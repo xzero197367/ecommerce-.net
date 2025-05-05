@@ -1,6 +1,7 @@
 
 using Ecommerce.Models;
 using Microsoft.EntityFrameworkCore;
+using Visual_C__Final_Project_E_Commerce;
 
 namespace Ecommerce.Context
 {
@@ -24,6 +25,10 @@ namespace Ecommerce.Context
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new OrderDetailsConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new CartItemConfiguration());
+
+
         }
     }
 
