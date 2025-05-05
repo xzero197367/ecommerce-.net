@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Ecommerce.FRONT.components.TopbarUC"
+             x:Name="TopbarUc"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Ecommerce.FRONT.components"
+             mc:Ignorable="d" d:DesignWidth="Infinity">
+    <Grid>
+        <!-- Top Bar Menu -->
+        <Menu Background="#2C3E50" Foreground="White" FontSize="14">
+            <MenuItem Header="_Dashboard"
+                      Command="{Binding ClickCommand, ElementName=TopbarUc}"
+                      CommandParameter="dashboard"
+                      Tag="Selected" />
+            <MenuItem Header="_Categories" 
+                      Command="{Binding ClickCommand, ElementName=TopbarUc}"
+                      CommandParameter="Category"
+                      >
+                <!-- <MenuItem Header="Books"  /> -->
+                <!-- <MenuItem Header="Electronics"  /> -->
+                <!-- <MenuItem Header="Clothing"  /> -->
+            </MenuItem>
+            <MenuItem Header="_Products" 
+                      Command="{Binding ClickCommand, ElementName=TopbarUc}"
+                      CommandParameter="Product"
+                       />
+            <MenuItem Header="_Cart" 
+                      Command="{Binding ClickCommand, ElementName=TopbarUc}"
+                      CommandParameter="Cart"
+                       />
+            <MenuItem Header="_Profile" 
+                      Command="{Binding ClickCommand, ElementName=TopbarUc}"
+                      CommandParameter="Profile"
+                       />
+        </Menu>
+    </Grid>
+</UserControl>
