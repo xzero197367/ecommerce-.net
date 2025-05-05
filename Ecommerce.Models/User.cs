@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ecommerce.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Visual_C__Final_Project_E_Commerce
@@ -26,6 +27,8 @@ namespace Visual_C__Final_Project_E_Commerce
         public bool IsActive { set; get; } = true;
         public DateTime DateCreated { set; get; }
         public DateTime? LastLoginDate { set; get; }
+        public ICollection<CartItem> CartItems { set; get; }
+        public ICollection<Order> Orders { set; get; }
     }
 
     public enum UserRole
