@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Visual_C__Final_Project_E_Commerce
+namespace Ecommerce.Models
 {
     public class User
     {

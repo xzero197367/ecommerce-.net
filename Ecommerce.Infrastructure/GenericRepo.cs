@@ -18,11 +18,7 @@ namespace Ecommerce.Infrastructure
 
         public T create(T entity)
         {
-            //return _dbSet.Add(entity).Entity;
-            //_context.SaveChanges();
-            var createdEntity = _dbSet.Add(entity).Entity;
-            //  _context.SaveChanges();
-            return createdEntity;
+            return _dbSet.Add(entity).Entity;
         }
 
         public T update(T entity)

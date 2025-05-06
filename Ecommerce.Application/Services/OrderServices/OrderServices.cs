@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ecommerce.Models;
 
-namespace Ecommerce.Application.Contracts
+namespace Ecommerce.Application.Services.OrderServices
 {
-    public interface IUserRepo : IGenericRepo<User>
+    class OrderServices
     {
-        
     }
 }
