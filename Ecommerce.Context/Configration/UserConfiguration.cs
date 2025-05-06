@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Visual_C__Final_Project_E_Commerce;
 
-namespace Ecommerce.Context
+namespace Ecommerce.Context.Configration
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

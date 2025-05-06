@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Application.Services.CategoryServices
+namespace Ecommerce.DTOs
 {
-   public class UseDto
+   public class CartItemDto
 
     {
 

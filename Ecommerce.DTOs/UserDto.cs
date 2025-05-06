@@ -1,7 +1,7 @@
 
 namespace Ecommerce.DTOs
 {
-    public class Class1
+    public class UserDto
     {
     }
 

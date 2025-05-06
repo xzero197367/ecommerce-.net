@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ecommerce.Context
+namespace Ecommerce.Context.Configration
 {
     public class ProductConfiguration:IEntityTypeConfiguration<Product>
     {
