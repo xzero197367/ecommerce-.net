@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Ecommerce.DTOs;
+using Ecommerce.Models;
+using Mapster;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +13,19 @@ namespace Ecommerce.Application.Mapping
     {
         public void Congfigure()
         {
-            //TypeAdapterConfig<Book, BookDTOs>.NewConfig()
-            //          .Map(dest => dest.AuthorName, src => src.Auther.Name);
-            //          .Map(dest => dest.Type, src => src.Type);
+            TypeAdapterConfig<User, UserCreateDto>.NewConfig()
+                      .Map(dest => dest.FirstName, src => src.FirstName)
+                      .Map(dest => dest.LastName, src => src.LastName)
+                      .Map(dest => dest.Email, src => src.UserEmail)
+                      .Map(dest => dest.Username, src => src.UserName)
+                      .Map(dest => dest.Role, src => src.UserRole)
+                      .Map(dest => dest.Password, src => src.UserPassword);
+                        
+
+            //TypeAdapterConfig<User, UserUpdateDto>.NewConfig()
+            //          .Map(dest => dest.FirstName, src => src.FirstName)
+            //          .Map(dest => dest.LastName, src => src.LastName)
+            //          .Map(dest => dest.Email, src => src.UserEmail);
         }
     }
 }

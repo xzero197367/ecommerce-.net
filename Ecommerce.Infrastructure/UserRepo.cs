@@ -1,16 +1,17 @@
 ﻿
+using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Ecommerce.Models;
 
 namespace Ecommerce.Infrastructure
 {
-    public class UserRepo : GenericRepo<User>
+    public class UserRepo: GenericRepo<User> 
     {
         private readonly ContextDB _context;
 
         public UserRepo(ContextDB context) : base(context)
         {
-            _context = context;
+            _context =  context;
         }
         public void ActivateUser(int UserId)
         {
