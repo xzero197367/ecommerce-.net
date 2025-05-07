@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ecommerce.Application.Contracts;
+using Ecommerce.DTOs;
 using Ecommerce.Models;
+using Mapster;
 
 namespace Ecommerce.Application.Services.UserServices
 {
    public class UserServices : IUserServices
 
     {
-        private readonly IUserRepo _userRepo;
-        public UserServices(IUserRepo userRepo)
+        private readonly IGenericRepo<User> _userRepo;
+        public UserServices(IGenericRepo<User> userRepo)
         {
             _userRepo = userRepo;
         }
@@ -22,9 +24,18 @@ namespace Ecommerce.Application.Services.UserServices
             return await _userRepo.GetAsync(u => u.UserEmail == email && u.UserPassword == password);
         }
 
-        public async Task RegisterAsync(User user)
+        public async Task RegisterAsync(UserCreateDto user)
         {
-            _userRepo.CreateAsync(user);
+            User user1 = user.Adapt<User>();
+            //User user1 = new User()
+            //{
+            //    FirstName = user.FirstName,
+            //    LastName = user.LastName,
+            //    UserEmail = user.Email,
+            //    UserRole = user.Role,
+            //};
+
+            _userRepo.CreateAsync(user1);
             await _userRepo.SaveChangesAsync(); 
         }
     }
