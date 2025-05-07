@@ -1,4 +1,5 @@
 
+using System.Linq.Expressions;
 using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Microsoft.EntityFrameworkCore;
@@ -16,33 +17,38 @@ namespace Ecommerce.Infrastructure
             _dbSet = context.Set<T>();
         }
 
-        public T create(T entity)
+        public async Task<T> CreateAsync(T entity)
         {
-            return _dbSet.Add(entity).Entity;
+            await _dbSet.AddAsync(entity);
+            return entity;
         }
 
-        public T update(T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
-            return _dbSet.Update(entity).Entity;
+            _dbSet.Update(entity);
+            return entity;
         }
 
-        public T delete(T entity)
+        public async Task DeleteAsync(T entity)
         {
-            return _dbSet.Remove(entity).Entity;
+            _dbSet.Remove(entity);
+            await Task.CompletedTask; 
         }
 
-        public T? getById(int id)
+
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet.Find(id);
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+      
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync(); 
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return _dbSet;
-        }
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
+            return await _dbSet.FindAsync(id);
         }
     }
 
