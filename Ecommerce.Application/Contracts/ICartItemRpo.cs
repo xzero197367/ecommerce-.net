@@ -10,6 +10,8 @@ namespace Ecommerce.Application.Contracts
    public interface ICartItemRpo : IGenericRepo<CartItem>
 
     {
+        IQueryable<CartItem> GetCartItemsByUserId(int userId);
+
 
     }
 }
