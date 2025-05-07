@@ -5,7 +5,7 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Infrastructure
 {
-    public class UserRepo: GenericRepo<User> 
+    public class UserRepo: GenericRepo<User>, IUserRepo
     {
         private readonly ContextDB _context;
 
