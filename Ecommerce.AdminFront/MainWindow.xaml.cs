@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ecommerce.AdminFront;
+using Ecommerce.AdminFront.Pages.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +23,29 @@ namespace WPFModernVerticalMenu
     /// </summary>
     public partial class MainWindow : Window
     {
+        PopupWindow popupWindow;
         public MainWindow()
         {
             InitializeComponent();
+            //showLoginWindow();
+        }
+
+        private void showRegisterWindow()
+        {
+            LoginPageUC loginPageUC = new LoginPageUC();
+            PopupWindow popupWindow = new PopupWindow();
+            popupWindow.containerGrid.Children.Add(loginPageUC);
+            popupWindow.Show();
+            this.Close();
+        }
+
+        private void showLoginWindow()
+        {
+            RegisterPageUC registerPage = new RegisterPageUC();
+            popupWindow = new PopupWindow();
+            popupWindow.containerGrid.Children.Add(registerPage);
+            popupWindow.Show();
+            this.Close();
         }
 
         private void BG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
