@@ -1,7 +1,7 @@
 
+using Ecommerce.Context.Configration;
 using Ecommerce.Models;
 using Microsoft.EntityFrameworkCore;
-using Visual_C__Final_Project_E_Commerce;
 
 namespace Ecommerce.Context
 {

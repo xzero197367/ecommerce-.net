@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.Pages.Auth.LoginPageUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Auth"
+             xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
+             >
+
+    <Border CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" 
+            BorderBrush="{DynamicResource SecundaryBackgroundColor}" Padding="5"
+            BorderThickness="2"
+            >
+        <StackPanel Width="200">
+            <TextBlock Text="Login" FontSize="25" Margin="0 0 0 10" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
+                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox Style="{DynamicResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="Email"/>
+            <PasswordBox Style="{DynamicResource CustomPasswordTextBoxStyle}" Margin="0 5" serv:PasswordPlaceholderService.Placeholder="Password"/>
+            <Button Style="{DynamicResource SaveButtonStyle}" >Login</Button>
+        </StackPanel>
+    </Border>
+</UserControl>

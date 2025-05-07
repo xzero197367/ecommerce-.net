@@ -8,5 +8,7 @@ namespace Ecommerce.DTOs
 {
     public class ProductDto
     {
+
+
     }
 }

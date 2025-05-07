@@ -14,6 +14,6 @@ namespace Ecommerce.Context.Configration
         public void Configure(EntityTypeBuilder<OrderDetail> builder)
         {
            builder.HasKey(od=>od.OrderDetailID);
-        }
+        } 
     }
 }
