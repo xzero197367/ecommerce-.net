@@ -1,5 +1,6 @@
 ﻿using Ecommerce.AdminFront;
 using Ecommerce.AdminFront.Pages.Auth;
+using Ecommerce.Application.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,10 +28,13 @@ namespace WPFModernVerticalMenu
         public MainWindow()
         {
             InitializeComponent();
-            //showLoginWindow();
+            MappesterConfig.Congfigure();
+            showRegisterWindow();
+
+
         }
 
-        private void showRegisterWindow()
+        private void showLoginWindow()
         {
             LoginPageUC loginPageUC = new LoginPageUC();
             PopupWindow popupWindow = new PopupWindow();
@@ -39,11 +43,13 @@ namespace WPFModernVerticalMenu
             this.Close();
         }
 
-        private void showLoginWindow()
+        private void showRegisterWindow()
         {
             RegisterPageUC registerPage = new RegisterPageUC();
             popupWindow = new PopupWindow();
             popupWindow.containerGrid.Children.Add(registerPage);
+            popupWindow.SizeToContent = SizeToContent.WidthAndHeight;
+           
             popupWindow.Show();
             this.Close();
         }
