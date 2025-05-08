@@ -29,7 +29,7 @@ namespace WPFModernVerticalMenu
         {
             InitializeComponent();
             MappesterConfig.Congfigure();
-            showRegisterWindow();
+            //showRegisterWindow();
 
 
         }

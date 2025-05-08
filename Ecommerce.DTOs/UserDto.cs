@@ -18,7 +18,6 @@ namespace Ecommerce.DTOs
     public class UserDto
     {
         public int UserID { set; get; }
-
         public string UserName { set; get; }
         public string UserPassword { set; get; }
         public string UserEmail { set; get; }

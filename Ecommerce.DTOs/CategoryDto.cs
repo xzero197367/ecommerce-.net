@@ -12,6 +12,7 @@ namespace Ecommerce.DTOs
         public int CategoryId { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
-        public ICollection<ProductDto> Products { get; set; }
+        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
+        public int ProductCount => Products?.Count ?? 0;
     }
 }

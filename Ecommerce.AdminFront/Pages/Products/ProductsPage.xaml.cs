@@ -17,5 +17,11 @@ namespace WPFModernVerticalMenu.Pages.Products
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PopoverPopup.IsOpen = true;
+        }
+
     }
 }

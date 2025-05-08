@@ -47,27 +47,27 @@ namespace Ecommerce.Infrastructure
 
         Category ICategoryRepo.AddCategory(Category category)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         IQueryable<Category> ICategoryRepo.FilterCategory(Func<Category, bool> condition)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         IQueryable<Category> ICategoryRepo.GetAllCategories()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         Category ICategoryRepo.GetCategoryById(int id)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         Category ICategoryRepo.UpdateCategory(Category category)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
