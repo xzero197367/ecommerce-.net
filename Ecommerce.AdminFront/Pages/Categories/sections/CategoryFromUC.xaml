@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.Pages.Categories.sections.CategoryFromUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Categories.sections"
+             xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
+             mc:Ignorable="d" >
+    <Border Padding="5" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="2" CornerRadius="10" Background="{DynamicResource SecundaryBackgroundColor}" Width="200">
+        <StackPanel Orientation="Vertical">
+            <TextBox Style="{StaticResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="Name"></TextBox>
+            <TextBox AcceptsReturn="True" Height="50" Style="{StaticResource CustomTextBoxStyle}" Margin="0 5 0 10"
+                     VerticalScrollBarVisibility="Auto"
+                     serv:PlaceholderService.Placeholder="Description"
+                     ></TextBox>
+            <Button Style="{DynamicResource SaveButtonStyle}">Save</Button>
+        </StackPanel>
+    </Border>
+</UserControl>

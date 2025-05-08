@@ -10,9 +10,6 @@ namespace Ecommerce.Application.Services.UserServices
     public interface IUserServices 
 
     {
-        // log in user
-        Task<User?> LoginAsync(string email, string password);
-
-        Task RegisterAsync(User user);
+        
     }
 }

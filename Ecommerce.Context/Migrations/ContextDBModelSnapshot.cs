@@ -155,14 +155,9 @@ namespace Ecommerce.Context.Migrations
                     b.Property<int>("UnitsInStock")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("products");
                 });
@@ -221,7 +216,7 @@ namespace Ecommerce.Context.Migrations
                         .IsRequired();
 
                     b.HasOne("Visual_C__Final_Project_E_Commerce.User", "User")
-                        .WithMany()
+                        .WithMany("CartItems")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -268,10 +263,6 @@ namespace Ecommerce.Context.Migrations
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Visual_C__Final_Project_E_Commerce.User", null)
-                        .WithMany("CartItems")
-                        .HasForeignKey("UserID");
 
                     b.Navigation("Category");
                 });

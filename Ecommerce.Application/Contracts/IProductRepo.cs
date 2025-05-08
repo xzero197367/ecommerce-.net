@@ -9,10 +9,8 @@ namespace Ecommerce.Application.Contracts
 {
    public interface IProductRepo : IGenericRepo<Product>
     {
-        // Add any additional methods specific to Product repository if needed
-        // For example:
-        // IEnumerable<Product> GetProductsByCategory(int categoryId);
-        // IEnumerable<Product> SearchProducts(string searchTerm);
+        IQueryable<Product> Search(string keyword);
+        IQueryable<Product> GetByCategory(int categoryId);
     }
     
 }
