@@ -9,9 +9,15 @@ namespace Ecommerce.Application.Contracts
 {
     public interface ICategoryRepo : IGenericRepo<Category>
     {
+        public IQueryable<Category> GetAllCategories();
+        public Category GetCategoryById(int id);
+        public Category UpdateCategory(Category category);
+        public Category AddCategory(Category category);
+        public IQueryable<Category> FilterCategory(Func<Category, bool> condition);
+
+
         Category GetByName(string name);
         IQueryable<Category> SearchCategory(string term);
-        /* Admin shall be able to delete a product category (Consider implications: disallow if products exist).*/
         bool HasProduct(int categoryId);
         void DeleteCategory(int categoryId);
     }
