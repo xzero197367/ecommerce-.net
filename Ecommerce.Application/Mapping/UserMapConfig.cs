@@ -11,19 +11,19 @@ namespace Ecommerce.Application.Mapping
             TypeAdapterConfig<UserCreateDto, User>.NewConfig()
              .Map(dest => dest.FirstName, src => src.FirstName)
              .Map(dest => dest.LastName, src => src.LastName)
-             .Map(dest => dest.UserEmail, src => src.Email)
-             .Map(dest => dest.UserName, src => src.Username)
-             .Map(dest => dest.UserRole, src => src.Role)
-             .Map(dest => dest.UserPassword, src => src.Password)
+             .Map(dest => dest.UserEmail, src => src.UserEmail)
+             .Map(dest => dest.UserName, src => src.UserName)
+             .Map(dest => dest.UserRole, src => src.UserRole)
+             .Map(dest => dest.UserPassword, src => src.UserPassword)
              .Map(dest => dest.DateCreated, _ => DateTime.UtcNow);
 
             TypeAdapterConfig<UserDto, User>.NewConfig().
               Map(dest => dest.UserID, src => src.UserID)
-              .Map(dest => dest.UserName, src => src.Username)
-              .Map(dest => dest.UserEmail, src => src.Email)
+              .Map(dest => dest.UserName, src => src.UserName)
+              .Map(dest => dest.UserEmail, src => src.UserEmail)
               .Map(dest => dest.FirstName, src => src.FirstName)
               .Map(dest => dest.LastName, src => src.LastName)
-              .Map(dest => dest.UserRole, src => Enum.Parse<UserRole>(src.Role));
+              .Map(dest => dest.UserRole, src => src.UserRole);
 
         }
     }
