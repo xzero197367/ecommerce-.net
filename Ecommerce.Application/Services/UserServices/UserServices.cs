@@ -14,8 +14,8 @@ namespace Ecommerce.Application.Services.UserServices
    public class UserServices : IUserServices
 
     {
-        private readonly IGenericRepo<User> _userRepo;
-        public UserServices(IGenericRepo<User> userRepo)
+        private readonly IUserRepo _userRepo;
+        public UserServices(IUserRepo userRepo)
         {
             _userRepo = userRepo;
         }
@@ -29,20 +29,6 @@ namespace Ecommerce.Application.Services.UserServices
             return user is not null ? user.Adapt<UserDto>() : null;
         }
 
-<<<<<<< HEAD
-        public async Task RegisterAsync(UserCreateDto user)
-        {
-            User user1 = user.Adapt<User>();
-            //User user1 = new User()
-            //{
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName,
-            //    UserEmail = user.Email,
-            //    UserRole = user.Role,
-            //};
-
-            _userRepo.CreateAsync(user1);
-=======
         public async Task<UserDto> RegisterAsync(UserCreateDto user)
         {
             user.Password = HashPassword(user.Password);
@@ -50,7 +36,6 @@ namespace Ecommerce.Application.Services.UserServices
 
             User reUser = await _userRepo.CreateAsync(user1);
             UserDto u = reUser.Adapt<UserDto>();
->>>>>>> ezz
             await _userRepo.SaveChangesAsync(); 
 
             return u;

@@ -13,14 +13,10 @@ namespace Ecommerce.Application.Services.UserServices
     {
         Task<UserDto?> LoginAsync(string email, string password);
 
-<<<<<<< HEAD
-        Task RegisterAsync(UserCreateDto user);
-=======
         Task<UserDto> RegisterAsync(UserCreateDto user);
 
         string HashPassword(string password);
 
         bool VerifyPassword(string password, string storedHash);
->>>>>>> ezz
     }
 }

@@ -44,5 +44,30 @@ namespace Ecommerce.Infrastructure
             return _context.categories.Where(c => c.Name.Contains(term)
             || c.Description.Contains(term));
         }
+
+        Category ICategoryRepo.AddCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
+
+        IQueryable<Category> ICategoryRepo.FilterCategory(Func<Category, bool> condition)
+        {
+            throw new NotImplementedException();
+        }
+
+        IQueryable<Category> ICategoryRepo.GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        Category ICategoryRepo.GetCategoryById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Category ICategoryRepo.UpdateCategory(Category category)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -56,11 +56,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 LastName = txtLname.Text,
                 Email = txtEmail.Text,
                 Username = txtEmail.Text,
-<<<<<<< HEAD
-                Password = HashPassword(txtPassword.Password),
-=======
                 Password = txtPassword.Password,
->>>>>>> ezz
                 Role = Models.UserRole.Client,
             };
 
@@ -74,45 +70,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
 
         
 
-<<<<<<< HEAD
-        public string HashPassword(string password)
-        {
-            // Generate a random salt
-            byte[] salt = RandomNumberGenerator.GetBytes(16);
-
-            // Derive a 32-byte key using PBKDF2
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
-            byte[] hash = pbkdf2.GetBytes(32);
-
-            // Combine salt + hash and return as base64
-            byte[] hashBytes = new byte[48];
-            Buffer.BlockCopy(salt, 0, hashBytes, 0, 16);
-            Buffer.BlockCopy(hash, 0, hashBytes, 16, 32);
-
-            return Convert.ToBase64String(hashBytes);
-        }
-
-        public static bool VerifyPassword(string password, string storedHash)
-        {
-            byte[] hashBytes = Convert.FromBase64String(storedHash);
-
-            byte[] salt = new byte[16];
-            Buffer.BlockCopy(hashBytes, 0, salt, 0, 16);
-
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
-            byte[] hash = pbkdf2.GetBytes(32);
-
-            for (int i = 0; i < 32; i++)
-            {
-                if (hashBytes[i + 16] != hash[i])
-                    return false;
-            }
-            return true;
-        }
-
-=======
        
->>>>>>> ezz
 
     }
 }

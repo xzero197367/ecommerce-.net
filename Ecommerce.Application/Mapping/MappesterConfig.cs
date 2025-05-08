@@ -13,26 +13,10 @@ namespace Ecommerce.Application.Mapping
     {
         public static void Congfigure()
         {
-<<<<<<< HEAD
-            TypeAdapterConfig<User, UserCreateDto>.NewConfig()
-                      .Map(dest => dest.FirstName, src => src.FirstName)
-                      .Map(dest => dest.LastName, src => src.LastName)
-                      .Map(dest => dest.Email, src => src.UserEmail)
-                      .Map(dest => dest.Username, src => src.UserName)
-                      .Map(dest => dest.Role, src => src.UserRole)
-                      .Map(dest => dest.Password, src => src.UserPassword);
-                        
-
-            //TypeAdapterConfig<User, UserUpdateDto>.NewConfig()
-            //          .Map(dest => dest.FirstName, src => src.FirstName)
-            //          .Map(dest => dest.LastName, src => src.LastName)
-            //          .Map(dest => dest.Email, src => src.UserEmail);
-=======
           
             UserMapConfig.Config();
 
       
->>>>>>> ezz
         }
     }
 }
