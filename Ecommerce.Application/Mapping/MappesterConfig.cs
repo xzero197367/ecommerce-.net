@@ -11,8 +11,9 @@ namespace Ecommerce.Application.Mapping
 {
     public class MappesterConfig
     {
-        public void Congfigure()
+        public static void Congfigure()
         {
+<<<<<<< HEAD
             TypeAdapterConfig<User, UserCreateDto>.NewConfig()
                       .Map(dest => dest.FirstName, src => src.FirstName)
                       .Map(dest => dest.LastName, src => src.LastName)
@@ -26,6 +27,12 @@ namespace Ecommerce.Application.Mapping
             //          .Map(dest => dest.FirstName, src => src.FirstName)
             //          .Map(dest => dest.LastName, src => src.LastName)
             //          .Map(dest => dest.Email, src => src.UserEmail);
+=======
+          
+            UserMapConfig.Config();
+
+      
+>>>>>>> ezz
         }
     }
 }

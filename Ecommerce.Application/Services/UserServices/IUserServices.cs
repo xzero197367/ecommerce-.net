@@ -11,9 +11,16 @@ namespace Ecommerce.Application.Services.UserServices
     public interface IUserServices 
 
     {
-        // log in user
-        Task<User?> LoginAsync(string email, string password);
+        Task<UserDto?> LoginAsync(string email, string password);
 
+<<<<<<< HEAD
         Task RegisterAsync(UserCreateDto user);
+=======
+        Task<UserDto> RegisterAsync(UserCreateDto user);
+
+        string HashPassword(string password);
+
+        bool VerifyPassword(string password, string storedHash);
+>>>>>>> ezz
     }
 }

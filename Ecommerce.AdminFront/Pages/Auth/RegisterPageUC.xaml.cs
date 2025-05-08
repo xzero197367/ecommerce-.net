@@ -56,7 +56,11 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 LastName = txtLname.Text,
                 Email = txtEmail.Text,
                 Username = txtEmail.Text,
+<<<<<<< HEAD
                 Password = HashPassword(txtPassword.Password),
+=======
+                Password = txtPassword.Password,
+>>>>>>> ezz
                 Role = Models.UserRole.Client,
             };
 
@@ -70,6 +74,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
 
         
 
+<<<<<<< HEAD
         public string HashPassword(string password)
         {
             // Generate a random salt
@@ -105,6 +110,9 @@ namespace Ecommerce.AdminFront.Pages.Auth
             return true;
         }
 
+=======
+       
+>>>>>>> ezz
 
     }
 }

@@ -13,7 +13,11 @@ namespace Ecommerce.AdminFront.Classes.AutoFac
         {
             var builder = new ContainerBuilder();
             builder.RegisterType<ContextDB>().As<ContextDB>();
+<<<<<<< HEAD
             builder.RegisterType<UserRepo>().As<GenericRepo<User>>();
+=======
+            builder.RegisterType<UserRepo>().As<IUserRepo>();
+>>>>>>> ezz
             builder.RegisterType<UserServices>().As<IUserServices>();
             //builder.RegisterType<BookServices>().As<IBookServices>();
             //builder.RegisterType<AutherRepository>().As<IAutherRepository>();
