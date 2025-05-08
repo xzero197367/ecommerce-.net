@@ -22,23 +22,26 @@ namespace Ecommerce.Application.Services.UserServices
 
         public async Task<UserDto?> LoginAsync(string email, string password)
         {
-            User user =  await _userRepo.GetAsync(
-                u => u.UserEmail == email && VerifyPassword(password, u.UserPassword
-                ));
+            //User user =  await _userRepo.GetAsync(
+            //    u => u.UserEmail == email && VerifyPassword(password, u.UserPassword
+            //    ));
 
-            return user is not null ? user.Adapt<UserDto>() : null;
+            //return user is not null ? user.Adapt<UserDto>() : null;
+            return null;
         }
 
         public async Task<UserDto> RegisterAsync(UserCreateDto user)
         {
-            user.Password = HashPassword(user.Password);
-            User user1 = user.Adapt<User>();
+            //user.UserPassword = HashPassword(user.UserPassword);
+            //User user1 = user.Adapt<User>();
 
-            User reUser = await _userRepo.CreateAsync(user1);
-            UserDto u = reUser.Adapt<UserDto>();
-            await _userRepo.SaveChangesAsync(); 
+            //User reUser = await _userRepo.CreateAsync(user1);
+            //UserDto u = reUser.Adapt<UserDto>();
+            //await _userRepo.SaveChangesAsync(); 
 
-            return u;
+            //return u;
+
+            return null;
         }
 
         public string HashPassword(string password)
