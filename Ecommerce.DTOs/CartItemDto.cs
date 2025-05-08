@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace Ecommerce.DTOs
 {
    public class CartItemDto
-
     {
+
+        UserDto User { get; set; }
 
     }
 }

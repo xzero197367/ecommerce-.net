@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.DTOs
 {
-    public class ProductDto
+
+    public class ProductCreateDto
     {
-
-
+        public string Name { get; set; }   
+        public decimal Price { get; set; }
+        public int UnitsInStock { get; set; }
+        public string ImagePath { get; set; }
+        public int CategoryID { get; set; }
     }
+    
+   
 }
