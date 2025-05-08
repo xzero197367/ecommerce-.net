@@ -24,14 +24,14 @@ namespace Ecommerce.Application.Services.ProductServices
 
         public ProductDto CreateProduct(Product pro)
         {
-            var createproduct = _productRepo.Create(pro);
-            _productRepo.SaveChanges();
+            var createproduct = _productRepo.create(pro);
+            _productRepo.saveChanges();
             return createproduct.Adapt<ProductDto>();
         }
 
         public ProductDto UpdateProduct(Product product)
         {
-            var existingProduct = _productRepo.GetById(product.ProductId) ?? throw new Exception("Product not found");
+            var existingProduct = _productRepo.getById(product.ProductId) ?? throw new Exception("Product not found");
             existingProduct.Name = product.Name;
             existingProduct.Description = product.Description;
             existingProduct.Price = product.Price;
@@ -39,41 +39,41 @@ namespace Ecommerce.Application.Services.ProductServices
             existingProduct.CategoryID = product.CategoryID;
             existingProduct.ImagePath = product.ImagePath;
 
-            var updatedProduct = _productRepo.Update(existingProduct);
-            _productRepo.SaveChanges();
+            var updatedProduct = _productRepo.update(existingProduct);
+            _productRepo.saveChanges();
             return updatedProduct.Adapt<ProductDto>();
         }
 
         public void DeleteProduct(int id)
         {
-            var product = _productRepo.GetById(id) ?? throw new Exception("Product not found");
-            _productRepo.Delete(product);
-            _productRepo.SaveChanges();
+            var product = _productRepo.getById(id) ?? throw new Exception("Product not found");
+            _productRepo.delete(product);
+            _productRepo.saveChanges();
         }
 
         public ProductDto GetProductById(int id)
         {
-            var product = _productRepo.GetById(id) ?? throw new Exception("Product not found");
+            var product = _productRepo.getById(id) ?? throw new Exception("Product not found");
             return product.Adapt<ProductDto>();
         }
 
         public List<ProductDto> GetAllProducts()
         {
-            return _productRepo.GetAll()
+            return _productRepo.getAll()
                 .ToList()
                 .Adapt<List<ProductDto>>();
         }
 
         public List<ProductDto> SearchProducts(string keyword)
         {
-            return _productRepo.Search(keyword)
+            return _productRepo.SearchProduct(keyword)
                 .ToList()
                 .Adapt<List<ProductDto>>();
         }
 
         public List<ProductDto> GetProductsByCategory(int categoryId)
         {
-            return _productRepo.GetByCategory(categoryId)
+            return _productRepo.GetProductByCategory(categoryId)
                 .ToList()
                 .Adapt<List<ProductDto>>();
         }
