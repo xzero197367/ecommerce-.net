@@ -10,7 +10,9 @@ namespace Ecommerce.Context
         public DbSet<Product> products { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<Order> orders { get; set; }
-        public DbSet<OrderDetail> ordersDetails { get; set; } 
+        public DbSet<OrderDetail> ordersDetails { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<CartItem> cartItems { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

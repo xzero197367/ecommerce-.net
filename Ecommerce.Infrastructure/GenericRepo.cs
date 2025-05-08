@@ -17,36 +17,35 @@ namespace Ecommerce.Infrastructure
             _dbSet = context.Set<T>();
         }
 
-        public T Create(T entity)
+        public T create(T entity)
         {
-            var createdEntity = _dbSet.Add(entity).Entity;
-            return createdEntity;
+            return _context.Add(entity).Entity;
         }
-
-        public T Update(T entity)
+        public T update(T entity)
         {
-            return _dbSet.Update(entity).Entity;
+            return _context.Update(entity).Entity;
         }
-
-        public T Delete(T entity)
+        public T delete(T entity)
         {
-            return _dbSet.Remove(entity).Entity;
+            return _context.Remove(entity).Entity;
         }
-
-        public T? GetById(int id)
+        public IQueryable<T> getAll()
+        {
+            return _dbSet;
+        }
+        public T? getById(int id)
         {
             return _dbSet.Find(id);
         }
 
-        public IQueryable<T> GetAll()
-        {
-            return _dbSet.AsQueryable();
-        }
-
-        public void SaveChanges()
+        public void saveChanges()
         {
             _context.SaveChanges();
+
+
         }
+
+  
     }
 
 }
