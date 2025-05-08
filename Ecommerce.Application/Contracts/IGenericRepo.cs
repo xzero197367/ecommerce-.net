@@ -13,5 +13,7 @@ namespace Ecommerce.Application.Contracts
         public T delete(T entity);
         public T getById(int id);
         public IQueryable<T> GetAll();
+
+        public void SaveChanges();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecommerce.Application.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,12 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.UserServices
 {
-    interface IUserServices
+    public interface IUserServices
     {
+        public void Register(UserRegisterDTO dto);
+
+
+        public void Login(UserLoginDTO dto);
+       
     }
 }

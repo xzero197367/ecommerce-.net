@@ -8,5 +8,9 @@ namespace Ecommerce.Application.Services.OrderServices
 {
     interface IOrderServices
     {
+        OrderFromCart()
+        {
+
+        }
     }
 }
