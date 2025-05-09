@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.OrderServices
 {
-    interface IOrderServices
+    public interface IOrderServices
     {
+        void SubmitSelectedCartItemsAsOrder(int userId, List<int> selectedCartItemsId);
     }
 }

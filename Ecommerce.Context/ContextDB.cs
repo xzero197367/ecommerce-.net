@@ -1,7 +1,7 @@
 
+using Ecommerce.Context.Configration;
 using Ecommerce.Models;
 using Microsoft.EntityFrameworkCore;
-using Ecommerce.Context.Configration;
 
 namespace Ecommerce.Context
 {
@@ -10,9 +10,7 @@ namespace Ecommerce.Context
         public DbSet<Product> products { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<Order> orders { get; set; }
-        public DbSet<OrderDetail> ordersDetails { get; set; }
-        public DbSet<User> users { get; set; }
-        public DbSet<CartItem> cartItems { get; set; }
+        public DbSet<OrderDetails> ordersDetails { get; set; } 
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

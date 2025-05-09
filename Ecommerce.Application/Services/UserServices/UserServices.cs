@@ -1,75 +1,81 @@
-﻿
-using System.Security.Cryptography;
-using Ecommerce.Application.Contracts;
-using Ecommerce.DTOs;
+﻿using Ecommerce.Application.Contracts;
+using Ecommerce.Application.Mapping;
 using Ecommerce.Models;
-using Mapster;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.UserServices
 {
-   public class UserServices : IUserServices
-
+    class UserServices : IUserServices
     {
-        private readonly IUserRepo _userRepo;
+        private readonly IUserRepo _userRepo; // access db 
         public UserServices(IUserRepo userRepo)
         {
             _userRepo = userRepo;
         }
 
-        public UserDto? Login(string email, string password)
+        #region req1 
+        public void Register(UserRegisterDTO dto)
         {
-            User user = _userRepo.getUser(u => u.UserEmail == email && u.UserPassword == password);
-            return user is not null ? user.Adapt<UserDto>() : null;
-        }
-
-        public UserDto Register(UserCreateDto user)
-        {
-            user.UserPassword = HashPassword(user.UserPassword);
-            User user1 = user.Adapt<User>();
-
-            User reUser = _userRepo.create(user1);
-            UserDto u = reUser.Adapt<UserDto>();
-            _userRepo.saveChanges();
-
-            return u;
-        }
-
-        public string HashPassword(string password)
-        {
-            // Generate a random salt
-            byte[] salt = RandomNumberGenerator.GetBytes(16);
-
-            // Derive a 32-byte key using PBKDF2
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
-            byte[] hash = pbkdf2.GetBytes(32);
-
-            // Combine salt + hash and return as base64
-            byte[] hashBytes = new byte[48];
-            Buffer.BlockCopy(salt, 0, hashBytes, 0, 16);
-            Buffer.BlockCopy(hash, 0, hashBytes, 16, 32);
-
-            return Convert.ToBase64String(hashBytes);
-        }
-
-        public bool VerifyPassword(string password, string storedHash)
-        {
-            byte[] hashBytes = Convert.FromBase64String(storedHash);
-
-            byte[] salt = new byte[16];
-            Buffer.BlockCopy(hashBytes, 0, salt, 0, 16);
-
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
-            byte[] hash = pbkdf2.GetBytes(32);
-
-            for (int i = 0; i < 32; i++)
+            var ExistingUser = _userRepo.GetAll().FirstOrDefault(u => u.UserEmail == dto.Email);
+           
+            if(ExistingUser != null)
             {
-                if (hashBytes[i + 16] != hash[i])
-                    return false;
+                throw new Exception("User already exists.");
             }
-            return true;
+
+            //var user1 = dto.adapt<User>();
+
+            var user = new User
+            {
+                UserName = dto.Username,
+                UserEmail = dto.Email,
+                UserPassword = dto.Password ,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                UserRole = UserRole.Client, // default role for sign-up
+                IsActive = true,
+                DateCreated = DateTime.UtcNow
+
+            };
+
+            _userRepo.create(user);
+            _userRepo.SaveChanges();
+
+
         }
 
+        // hash the password 
+        // password confirmation
+        // confirmation with username too
+        #endregion
        
+        #region req2
+        public void Login(UserLoginDTO dto)
+        {
+            var ExistingUser = _userRepo.GetAll().FirstOrDefault(u => u.UserEmail == dto.Email);
+
+            if(ExistingUser == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            if(dto.Password != ExistingUser.UserPassword)
+            {
+                throw new Exception("Incorrect password.");
+            }
+
+            ExistingUser.LastLoginDate = DateTime.UtcNow;
+
+            _userRepo.update(ExistingUser);
+            _userRepo.SaveChanges();
+
+        }
+        #endregion
+
 
     }
 }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Context.Configration
 {
-    public class OrderDetailsConfiguration : IEntityTypeConfiguration<OrderDetail>
+    public class OrderDetailsConfiguration : IEntityTypeConfiguration<OrderDetails>
     {
-        public void Configure(EntityTypeBuilder<OrderDetail> builder)
+        public void Configure(EntityTypeBuilder<OrderDetails> builder)
         {
            builder.HasKey(od=>od.OrderDetailID);
         } 

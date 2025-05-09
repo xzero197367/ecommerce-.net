@@ -1,5 +1,4 @@
 
-using System.Linq.Expressions;
 using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Microsoft.EntityFrameworkCore;
@@ -10,42 +9,41 @@ namespace Ecommerce.Infrastructure
     {
         private readonly ContextDB _context;
 
-        private readonly DbSet<T> _dbSet;
+        public readonly DbSet<T> _dbSet;
         public GenericRepo(ContextDB context)
         {
             _context = context;
             _dbSet = context.Set<T>();
         }
 
-        public T create(T entity)
+        public T Create(T entity)
         {
-            return _context.Add(entity).Entity;
+            return _dbSet.Add(entity).Entity;
         }
-        public T update(T entity)
+
+        public T Update(T entity)
         {
-            return _context.Update(entity).Entity;
+            return _dbSet.Update(entity).Entity;
         }
-        public T delete(T entity)
+
+        public T Delete(T entity)
         {
-            return _context.Remove(entity).Entity;
+            return _dbSet.Remove(entity).Entity;
         }
-        public IQueryable<T> getAll()
-        {
-            return _dbSet;
-        }
-        public T? getById(int id)
+
+        public T? GetById(int id)
         {
             return _dbSet.Find(id);
         }
 
-        public void saveChanges()
+        public IQueryable<T> GetAll()
+        {
+            return _dbSet;
+        }
+        public void SaveChanges()
         {
             _context.SaveChanges();
-
-
         }
-
-  
     }
 
 }

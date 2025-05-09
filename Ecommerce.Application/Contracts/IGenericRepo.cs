@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,12 +8,12 @@ namespace Ecommerce.Application.Contracts
 {
     public interface IGenericRepo<T>
     {
-        T create(T entity);
-        T update(T entity);
-        T delete(T entity);
+        public T Create(T entity);
+        public T Update(T entity);
+        public T Delete(T entity);
+        public T GetById(int id);
+        public IQueryable<T> GetAll();
 
-        T getById(int id);
-        IQueryable<T> getAll();
-        void saveChanges();
+        public void SaveChanges();
     }
 }

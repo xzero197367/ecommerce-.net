@@ -9,41 +9,19 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Infrastructure
 {
-    public class OrderRepo : GenericRepo<Order>, IOrderRepo
+    public class OrderRepo : GenericRepo<Order> , IOrderRepo
     {
-        private readonly ContextDB _context;
-
         public OrderRepo(ContextDB context) : base(context)
         {
-            _context = context;
         }
 
-        public void ApproveOrder(int orderId)
+        public void SaveOrder(Order order)
         {
-            var order = _context.orders.Find(orderId);
-            if (order != null && order.Status == OrderStatus.Pending)
-            {
-                order.Status = OrderStatus.Approved;
+            _dbSet.Add(order);
 
-            }
+
         }
 
-        public void DenyOrder(int orderId)
-        {
-            var order = _context.orders.Find(orderId);
-            if (order != null && order.Status == OrderStatus.Pending)
-            {
-                order.Status = OrderStatus.Denied;
-
-            }
-        }
-
-        public IQueryable<Order> GetOrdersByStatus(OrderStatus status)
-        {
-            return _context.orders.Where(o => o.Status == status);
-        }
-
-
+        // comeback to save order ok ??
     }
-
 }
