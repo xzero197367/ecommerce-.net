@@ -4,50 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Orders.sections"
-             
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" >
     <Grid>
-        <ListView Background="Transparent" ItemsSource="{Binding Orders}">
-            <ListView.View>
-                <GridView>
-                    <!--<GridViewColumn Header="Order ID" Width="80"
-                            DisplayMemberBinding="{Binding OrderID}" />
+        <ui:ListView Background="Transparent" ItemsSource="{Binding Orders}">
+            <ui:ListView.View>
+                <ui:GridView>
 
-                    <GridViewColumn Header="User ID" Width="80"
-                            DisplayMemberBinding="{Binding UserID}" />-->
-
-                    <GridViewColumn Header="Order Date" Width="120">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Order Date" Width="120">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding OrderDate, StringFormat=d}" />
+                                <ui:TextBlock Text="{Binding OrderDate, StringFormat=d}" />
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Total Amount" Width="100"
+                    <ui:GridViewColumn Header="Total Amount" Width="100"
                             DisplayMemberBinding="{Binding TotalAmount}" />
 
-                    <GridViewColumn Header="Status" Width="100"
+                    <ui:GridViewColumn Header="Status" Width="100"
                             DisplayMemberBinding="{Binding Status}" />
 
-                    <GridViewColumn Header="Processed Date" Width="120">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Processed Date" Width="120">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding DateProcessed, StringFormat=d}" />
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="User Name" Width="150">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="User Name" Width="150">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding User.FullName}" />
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+                </ui:GridView>
+            </ui:ListView.View>
+        </ui:ListView>
 
     </Grid>
 </UserControl>

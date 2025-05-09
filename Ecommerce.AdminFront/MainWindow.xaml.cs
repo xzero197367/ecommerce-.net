@@ -33,10 +33,10 @@ namespace WPFModernVerticalMenu
         public MainWindow()
         {
             Instance = this;
-            if (currentUser is null)
-            {
-                showLoginWindow();
-            }
+            // if (currentUser is null)
+            // {
+            //     showLoginWindow();
+            // }
             InitializeComponent();
             MappesterConfig.Congfigure();
             //showRegisterWindow();
