@@ -1,6 +1,7 @@
 ﻿using Ecommerce.AdminFront;
 using Ecommerce.AdminFront.Pages.Auth;
 using Ecommerce.Application.Mapping;
+using Ecommerce.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,22 @@ namespace WPFModernVerticalMenu
     /// </summary>
     public partial class MainWindow : Window
     {
-        PopupWindow popupWindow;
+        PopupWindow popupWindow;    
+
+        public static MainWindow Instance { get; set; }
+        public static UserDto currentUser { get; set; }
+
         public MainWindow()
         {
+            Instance = this;
+            // if (currentUser is null)
+            // {
+            //     showLoginWindow();
+            // }
             InitializeComponent();
             MappesterConfig.Congfigure();
             //showRegisterWindow();
-
+           
 
         }
 

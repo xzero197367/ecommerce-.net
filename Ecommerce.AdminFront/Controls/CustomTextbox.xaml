@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.Controls.CustomTextbox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Ecommerce.AdminFront.Controls"
+             mc:Ignorable="d">
+   <UserControl.Resources>
+        <!-- Placeholder Animation -->
+        <Storyboard x:Key="PlaceholderFocusIn">
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)"
+                            To="-15" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleX)"
+                            To="0.85" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleY)"
+                            To="0.85" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="Opacity"
+                            To="0.7" Duration="0:0:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="PlaceholderFocusOut">
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(TranslateTransform.Y)"
+                            To="0" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleX)"
+                            To="1" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="(TextBlock.RenderTransform).(ScaleTransform.ScaleY)"
+                            To="1" Duration="0:0:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="PlaceholderText" 
+                            Storyboard.TargetProperty="Opacity"
+                            To="1" Duration="0:0:0.2"/>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid>
+        <TextBox x:Name="InnerTextBox"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 Padding="5,10,5,5"
+                 FontSize="14"
+                 Foreground="#333333"
+                 Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
+                 GotFocus="InnerTextBox_GotFocus"
+                 LostFocus="InnerTextBox_LostFocus"
+                 TextChanged="InnerTextBox_TextChanged"/>
+        <TextBlock x:Name="PlaceholderText"
+                   Text="{Binding PlaceholderTextValue, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   FontSize="14"
+                   Foreground="#999999"
+                   Padding="6,10,5,5"
+                   IsHitTestVisible="False">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="0" CenterY="0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <Border BorderThickness="1" 
+                BorderBrush="#CCCCCC" 
+                CornerRadius="4"
+                Background="#FFFFFF">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="#999999"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=InnerTextBox}" Value="True">
+                            <Setter Property="BorderBrush" Value="#0078D4"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+    </Grid>
+</UserControl>

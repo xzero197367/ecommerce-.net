@@ -3,14 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WPFModernVerticalMenu.Pages.Categories"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
        xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Categories.sections"
-         xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
-      mc:Ignorable="d" 
+         xmlns:controls="clr-namespace:Ecommerce.AdminFront.Controls"
+         mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dashboard">
 
-    <Border CornerRadius="5" Background="{DynamicResource SecundaryBackgroundColor}">
+    <Border CornerRadius="5"  >
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -19,7 +19,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Orders" FontSize="30" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
+            <TextBlock FontFamily="arial" Text="Orders" FontSize="30" 
+                       FontWeight="Bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <Grid Grid.Row="1" ClipToBounds="False" 
@@ -30,17 +31,18 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox serv:PlaceholderService.Placeholder="Search for Category...." Style="{StaticResource CustomTextBoxStyle}" Width="200"/>
+                    <ui:TextBox Width="300" PlaceholderText="Search by Category Name..."/>
                 </StackPanel>
 
             
                 <Grid Grid.Column="1">
                     <!-- Button that triggers the Popover -->
-                    <Button Grid.Column="1" Style="{DynamicResource SaveButtonStyle}" Click="Button_Click">Create Category</Button>
+                    <ui:Button Appearance="Primary"
+                                Click="Button_Click" Margin="0 0 5 0">Create Category</ui:Button>
 
                     <!-- Popup (Popover) -->
                     <Popup x:Name="PopoverPopup" AllowsTransparency="True" Placement="MousePoint" IsOpen="False" StaysOpen="False">
-                        <Border Background="{DynamicResource PrimaryBackgroundColor}" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Padding="10">
+                        <Border  CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Padding="10">
                             <sections:CategoryFromUC/>
                         </Border>
                     </Popup>

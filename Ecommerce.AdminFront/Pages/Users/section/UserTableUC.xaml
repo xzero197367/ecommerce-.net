@@ -3,15 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
     <Grid>
-        <ListView Background="Transparent" ItemsSource="{Binding Users}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="User ID" Width="100">
-                        <GridViewColumn.CellTemplate>
+        <ui:ListView Background="Transparent" ItemsSource="{Binding Users}">
+            <ui:ListView.View>
+                <ui:GridView>
+                    <ui:GridViewColumn Header="User ID" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="100">
                                     <Label.Content>
@@ -19,11 +20,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Username" Width="150">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Username" Width="150">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="150">
                                     <Label.Content>
@@ -31,11 +32,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Email" Width="200">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Email" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="200">
                                     <Label.Content>
@@ -43,24 +44,13 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <!--<GridViewColumn Header="Full Name" Width="200">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Label Width="200">
-                                    <Label.Content>
-                                        <AccessText TextWrapping="Wrap" 
-                            Text="{Binding Path=., Converter={StaticResource FullNameConverter}}" />
-                                    </Label.Content>
-                                </Label>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+            
 
-                    <GridViewColumn Header="Role" Width="100">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Role" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="100">
                                     <Label.Content>
@@ -68,11 +58,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Active" Width="80">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Active" Width="80">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="80">
                                     <Label.Content>
@@ -80,11 +70,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Date Created" Width="150">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Date Created" Width="150">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="150">
                                     <Label.Content>
@@ -92,11 +82,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Last Login" Width="150">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Last Login" Width="150">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="150">
                                     <Label.Content>
@@ -104,11 +94,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+                </ui:GridView>
 
-            </ListView.View>
-        </ListView>  
+            </ui:ListView.View>
+        </ui:ListView>  
     </Grid>
 </UserControl>

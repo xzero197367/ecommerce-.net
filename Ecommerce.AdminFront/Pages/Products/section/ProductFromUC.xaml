@@ -3,19 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Products.sections"
-             xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" >
     <Border Padding="5" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="2" CornerRadius="10" Background="{DynamicResource SecundaryBackgroundColor}" Width="200">
-        <StackPanel Orientation="Vertical">
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="Name"></TextBox>
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" Margin="0 5" serv:PlaceholderService.Placeholder="Price"></TextBox>
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="UnitsInStock"></TextBox>
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" Margin="0 5"  serv:PlaceholderService.Placeholder="ImagePath"></TextBox>
+        <StackPanel Orientation="Vertical" >
+            <ui:TextBox  PlaceholderText="Name"></ui:TextBox>
+            <ui:TextBox  Margin="0 5" PlaceholderText="Price"></ui:TextBox>
+            <ui:TextBox  PlaceholderText="UnitsInStock"></ui:TextBox>
+            <ui:TextBox  Margin="0 5"  PlaceholderText="ImagePath"></ui:TextBox>
             <ComboBox Text="Category" Margin="0 0 0 5" >
                 <ComboBoxItem>Category 1</ComboBoxItem>
             </ComboBox>
-            <Button Style="{DynamicResource SaveButtonStyle}">Save</Button>
+            <ui:Button  HorizontalAlignment="Stretch">Save</ui:Button>
         </StackPanel>
     </Border>
 </UserControl>

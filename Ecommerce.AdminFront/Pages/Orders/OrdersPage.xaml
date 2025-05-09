@@ -3,14 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:local="clr-namespace:WPFModernVerticalMenu.Pages.Orders"
-          xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Orders.sections"
-xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
+         xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Orders.sections"
+        xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dashboard">
 
-    <Border CornerRadius="5" Background="{DynamicResource SecundaryBackgroundColor}">
+    <Border CornerRadius="5">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -19,7 +20,7 @@ xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Orders" FontSize="30" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
+            <TextBlock  Text="Orders" FontSize="30" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <Grid Grid.Row="1" ClipToBounds="False" 
@@ -30,7 +31,7 @@ xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox serv:PlaceholderService.Placeholder="Search for Orders...." Style="{StaticResource CustomTextBoxStyle}" Width="200"/>
+                    <ui:TextBox serv:PlaceholderService.Placeholder="Search for Orders...."  Width="200"/>
                 </StackPanel>
 
             </Grid>

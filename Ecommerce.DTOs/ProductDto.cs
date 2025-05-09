@@ -21,7 +21,7 @@ namespace Ecommerce.DTOs
         public int CategoryID { get; set; }
         public CategoryDto Category { get; set; }
         public ICollection<OrderDetailsDto> OrderDetails { get; set; }
-        public ICollection<CartItemDto> CartItems { get; set; }
+        //public ICollection<CartItemDto> CartItems { get; set; }
     }
    
 }

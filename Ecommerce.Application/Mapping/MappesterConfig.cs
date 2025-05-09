@@ -16,6 +16,7 @@ namespace Ecommerce.Application.Mapping
           
             UserMapConfig.Config();
 
+
       
         }
     }

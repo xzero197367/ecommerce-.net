@@ -4,18 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
              mc:Ignorable="d" >
     <Border Padding="5" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="2" CornerRadius="10" Background="{DynamicResource SecundaryBackgroundColor}" Width="200">
         <StackPanel Orientation="Vertical">
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" Margin="0 5 0 0" serv:PlaceholderService.Placeholder="First Name"></TextBox>
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Last Name"></TextBox>
+            <ui:TextBox Margin="0 5 0 0" serv:PlaceholderService.Placeholder="First Name"></ui:TextBox>
+            <ui:TextBox Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Last Name"></ui:TextBox>
 
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Username"></TextBox>
-            <TextBox Style="{StaticResource CustomTextBoxStyle}" Margin="0 5" serv:PlaceholderService.Placeholder="Email"></TextBox>
+            <ui:TextBox Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Username"></ui:TextBox>
+            <ui:TextBox Margin="0 5" serv:PlaceholderService.Placeholder="Email"></ui:TextBox>
             
-            <PasswordBox Padding="2" serv:PasswordPlaceholderService.Placeholder="Enter password" 
-                         Style="{StaticResource CustomPasswordTextBoxStyle}"></PasswordBox>
+            <ui:PasswordBox Padding="2" serv:PasswordPlaceholderService.Placeholder="Enter password" 
+                         ></ui:PasswordBox>
             
             
             
@@ -23,7 +24,7 @@
                 <ComboBoxItem>Admin</ComboBoxItem>
                 <ComboBoxItem>Client</ComboBoxItem>
             </ComboBox>
-            <Button Style="{DynamicResource SaveButtonStyle}">Save</Button>
+            <ui:Button HorizontalAlignment="Stretch" Appearance="Primary">Save</ui:Button>
         </StackPanel>
     </Border>
 </UserControl>
