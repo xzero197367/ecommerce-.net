@@ -29,10 +29,10 @@ namespace Ecommerce.Infrastructure
             }
         }
 
-        public Category GetByName(string name)
-        {
-            return _context.categories.FirstOrDefault(c => c.Name == name);
-        }
+        //public Category GetByName(string name)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public bool HasProduct(int categoryId)
         {
@@ -45,29 +45,29 @@ namespace Ecommerce.Infrastructure
             || c.Description.Contains(term));
         }
 
-        Category ICategoryRepo.AddCategory(Category category)
-        {
-            return null;
-        }
+        //Category ICategoryRepo.AddCategory(Category category)
+        //{
+        //    return null;
+        //}
 
-        IQueryable<Category> ICategoryRepo.FilterCategory(Func<Category, bool> condition)
-        {
-            return null;
-        }
+        //IQueryable<Category> ICategoryRepo.FilterCategory(Func<Category, bool> condition)
+        //{
+        //    return null;
+        //}
 
-        IQueryable<Category> ICategoryRepo.GetAllCategories()
-        {
-            return null;
-        }
+        //IQueryable<Category> ICategoryRepo.GetAllCategories()
+        //{
+        //    return null;
+        //}
 
-        Category ICategoryRepo.GetCategoryById(int id)
-        {
-            return null;
-        }
+        //Category ICategoryRepo.GetCategoryById(int id)
+        //{
+        //    return null;
+        //}
 
-        Category ICategoryRepo.UpdateCategory(Category category)
-        {
-            return null;
-        }
+        //Category ICategoryRepo.UpdateCategory(Category category)
+        //{
+        //    return null;
+        //}
     }
 }
