@@ -11,9 +11,9 @@ namespace Ecommerce.Application.Services.UserServices
     public interface IUserServices 
 
     {
-        Task<UserDto?> LoginAsync(string email, string password);
+        UserDto? Login(string email, string password);
 
-        Task<UserDto> RegisterAsync(UserCreateDto user);
+        UserDto Register(UserCreateDto user);
 
         string HashPassword(string password);
 

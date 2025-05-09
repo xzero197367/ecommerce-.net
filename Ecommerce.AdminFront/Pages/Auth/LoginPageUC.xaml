@@ -11,12 +11,17 @@
             BorderBrush="{DynamicResource SecundaryBackgroundColor}" Padding="5"
             BorderThickness="2"
             >
-        <StackPanel Width="200">
-            <TextBlock Text="Login" FontSize="25" Margin="0 0 0 10" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
-                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBox x:Name="txtEmail" Style="{DynamicResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="Email"/>
-            <PasswordBox x:Name="txtPassword" Style="{DynamicResource CustomPasswordTextBoxStyle}" Margin="0 5" serv:PasswordPlaceholderService.Placeholder="Password"/>
-            <Button x:Name="btnLogin" Click="btnLogin_Click" Style="{DynamicResource SaveButtonStyle}" >Login</Button>
+        <StackPanel Orientation="Horizontal">
+
+
+            <StackPanel Width="200" VerticalAlignment="Center">
+
+                <TextBlock Text="Login" FontSize="25" Margin="0 0 0 10" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
+            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox x:Name="txtEmail" Style="{DynamicResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="Email"/>
+                <PasswordBox x:Name="txtPassword" Style="{DynamicResource CustomPasswordTextBoxStyle}" Margin="0 5" serv:PasswordPlaceholderService.Placeholder="Password"/>
+                <Button x:Name="btnLogin" Click="btnLogin_Click" Style="{DynamicResource SaveButtonStyle}" >Login</Button>
+            </StackPanel>
         </StackPanel>
     </Border>
 </UserControl>
