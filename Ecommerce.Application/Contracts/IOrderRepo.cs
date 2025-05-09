@@ -12,6 +12,8 @@ namespace Ecommerce.Application.Contracts
    public interface IOrderRepo : IGenericRepo<Order>
     {
         List<Order> GetOrdersByUserId(int userId);
+
+        public List<Order> GetOrdersByStatus(OrderStatus? orderStatus = null);
     }
     
 

@@ -23,7 +23,7 @@ public class OrderServices
         _orderRepository = orderRepository;
     }
 
-    public void SubmitSelectedCartItemsAsOrder(int userId, List<int> selectedCartItemsId)
+    public void UserSubmitsSelectedCartItemsAsOrder(int userId, List<int> selectedCartItemsId)
     {
         var selectedItems = _cartRepository.GetCartItemsByID(userId, selectedCartItemsId);
 
@@ -61,7 +61,7 @@ public class OrderServices
 
     }
 
-    public List<OrderHistortyDTO> ViewOrderHistory(int userId)
+    public List<OrderHistortyDTO> UserViewsOrderHistory(int userId)
     {
         var orders = _orderRepository.GetOrdersByUserId(userId);
 
@@ -74,7 +74,47 @@ public class OrderServices
  
     }
 
+    public List<Order> AdminViewsOrders(OrderStatus orderStatus)
+    {
+       return _orderRepository.GetOrdersByStatus(orderStatus);
+    }
 
+    public bool AdminApprovesOrder(int orderId)
+    {
+        var order = _orderRepository.GetById(orderId);
+
+        if(order == null || order.Status != OrderStatus.Pending)
+        {
+            return false;
+        }
+
+        order.Status= OrderStatus.Approved;
+        order.DateProcessed = DateTime.Now;
+
+        _orderRepository.Update(order);
+        _orderRepository.SaveChanges();
+
+        return true;
+    }
+
+    public bool AdminDeniesOrder(int orderId)
+    {
+        var order = _orderRepository.GetById(orderId);
+
+        if (order == null || order.Status != OrderStatus.Pending)
+        {
+            return false;
+        }
+
+        order.Status = OrderStatus.Denied;
+        order.DateProcessed = DateTime.Now;
+
+        _orderRepository.Update(order);
+        _orderRepository.SaveChanges();
+
+        return true;
+
+    }
 }
 
 
