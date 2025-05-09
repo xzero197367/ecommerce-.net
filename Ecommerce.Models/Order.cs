@@ -20,7 +20,6 @@ namespace Ecommerce.Models
         public User User { get; set; }  
         public ICollection<OrderDetail> Details { get; set; }
 
-
         
     }
 }

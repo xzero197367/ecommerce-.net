@@ -26,26 +26,31 @@ namespace Ecommerce.AdminFront.Pages.Auth
             userServices = container.Resolve<IUserServices>();
         }
 
-        private async void btnRegister_Click(object sender, RoutedEventArgs e)
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            btnRegister.IsEnabled = false;
             if (string.IsNullOrWhiteSpace(txtFname.Text))
             {
                 MessageBox.Show("First Name is required.");
+                btnRegister.IsEnabled = true;
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtLname.Text))
             {
                 MessageBox.Show("Last Name is required.");
+                btnRegister.IsEnabled = true;
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 MessageBox.Show("Email is required.");
+                btnRegister.IsEnabled = true;
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtPassword.Password))
             {
                 MessageBox.Show("Password is required.");
+                btnRegister.IsEnabled = true;
                 return;
             }
 
@@ -54,17 +59,19 @@ namespace Ecommerce.AdminFront.Pages.Auth
             {
                 FirstName = txtFname.Text,
                 LastName = txtLname.Text,
-                Email = txtEmail.Text,
-                Username = txtEmail.Text,
-                Password = txtPassword.Password,
-                Role = Models.UserRole.Client,
+                UserEmail = txtEmail.Text,
+                UserName = txtEmail.Text,
+                UserPassword = txtPassword.Password,
+                UserRole = Models.UserRole.Client,
             };
 
             //ContextDB contextDB = new ContextDB();
             //UserRepo userRepo = new UserRepo(contextDB);
             //UserServices userServices2 = new UserServices(userRepo);
 
-            await userServices.RegisterAsync(newUser);
+            userServices.Register(newUser);
+            btnRegister.IsEnabled = true;
+            MessageBox.Show("User registered successfully!");
 
         }
 

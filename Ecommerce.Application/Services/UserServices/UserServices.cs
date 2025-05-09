@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using Ecommerce.Application.Contracts;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
@@ -20,23 +16,20 @@ namespace Ecommerce.Application.Services.UserServices
             _userRepo = userRepo;
         }
 
-        public async Task<UserDto?> LoginAsync(string email, string password)
+        public UserDto? Login(string email, string password)
         {
-            User user =  await _userRepo.GetAsync(
-                u => u.UserEmail == email && VerifyPassword(password, u.UserPassword
-                ));
-
+            User user = _userRepo.getUser(u => u.UserEmail == email && u.UserPassword == password);
             return user is not null ? user.Adapt<UserDto>() : null;
         }
 
-        public async Task<UserDto> RegisterAsync(UserCreateDto user)
+        public UserDto Register(UserCreateDto user)
         {
-            user.Password = HashPassword(user.Password);
+            user.UserPassword = HashPassword(user.UserPassword);
             User user1 = user.Adapt<User>();
 
-            User reUser = await _userRepo.CreateAsync(user1);
+            User reUser = _userRepo.create(user1);
             UserDto u = reUser.Adapt<UserDto>();
-            await _userRepo.SaveChangesAsync(); 
+            _userRepo.saveChanges();
 
             return u;
         }
@@ -75,6 +68,8 @@ namespace Ecommerce.Application.Services.UserServices
             }
             return true;
         }
+
+       
 
     }
 }

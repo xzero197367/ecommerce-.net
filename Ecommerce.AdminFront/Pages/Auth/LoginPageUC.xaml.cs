@@ -47,7 +47,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 return;
             }
 
-            await userServices.LoginAsync(txtEmail.Text, txtPassword.Password);
+            userServices.Login(txtEmail.Text, txtPassword.Password);
             btnLogin.IsEnabled = true;
         }
     }

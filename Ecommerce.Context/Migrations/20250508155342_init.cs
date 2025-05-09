@@ -26,7 +26,7 @@ namespace Ecommerce.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "users",
                 columns: table => new
                 {
                     UserID = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +43,7 @@ namespace Ecommerce.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserID);
+                    table.PrimaryKey("PK_users", x => x.UserID);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,15 +85,15 @@ namespace Ecommerce.Context.Migrations
                 {
                     table.PrimaryKey("PK_orders", x => x.OrderID);
                     table.ForeignKey(
-                        name: "FK_orders_User_UserID",
+                        name: "FK_orders_users_UserID",
                         column: x => x.UserID,
-                        principalTable: "User",
+                        principalTable: "users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartItem",
+                name: "cartItems",
                 columns: table => new
                 {
                     CartItemID = table.Column<int>(type: "int", nullable: false)
@@ -105,18 +105,18 @@ namespace Ecommerce.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItem", x => x.CartItemID);
+                    table.PrimaryKey("PK_cartItems", x => x.CartItemID);
                     table.ForeignKey(
-                        name: "FK_CartItem_User_UserID",
-                        column: x => x.UserID,
-                        principalTable: "User",
-                        principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartItem_products_ProductID",
+                        name: "FK_cartItems_products_ProductID",
                         column: x => x.ProductID,
                         principalTable: "products",
                         principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_cartItems_users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "users",
+                        principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -148,13 +148,13 @@ namespace Ecommerce.Context.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_ProductID",
-                table: "CartItem",
+                name: "IX_cartItems_ProductID",
+                table: "cartItems",
                 column: "ProductID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItem_UserID",
-                table: "CartItem",
+                name: "IX_cartItems_UserID",
+                table: "cartItems",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
@@ -188,7 +188,7 @@ namespace Ecommerce.Context.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartItem");
+                name: "cartItems");
 
             migrationBuilder.DropTable(
                 name: "ordersDetails");
@@ -200,7 +200,7 @@ namespace Ecommerce.Context.Migrations
                 name: "products");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "users");
 
             migrationBuilder.DropTable(
                 name: "categories");

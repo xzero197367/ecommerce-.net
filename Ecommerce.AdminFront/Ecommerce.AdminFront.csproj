@@ -37,10 +37,16 @@
     <Compile Update="MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\Orders\sections\OrderTableUC.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\Products\section\ProductTableUC.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Products\section\ProductFromUC.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Users\section\UserTableUC.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Users\section\UserFromUC.xaml.cs">
@@ -62,11 +68,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Orders\section\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.1" />
+    <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

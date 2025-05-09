@@ -1,0 +1,25 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ecommerce.FRONT"
+        xmlns:components="clr-namespace:Ecommerce.FRONT.components" x:Class="Ecommerce.FRONT.TestWindow"
+        mc:Ignorable="d"
+        Title="TestWindow" Height="450" Width="800">
+    <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="721,21,0,0" VerticalAlignment="Top"/>
+
+        <Border Background="Black" Margin="134,76,166,65">
+            <TabControl>
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
+
+        </Border>
+    </Grid>
+</Window>
