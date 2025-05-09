@@ -7,7 +7,7 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Contracts
 {
-   public interface IOrderDetailRepo : IGenericRepo<OrderDetail>
+   public interface IOrderDetailRepo : IGenericRepo<OrderDetails>
     {
         // Add any additional methods specific to OrderDetail repository if needed
     }

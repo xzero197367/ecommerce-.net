@@ -23,9 +23,11 @@ namespace Ecommerce.Models
         public OrderStatus Status { get; set; }
         public DateTime? DateProcessed { get; set; }
         public User User { get; set; }  
-        public ICollection<OrderDetail> Details { get; set; }
+        public ICollection<OrderDetails> Details { get; set; }
 
-
-        
+        public static implicit operator Order(Order v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
