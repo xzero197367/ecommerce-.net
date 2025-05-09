@@ -7,9 +7,11 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Contracts
 {
-   public interface ICartItemRpo : IGenericRepo<CartItem>
-
+   public interface ICartItemRepo : IGenericRepo<CartItem>
     {
+        List<CartItem> GetCartItemsByID(int userId, List<int> cartItemsId);
+        void RemoveCartItems(List<int> cartItemsId);
+
 
     }
 }

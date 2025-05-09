@@ -9,29 +9,29 @@ namespace Ecommerce.Infrastructure
     {
         private readonly ContextDB _context;
 
-        private readonly DbSet<T> _dbSet;
+        public readonly DbSet<T> _dbSet;
         public GenericRepo(ContextDB context)
         {
             _context = context;
             _dbSet = context.Set<T>();
         }
 
-        public T create(T entity)
+        public T Create(T entity)
         {
             return _dbSet.Add(entity).Entity;
         }
 
-        public T update(T entity)
+        public T Update(T entity)
         {
             return _dbSet.Update(entity).Entity;
         }
 
-        public T delete(T entity)
+        public T Delete(T entity)
         {
             return _dbSet.Remove(entity).Entity;
         }
 
-        public T? getById(int id)
+        public T? GetById(int id)
         {
             return _dbSet.Find(id);
         }
