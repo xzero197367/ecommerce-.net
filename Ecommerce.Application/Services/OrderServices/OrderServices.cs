@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Ecommerce.Application.Contracts;
+using Ecommerce.Application.Mapping;
 using Ecommerce.Models;
 
 namespace Ecommerce.Application.Services.OrderServices;
@@ -13,6 +14,8 @@ public class OrderServices
 {
     private readonly ICartItemRepo _cartRepository;
     private readonly IOrderRepo _orderRepository;
+
+    
 
     public OrderServices(ICartItemRepo cartRepository, IOrderRepo orderRepository)
     {
@@ -57,6 +60,21 @@ public class OrderServices
 
 
     }
+
+    public List<OrderHistortyDTO> ViewOrderHistory(int userId)
+    {
+        var orders = _orderRepository.GetOrdersByUserId(userId);
+
+        return orders.Select(o => new OrderHistortyDTO
+        {
+            OrderDate = o.OrderDate,
+            TotalAmount = o.TotalAmount,
+            Status = o.Status
+        }).ToList();
+ 
+    }
+
+
 }
 
 

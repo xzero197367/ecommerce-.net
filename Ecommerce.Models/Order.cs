@@ -25,9 +25,9 @@ namespace Ecommerce.Models
         public User User { get; set; }  
         public ICollection<OrderDetails> Details { get; set; }
 
-        public static implicit operator Order(Order v)
-        {
-            throw new NotImplementedException();
-        }
+        //public static implicit operator Order(Order v)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

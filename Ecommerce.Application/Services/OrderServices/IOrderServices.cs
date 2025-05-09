@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecommerce.Application.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Ecommerce.Application.Services.OrderServices
 {
     public interface IOrderServices
     {
-        void SubmitSelectedCartItemsAsOrder(int userId, List<int> selectedCartItemsId);
+        public void SubmitSelectedCartItemsAsOrder(int userId, List<int> selectedCartItemsId);
+
+        public List<OrderHistortyDTO> ViewOrsersHistory(int userId);
     }
 }

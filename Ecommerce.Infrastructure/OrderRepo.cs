@@ -1,5 +1,6 @@
 ﻿using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
+using Ecommerce.DTOs;
 using Ecommerce.Models;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,14 @@ namespace Ecommerce.Infrastructure
         {
         }
 
-        public void SaveOrder(Order order)
+        public List<Order> GetOrdersByUserId(int userId)
         {
-            _dbSet.Add(order);
-
-
+           return  _dbSet.Where(o => o.UserID == userId)
+                          .OrderByDescending(o => o.OrderDate)
+                          .ToList();
+            
         }
 
-        // comeback to save order ok ??
+       
     }
 }
