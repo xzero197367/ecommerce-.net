@@ -11,8 +11,11 @@ namespace Ecommerce.Application.Services.CategoryServices
     public interface ICategoryServices
 
     {
+        Task<CategoryDto?> GetCategoryById(int categoryId);
         Task<CategoryDto?> GetCategoryByName(string name);
-        Task<bool> CategoryHasProduct(int categoryId);
+        Task<CategoryDto> CreateCategory(CategoryCreateDto categoryDto);
+        Task<CategoryDto> UpdateCategory(int categoryId, CategoryCreateDto categoryDto);
+        Task<CategoryDto?> DeleteCategory(int categoryId);
         Task<int> GetCategoryCount();
         Task<int> GetProductCountInCategory(int categoryId);
         Task SaveChanges();

@@ -61,13 +61,6 @@ namespace Ecommerce.Application.Services.CategoryServices
             return category?.Adapt<CategoryDto>();
         }
 
-
-
-        public async Task<bool> CategoryHasProduct(int categoryId)
-        {
-            return await _categoryRepo.HasProduct(categoryId);
-        }
-
         public async Task<int> GetCategoryCount()
         {
             return await _categoryRepo.GetCategoryCount();
@@ -78,7 +71,6 @@ namespace Ecommerce.Application.Services.CategoryServices
             return await _categoryRepo.GetProductCountInCategory(categoryId);
 
         }
-
         public async Task SaveChanges()
         {
             await _categoryRepo.saveChanges();

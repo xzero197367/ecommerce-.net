@@ -10,6 +10,6 @@ namespace Ecommerce.Application.Contracts
         Task<bool> HasProduct(int categoryId);
         Task DeleteCategory(int categoryId);
         Task<int> GetCategoryCount();
-        Task<int> GetProductCountInCategory(int categoryId);  
+        Task<int> GetProductCountInCategory(int categoryId);    
     }
 }
