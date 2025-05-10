@@ -9,11 +9,11 @@
             Background="{ui:ThemeResource ApplicationBackgroundBrush}"
             Width="200">
         <StackPanel Orientation="Vertical">
-            <ui:TextBox  PlaceholderText="Name"></ui:TextBox>
-            <ui:RichTextBox AcceptsReturn="True" MinHeight="50" Margin="0 5 0 10"
+            <ui:TextBox x:Name="txtname"  PlaceholderText="Name"></ui:TextBox>
+            <ui:RichTextBox x:Name="txtdesc" AcceptsReturn="True" MinHeight="50" Margin="0 5 0 10"
                      VerticalScrollBarVisibility="Auto"
                      ></ui:RichTextBox>
-            <ui:Button Style="{DynamicResource SaveButtonStyle}">Save</ui:Button>
+            <ui:Button Style="{DynamicResource SaveButtonStyle}" Click="Button_Click">Save</ui:Button>
         </StackPanel>
     </Border>
 </UserControl>

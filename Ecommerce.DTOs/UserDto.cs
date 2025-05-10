@@ -4,6 +4,7 @@ using Ecommerce.Models;
 namespace Ecommerce.DTOs
 {
 
+    // create / update
     public class UserCreateDto
     {
 
@@ -15,6 +16,7 @@ namespace Ecommerce.DTOs
         public UserRole UserRole { get; set; }
     }
 
+    //display
     public class UserDto
     {
         public int UserID { set; get; }
