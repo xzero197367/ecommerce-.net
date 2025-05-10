@@ -22,6 +22,7 @@ namespace WPFModernVerticalMenu.Pages.Products
         {
             PopoverPopup.IsOpen = true;
         }
+        
 
     }
 }

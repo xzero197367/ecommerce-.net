@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Ecommerce.Application.Contracts;
+using Ecommerce.Application.Services.CategoryServices;
+using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.Application.Services.UserServices;
 using Ecommerce.Context;
 using Ecommerce.Infrastructure;
@@ -15,12 +17,12 @@ namespace Ecommerce.AdminFront.Classes.AutoFac
             builder.RegisterType<ContextDB>().As<ContextDB>();
             builder.RegisterType<UserRepo>().As<IUserRepo>();
             builder.RegisterType<UserServices>().As<IUserServices>();
-            //builder.RegisterType<BookServices>().As<IBookServices>();
-            //builder.RegisterType<AutherRepository>().As<IAutherRepository>();
-            //builder.RegisterType<AutherServices>().As<IAutherServices>();
-            //builder.RegisterType<PublisherRepository>().As<IPublisherRepository>();
-            //builder.RegisterType<PublisherServices>().As<IPublisherServices>();
-            //builder.RegisterType<Autofact>().As<IUnitOfWork>();
+            builder.RegisterType<ProductRepo>().As<IProductRepo>();
+            builder.RegisterType<ProductServices>().As<IProductServices>();
+            builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IGenericRepo<>));
+            builder.RegisterType<CategoryRepo>().As<ICategoryRepo>();
+            builder.RegisterType<CategoryServices>().As<ICategoryServices>();
+
             return builder.Build();
         }
     }

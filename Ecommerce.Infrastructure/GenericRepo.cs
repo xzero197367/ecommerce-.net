@@ -21,6 +21,17 @@ namespace Ecommerce.Infrastructure
         {
             return _context.Add(entity).Entity;
         }
+
+        public async Task<T> CreateAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+            return entity;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public T update(T entity)
         {
             return _context.Update(entity).Entity;
@@ -45,7 +56,7 @@ namespace Ecommerce.Infrastructure
 
         }
 
-  
+
     }
 
 }

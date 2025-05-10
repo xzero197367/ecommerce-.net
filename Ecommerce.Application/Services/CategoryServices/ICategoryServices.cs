@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ecommerce.DTOs;
 
 namespace Ecommerce.Application.Services.CategoryServices
 {
-   public class UseDto
+   public  interface ICategoryServices
 
     {
+        Task CreateCategoryAsync(CategoryCreateDto dto);
 
+        Task<List<CategoryDto>> GetCategoriesAsync();
     }
 }

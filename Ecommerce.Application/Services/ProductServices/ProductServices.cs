@@ -22,11 +22,19 @@ namespace Ecommerce.Application.Services.ProductServices
             _productRepo = productRepo;
         }
 
-        public ProductDto CreateProduct(Product pro)
+        //public ProductDto CreateProduct(ProductDto pro)
+        //{
+        //    var product = pro.Adapt<Product>();
+        //    var createproduct = _productRepo.create(product);
+        //    _productRepo.saveChanges();
+        //    return createproduct.Adapt<ProductDto>();
+        //}
+
+        public async Task CreateProductAsync(ProductCreateDto dto)
         {
-            var createproduct = _productRepo.create(pro);
-            _productRepo.saveChanges();
-            return createproduct.Adapt<ProductDto>();
+            var product = dto.Adapt<Product>(); // Mapster
+            await _productRepo.CreateAsync(product);
+            await _productRepo.SaveChangesAsync();
         }
 
         public ProductDto UpdateProduct(Product product)
@@ -76,6 +84,11 @@ namespace Ecommerce.Application.Services.ProductServices
             return _productRepo.GetProductByCategory(categoryId)
                 .ToList()
                 .Adapt<List<ProductDto>>();
+        }
+
+        public ProductDto CreateProduct(ProductDto product)
+        {
+            throw new NotImplementedException();
         }
 
 
