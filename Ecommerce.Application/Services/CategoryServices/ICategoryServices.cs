@@ -11,7 +11,6 @@ namespace Ecommerce.Application.Services.CategoryServices
     public interface ICategoryServices
 
     {
-        Task<CategoryDto?> GetCategoryById(int categoryId);
         Task<CategoryDto?> GetCategoryByName(string name);
         Task<bool> CategoryHasProduct(int categoryId);
         Task<int> GetCategoryCount();
