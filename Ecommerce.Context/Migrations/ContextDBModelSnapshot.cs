@@ -48,7 +48,7 @@ namespace Ecommerce.Context.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("cartItems");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.Category", b =>
@@ -162,7 +162,7 @@ namespace Ecommerce.Context.Migrations
                     b.ToTable("products");
                 });
 
-            modelBuilder.Entity("Visual_C__Final_Project_E_Commerce.User", b =>
+            modelBuilder.Entity("Ecommerce.Models.User", b =>
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
@@ -204,7 +204,7 @@ namespace Ecommerce.Context.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("User");
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("Ecommerce.Models.CartItem", b =>
@@ -215,7 +215,7 @@ namespace Ecommerce.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Visual_C__Final_Project_E_Commerce.User", "User")
+                    b.HasOne("Ecommerce.Models.User", "User")
                         .WithMany("CartItems")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -228,7 +228,7 @@ namespace Ecommerce.Context.Migrations
 
             modelBuilder.Entity("Ecommerce.Models.Order", b =>
                 {
-                    b.HasOne("Visual_C__Final_Project_E_Commerce.User", "User")
+                    b.HasOne("Ecommerce.Models.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -284,7 +284,7 @@ namespace Ecommerce.Context.Migrations
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("Visual_C__Final_Project_E_Commerce.User", b =>
+            modelBuilder.Entity("Ecommerce.Models.User", b =>
                 {
                     b.Navigation("CartItems");
 

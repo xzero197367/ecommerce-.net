@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Products.sections"
              mc:Ignorable="d" >
     <Grid>
-        <ListView Background="Transparent">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" Width="100">
-                        <GridViewColumn.CellTemplate>
+        <ui:ListView Background="Transparent">
+            <ui:ListView.View>
+                <ui:GridView>
+                    <ui:GridViewColumn Header="Name" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label 
                                  Width="200" >
@@ -19,10 +20,10 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Description" Width="200">
-                        <GridViewColumn.CellTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+                    <ui:GridViewColumn Header="Description" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label 
                                     Width="200" >
@@ -31,11 +32,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Product Count" Width="200">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Product Count" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label 
                                     Width="200" >
@@ -44,11 +45,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                    <GridViewColumn Header="Actions" Width="100">
-                        <GridViewColumn.CellTemplate>
+                    <ui:GridViewColumn Header="Actions" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label 
                                     Width="200" >
@@ -57,11 +58,11 @@
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
 
-                </GridView>
-            </ListView.View>
-        </ListView>  
+                </ui:GridView>
+            </ui:ListView.View>
+        </ui:ListView>  
     </Grid>
 </UserControl>

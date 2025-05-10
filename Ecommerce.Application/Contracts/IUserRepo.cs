@@ -6,6 +6,7 @@ namespace Ecommerce.Application.Contracts
     public interface IUserRepo : IGenericRepo<User>
 
     {
+        User getUser(Func<User, bool> condition);
         User GetByUserName(string userName);
         User GetByEmail(string email);
         IQueryable<User> GetAllClients();

@@ -26,7 +26,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
             userServices = container.Resolve<IUserServices>();
         }
 
-        private async void btnRegister_Click(object sender, RoutedEventArgs e)
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             btnRegister.IsEnabled = false;
             if (string.IsNullOrWhiteSpace(txtFname.Text))
@@ -69,7 +69,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
             //UserRepo userRepo = new UserRepo(contextDB);
             //UserServices userServices2 = new UserServices(userRepo);
 
-            await userServices.RegisterAsync(newUser);
+            userServices.Register(newUser);
             btnRegister.IsEnabled = true;
             MessageBox.Show("User registered successfully!");
 
