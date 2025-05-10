@@ -10,7 +10,7 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Services.OrderServices;
 
-public class OrderServices
+public class OrderServices : IOrderServices
 {
     private readonly ICartItemRepo _cartRepository;
     private readonly IOrderRepo _orderRepository;
@@ -61,7 +61,7 @@ public class OrderServices
 
     }
 
-    public List<OrderHistortyDTO> UserViewsOrderHistory(int userId)
+    public List<OrderHistortyDTO> UserViewsOrdersHistory(int userId)
     {
         var orders = _orderRepository.GetOrdersByUserId(userId);
 

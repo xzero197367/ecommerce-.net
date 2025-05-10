@@ -1,6 +1,3 @@
-
-using Visual_C__Final_Project_E_Commerce;
-
 namespace Ecommerce.Models
 {
     public class CartItem

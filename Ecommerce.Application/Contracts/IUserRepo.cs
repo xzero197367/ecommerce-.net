@@ -7,8 +7,12 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Contracts
 {
-    public interface IUserRepo : IGenericRepo<User>
+    public interface IUserRepo : IGenericRepo<User> 
     {
-        
+        public List<User> GetAllClientUsers();
+
+        public User? GetUserByEmailOrUsername(string email, string username);
+
+        public List<User> GetAllAdminUsers();
     }
 }

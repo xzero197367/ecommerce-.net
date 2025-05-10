@@ -12,7 +12,7 @@ namespace Ecommerce.Application.Services.OrderServices
     {
         public void UserSubmitsSelectedCartItemsAsOrder(int userId, List<int> selectedCartItemsId);
 
-        public List<OrderHistortyDTO> UserViewsOrsersHistory(int userId);
+        public List<OrderHistortyDTO> UserViewsOrdersHistory(int userId);
 
         public List<Order> AdminViewsOrders(OrderStatus orderStatus);
 
