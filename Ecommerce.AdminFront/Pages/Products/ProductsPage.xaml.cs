@@ -23,5 +23,9 @@ namespace WPFModernVerticalMenu.Pages.Products
             PopoverPopup.IsOpen = true;
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
