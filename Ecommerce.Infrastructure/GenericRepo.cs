@@ -20,16 +20,20 @@ namespace Ecommerce.Infrastructure
         public async Task<T> create(T entity)
         {
             var createdEntity = await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return createdEntity.Entity;
         }
         public async Task<T> update(T entity)
         {
             var updatedEntity = _context.Update(entity);
+            await _context.SaveChangesAsync();
             return updatedEntity.Entity;
         }
         public async Task<T> delete(T entity)
         {
             var deletedEntity = _context.Remove(entity);
+            await _context.SaveChangesAsync();
+
             return deletedEntity.Entity;
         }
         public async Task<IQueryable<T>> getAll()
