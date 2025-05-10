@@ -9,12 +9,12 @@ namespace Ecommerce.Application.Contracts
 {
     public interface IGenericRepo<T>
     {
-        T create(T entity);
-        T update(T entity);
-        T delete(T entity);
+        Task<T> create(T entity);
+        Task<T> update(T entity);
+        Task<T> delete(T entity);
 
-        T getById(int id);
-        IQueryable<T> getAll();
-        void saveChanges();
+        Task<T?> getById(int id);
+        Task<IQueryable<T>> getAll();
+        Task saveChanges();
     }
 }

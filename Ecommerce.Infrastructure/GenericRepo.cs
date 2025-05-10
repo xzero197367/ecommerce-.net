@@ -17,31 +17,33 @@ namespace Ecommerce.Infrastructure
             _dbSet = context.Set<T>();
         }
 
-        public T create(T entity)
+        public async Task<T> create(T entity)
         {
-            return _context.Add(entity).Entity;
+            var createdEntity = await _context.AddAsync(entity);
+            return createdEntity.Entity;
         }
-        public T update(T entity)
+        public async Task<T> update(T entity)
         {
-            return _context.Update(entity).Entity;
+            var updatedEntity = _context.Update(entity);
+            return updatedEntity.Entity;
         }
-        public T delete(T entity)
+        public async Task<T> delete(T entity)
         {
-            return _context.Remove(entity).Entity;
+            var deletedEntity = _context.Remove(entity);
+            return deletedEntity.Entity;
         }
-        public IQueryable<T> getAll()
+        public async Task<IQueryable<T>> getAll()
         {
-            return _dbSet;
+            return _dbSet.AsQueryable();
         }
-        public T? getById(int id)
+        public async Task<T?> getById(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void saveChanges()
+        public async Task saveChanges()
         {
-            _context.SaveChanges();
-
+            await _context.SaveChangesAsync();
 
         }
 

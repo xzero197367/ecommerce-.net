@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Ecommerce.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,56 +19,36 @@ namespace Ecommerce.Infrastructure
             _context = context;
         }
 
-        public void DeleteCategory(int categoryId)
+        public async Task<Category?> GetByName(string name)
         {
-            var category = _context.categories.Find(categoryId);
-
-            if (!HasProduct(categoryId))
-            {
-                _context.categories.Remove(category);
-                _context.SaveChanges();
-            }
+            return await _context.categories.FirstOrDefaultAsync(c => c.Name == name);
         }
 
-        public Category GetByName(string name)
+
+        public async Task<bool> HasProduct(int categoryId)
         {
-            return _context.categories.FirstOrDefault(c => c.Name == name);
+            return await _context.products.AnyAsync(p => p.CategoryID == categoryId);
         }
 
-        public bool HasProduct(int categoryId)
+        public async Task DeleteCategory(int categoryId)
         {
-            return _context.products.Any(p => p.CategoryID == categoryId);
+            var category = await _context.categories.FindAsync(categoryId);
+          
+                if (!await HasProduct(categoryId))
+                {
+                    _context.categories.Remove(category);
+                    await _context.SaveChangesAsync();
+                }
+            
+        }
+        public async Task<int> GetCategoryCount()
+        {
+            return await _context.categories.CountAsync();
         }
 
-        public IQueryable<Category> SearchCategory(string term)
+        public async Task<int> GetProductCountInCategory(int categoryId)
         {
-            return _context.categories.Where(c => c.Name.Contains(term)
-            || c.Description.Contains(term));
-        }
-
-        Category ICategoryRepo.AddCategory(Category category)
-        {
-            return null;
-        }
-
-        IQueryable<Category> ICategoryRepo.FilterCategory(Func<Category, bool> condition)
-        {
-            return null;
-        }
-
-        IQueryable<Category> ICategoryRepo.GetAllCategories()
-        {
-            return null;
-        }
-
-        Category ICategoryRepo.GetCategoryById(int id)
-        {
-            return null;
-        }
-
-        Category ICategoryRepo.UpdateCategory(Category category)
-        {
-            return null;
+            return await _context.products.CountAsync(p => p.CategoryID == categoryId);
         }
     }
 }
