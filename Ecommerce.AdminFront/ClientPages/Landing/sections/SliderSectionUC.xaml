@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.ClientPages.Landing.sections.SliderSectionUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Loaded="UserControl_Loaded"
+             xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Landing.sections"
+             mc:Ignorable="d">
+    <StackPanel>
+        <Grid Height="500" ClipToBounds="True">
+            <ui:Image x:Name="ImageDisplay"
+                      Height="500"
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch"
+                      Stretch="Fill"
+            />
+        </Grid>
+            
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <ui:Button Content="◀" Width="50" Click="PrevImage_Click" />
+            <ui:Button Content="▶" Width="50" Click="NextImage_Click" Margin="10,0,0,0"/>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

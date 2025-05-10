@@ -13,6 +13,16 @@
     <EmbeddedResource Remove="Pages\NewFolder\**" />
     <None Remove="Pages\NewFolder\**" />
     <Page Remove="Pages\NewFolder\**" />
+    <Page Update="Components\ProductsCardUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ClientPages\Landing\sections\ProductSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +30,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\logo.png" />
+    <Content Include="Resources\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\ecommerce.jpeg" />
+    <Content Include="Resources\ecommerce.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\slide1.jpg" />
+    <Content Include="Resources\slide1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\slide2.jpg" />
+    <Content Include="Resources\slide2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\slide3.jpg" />
+    <Content Include="Resources\slide3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\slide4.png" />
+    <Content Include="Resources\slide4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\products\product1.jpg" />
+    <Content Include="Resources\products\product1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Resources\products\product2.jpg" />
+    <Content Include="Resources\products\product2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -69,6 +109,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.2.1" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc5.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,27 +1,43 @@
 ﻿<UserControl x:Class="Ecommerce.AdminFront.Pages.Auth.LoginPageUC"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Auth"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
-             >
+             xmlns:components="clr-namespace:Ecommerce.AdminFront.Components">
 
-    <Border CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}" 
+    <Border CornerRadius="5" Background="{DynamicResource PrimaryBackgroundColor}"
             BorderBrush="{DynamicResource SecundaryBackgroundColor}" Padding="5"
-            BorderThickness="2"
-            >
-        <StackPanel Orientation="Horizontal">
+            Margin="10"
+            BorderThickness="2">
+        <Grid>
+            <!-- <Grid.ColumnDefinitions> -->
+            <!--     <ColumnDefinition Width="*"></ColumnDefinition> -->
+            <!--     <ColumnDefinition Width="*"></ColumnDefinition> -->
+            <!-- </Grid.ColumnDefinitions> -->
+
+            <ui:Image Source="/Resources/ecommerce.jpeg" 
+                      MinWidth="500" VerticalAlignment="Stretch">
+                
+            </ui:Image>
 
 
-            <StackPanel Width="200" VerticalAlignment="Center">
-
-                <TextBlock Text="Login" FontSize="25" Margin="0 0 0 10" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
-            VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox x:Name="txtEmail" Style="{DynamicResource CustomTextBoxStyle}" serv:PlaceholderService.Placeholder="Email"/>
-                <PasswordBox x:Name="txtPassword" Style="{DynamicResource CustomPasswordTextBoxStyle}" Margin="0 5" serv:PasswordPlaceholderService.Placeholder="Password"/>
-                <Button x:Name="btnLogin" Click="btnLogin_Click" Style="{DynamicResource SaveButtonStyle}" >Login</Button>
-            </StackPanel>
-        </StackPanel>
+            <ui:Card Width="400" Grid.Column="1" Margin="10"  Background="{ui:ThemeResource ApplicationBackgroundBrush}">
+                <StackPanel VerticalAlignment="Center">
+                    <!-- <components:ThemeToggleUC /> -->
+                    <ui:TextBlock Text="Login" FontSize="25" Margin="0 0 0 20" FontWeight="Bold"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <ui:TextBox x:Name="txtEmail" serv:PlaceholderService.Placeholder="Email" />
+                    <ui:PasswordBox x:Name="txtPassword" Margin="0 10"
+                                    serv:PasswordPlaceholderService.Placeholder="Password" />
+                    <ui:Button Appearance="Primary" HorizontalAlignment="Stretch" x:Name="btnLogin"
+                               Click="btnLogin_Click">
+                        Login
+                    </ui:Button>
+                </StackPanel>
+            </ui:Card>
+        </Grid>
     </Border>
 </UserControl>

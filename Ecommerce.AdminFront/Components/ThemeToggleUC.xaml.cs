@@ -1,21 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Wpf.Ui.Appearance;
 
+namespace Ecommerce.AdminFront.Components;
 
-
-namespace Ecommerce.AdminFront;
-
-    
-
-public partial class TextWindow 
+public partial class ThemeToggleUC : UserControl
 {
-    public ObservableCollection<string> Strings { get; } = new ObservableCollection<string>
-    {
-        "Home", "Section", "Page"
-    };
-    
-    public TextWindow()
+    public ThemeToggleUC()
     {
         InitializeComponent();
     }
