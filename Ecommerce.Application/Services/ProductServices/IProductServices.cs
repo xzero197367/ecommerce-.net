@@ -12,11 +12,11 @@ namespace Ecommerce.Application.Services.ProductServices
     {
         Task<ProductDto> CreateProductAsync(ProductCreateDto product);
 
-        ProductDto UpdateProduct(Product product);
-        void DeleteProduct(int id);
-        ProductDto GetProductById(int id);
+        Task<ProductDto> UpdateProductAsync(Product product);
+        Task DeleteProductAsync(int id);
         Task<List<ProductDto>> GetAllProducts();
         List<ProductDto> SearchProducts(string keyword);
         List<ProductDto> GetProductsByCategory(int categoryId);
+        Task<ProductDto> GetProductById(int id);
     }
 }

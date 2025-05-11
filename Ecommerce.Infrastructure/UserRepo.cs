@@ -1,4 +1,7 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Ecommerce.Models;
@@ -6,55 +9,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Infrastructure
 {
-    public class UserRepo: GenericRepo<User>, IUserRepo
+    public class UserRepo : GenericRepo<User>, IUserRepo
     {
         private readonly ContextDB _context;
         private DbSet<User> _dbSet;
 
         public UserRepo(ContextDB context) : base(context)
         {
-            _context =  context;
+            _context = context;
             _dbSet = context.Set<User>();
         }
-        public void ActivateUser(int UserId)
+
+        public async Task<List<User>> GetAllAdminUsers()
         {
-            var user = _context.users.Find(UserId);
-            user.IsActive = true;
-            _context.SaveChanges();
+            return await _dbSet
+               .Where(u => u.UserRole == UserRole.Admin)
+               .ToListAsync();
         }
 
-        public void DeactivateUser(int UserId)
+        public async Task<List<User>> GetAllClientUsers()
         {
-            var user = _context.users.Find(UserId);
-            user.IsActive = false;
-            _context.SaveChanges();
+            return await _dbSet
+                           .Where(u => u.UserRole == UserRole.Client)
+                           .ToListAsync();
         }
 
-        public IQueryable<User> GetAllAdmins()
+        public async Task<User?> GetUserByEmailOrUsername(string email, string username)
         {
-            return _dbSet.Where(u => u.UserRole == UserRole.Admin);
-
+            return await _dbSet
+                .FirstOrDefaultAsync(u => u.UserEmail == email || u.UserName == username);
         }
 
-        public IQueryable<User> GetAllClients()
-        {
-            return _dbSet.Where(u => u.UserRole == UserRole.Client);
-
-        }
-
-        public User GetByUserName(string userName)
-        {
-            return _dbSet.FirstOrDefault(u => u.UserName == userName);
-        }
-
-        public User GetByEmail(string email)
-        {
-            return _dbSet.FirstOrDefault(u => u.UserEmail == email);
-        }
-
-        public User getUser(Func<User, bool> condition)
-        {
-            return _dbSet.FirstOrDefault(condition);
-        }
     }
 }

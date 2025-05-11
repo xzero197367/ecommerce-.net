@@ -17,8 +17,8 @@ namespace Ecommerce.Models
         public decimal TotalAmount { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime? DateProcessed { get; set; }
-        public User User { get; set; }  
-        public ICollection<OrderDetail> Details { get; set; }
+        public virtual User User { get; set; }  
+        public virtual ICollection<OrderDetail> Details { get; set; }
 
         
     }

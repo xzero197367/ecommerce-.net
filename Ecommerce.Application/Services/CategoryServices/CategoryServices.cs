@@ -20,58 +20,97 @@ namespace Ecommerce.Application.Services.CategoryServices
 
         public async Task<CategoryDto> CreateCategoryAsync(CategoryCreateDto dto)
         {
-            var category = dto.Adapt<Category>(); // Mapster
-            Category resCategory = await _categoryRepo.CreateAsync(category);
-            await _categoryRepo.SaveChangesAsync();
-            return resCategory.Adapt<CategoryDto>();
+            var category = dto.Adapt<Category>();
+            var created = await _categoryRepo.create(category);
+            await _categoryRepo.saveChanges();
+            return created.Adapt<CategoryDto>();
+        }
+
+        //public async Task<List<CategoryDto>> GetCategoriesAsync()
+        //{
+        //    List<Category> categories = await _categoryRepo.GetAllCategories().ToListAsync();
+
+        //    return categories.Adapt<List<CategoryDto>>(); // Mapster
+        //        //.Include(c => c.Products) 
+        //        //.Select(c => new CategoryDto
+        //        //{
+        //        //    CategoryId = c.CategoryId,
+        //        //    Name = c.Name,
+        //        //    Description = c.Description,
+        //        //    Products = c.Products.Select(p => new ProductDto
+        //        //    {
+        //        //        ProductId = p.ProductId,
+        //        //        Name = p.Name
+        //        //    }).ToList()
+        //        //})
+        //        //.ToListAsync();
+        //}
+
+        public async Task<(bool status, string message)> DeleteCategoryAsync(int id)
+        {
+            var category = await _categoryRepo.getById(id);
+            if (category == null)
+                return (false, "Category not found.");
+
+            if (await _categoryRepo.HasProduct(id))
+                return (false, "Cannot delete category because it has related products.");
+
+            _categoryRepo.delete(category);
+            await _categoryRepo.saveChanges();
+
+            return (true, "Category deleted successfully.");
+        }
+
+
+
+
+
+        public async Task<CategoryDto?> UpdateCategoryAsync(int id, CategoryCreateDto dto)
+        {
+            var existing = await _categoryRepo.getById(id);
+            existing.Name = dto.Name;
+            existing.Description = dto.Description;
+
+           await _categoryRepo.update(existing);
+            await _categoryRepo.saveChanges();
+
+            return existing.Adapt<CategoryDto>();
+        }
+
+      
+
+        public async Task<CategoryDto?> GetCategoryById(int categoryId)
+        {
+            var category = await _categoryRepo.getById(categoryId);
+            return category?.Adapt<CategoryDto>();
+        }
+
+        public async Task<CategoryDto?> GetCategoryByName(string name)
+        {
+            var category = await _categoryRepo.GetByName(name);
+            return category?.Adapt<CategoryDto>();
+        }
+
+        public async Task<int> GetCategoryCount()
+        {
+            return await _categoryRepo.GetCategoryCount();
+        }
+
+        public async Task<int> GetProductCountInCategory(int categoryId)
+        {
+            return await _categoryRepo.GetProductCountInCategory(categoryId);
+
         }
 
         public async Task<List<CategoryDto>> GetCategoriesAsync()
         {
-            List<Category> categories = await _categoryRepo.GetAllCategories().ToListAsync();
+            var categories = await _categoryRepo.getAll();
+            return categories.Adapt<List<CategoryDto>>();
 
-            return categories.Adapt<List<CategoryDto>>(); // Mapster
-                //.Include(c => c.Products) 
-                //.Select(c => new CategoryDto
-                //{
-                //    CategoryId = c.CategoryId,
-                //    Name = c.Name,
-                //    Description = c.Description,
-                //    Products = c.Products.Select(p => new ProductDto
-                //    {
-                //        ProductId = p.ProductId,
-                //        Name = p.Name
-                //    }).ToList()
-                //})
-                //.ToListAsync();
         }
 
-        async Task<(bool status, string message)> ICategoryServices.DeleteCategoryAsync(int id)
-        {
-            try
-            {
-                Category category = await _categoryRepo.FindCategory(id).Include(c=>c.Products).FirstOrDefaultAsync();
-                if(category == null)
-                {
-                    return (false, "Deleted successfully");
-                }else if(category.Products.Count > 0)
-                {
-                    return (false, "this category has products, delete them first");
-                }
-                _categoryRepo.DeleteCategory(id);
-
-                return (true, "Deleted successfully");
-            }
-            catch
-            {
-                return (false, "deleted failed");
-            }
-        }
-
-        Task<CategoryDto> ICategoryServices.UpdateCategoryAsync(int id, CategoryCreateDto dto)
-        {
-            throw new NotImplementedException();
-        }
     }
-    
+
 }
+    
+    

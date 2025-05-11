@@ -16,24 +16,24 @@ namespace Ecommerce.Application.Services.UserServices
             _userRepo = userRepo;
         }
 
-        public UserDto? Login(string email, string password)
-        {
-            User user = _userRepo.getUser(u => u.UserEmail == email && u.UserPassword == password);
-            return user is not null ? user.Adapt<UserDto>() : null;
-        }
+        //public UserDto? Login(string email, string password)
+        //{
+        //    User user = _userRepo(u => u.UserEmail == email && u.UserPassword == password);
+        //    return user is not null ? user.Adapt<UserDto>() : null;
+        //}
 
-        public UserDto Register(UserCreateDto user)
-        {
-            user.UserPassword = HashPassword(user.UserPassword);
-            User user1 = user.Adapt<User>();
+        //public UserDto Register(UserCreateDto user)
+        //{
+        //    user.UserPassword = HashPassword(user.UserPassword);
+        //    User user1 = user.Adapt<User>();
 
-            User resultUser = _userRepo.create(user1);
+        //    User resultUser = _userRepo.create(user1);
             
-            UserDto u = resultUser.Adapt<UserDto>();
-            _userRepo.saveChanges();
+        //    UserDto u = resultUser.Adapt<UserDto>();
+        //    _userRepo.saveChanges();
 
-            return u;
-        }
+        //    return u;
+        //}
 
         public string HashPassword(string password)
         {
@@ -50,6 +50,16 @@ namespace Ecommerce.Application.Services.UserServices
             Buffer.BlockCopy(hash, 0, hashBytes, 16, 32);
 
             return Convert.ToBase64String(hashBytes);
+        }
+
+        public UserDto? Login(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserDto Register(UserCreateDto user)
+        {
+            throw new NotImplementedException();
         }
 
         public bool VerifyPassword(string password, string storedHash)

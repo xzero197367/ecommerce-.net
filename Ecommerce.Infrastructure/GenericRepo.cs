@@ -17,41 +17,37 @@ namespace Ecommerce.Infrastructure
             _dbSet = context.Set<T>();
         }
 
-        public T create(T entity)
+        public async Task<T> create(T entity)
         {
-            return _context.Add(entity).Entity;
+            var createdEntity = await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return createdEntity.Entity;
+        }
+        public async Task<T> update(T entity)
+        {
+            var updatedEntity = _context.Update(entity);
+            await _context.SaveChangesAsync();
+            return updatedEntity.Entity;
+        }
+        public async Task<T> delete(T entity)
+        {
+            var deletedEntity = _context.Remove(entity);
+            await _context.SaveChangesAsync();
+
+            return deletedEntity.Entity;
+        }
+        public async Task<IQueryable<T>> getAll()
+        {
+            return _dbSet.AsQueryable();
+        }
+        public async Task<T?> getById(int id)
+        {
+            return await _dbSet.FindAsync(id);
         }
 
-        public async Task<T> CreateAsync(T entity)
-        {
-            await _dbSet.AddAsync(entity);
-            return entity;
-        }
-
-        public async Task SaveChangesAsync()
+        public async Task saveChanges()
         {
             await _context.SaveChangesAsync();
-        }
-        public T update(T entity)
-        {
-            return _context.Update(entity).Entity;
-        }
-        public T delete(T entity)
-        {
-            return _context.Remove(entity).Entity;
-        }
-        public IQueryable<T> getAll()
-        {
-            return _dbSet;
-        }
-        public T? getById(int id)
-        {
-            return _dbSet.Find(id);
-        }
-
-        public void saveChanges()
-        {
-            _context.SaveChanges();
 
         }
 

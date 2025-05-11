@@ -10,12 +10,16 @@ namespace Ecommerce.Application.Services.CategoryServices
    public  interface ICategoryServices
 
     {
-        Task<CategoryDto> CreateCategoryAsync(CategoryCreateDto dto);
-
-        Task<CategoryDto> UpdateCategoryAsync(int id, CategoryCreateDto dto);
 
         Task<(bool status, string message)> DeleteCategoryAsync(int id);
 
         Task<List<CategoryDto>> GetCategoriesAsync();
+
+        Task<CategoryDto?> GetCategoryById(int categoryId);
+        Task<CategoryDto?> GetCategoryByName(string name);
+        Task<CategoryDto> CreateCategoryAsync(CategoryCreateDto categoryDto);
+        Task<CategoryDto> UpdateCategoryAsync(int id, CategoryCreateDto dto);
+        Task<int> GetCategoryCount();
+        Task<int> GetProductCountInCategory(int categoryId);
     }
 }

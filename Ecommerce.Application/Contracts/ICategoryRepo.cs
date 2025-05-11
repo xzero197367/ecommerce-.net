@@ -6,15 +6,12 @@ namespace Ecommerce.Application.Contracts
     public interface ICategoryRepo : IGenericRepo<Category>
     {
 
-        //public IQueryable<Category> FilterCategory(Func<Category, bool> condition);
+        Task<Category?> GetByName(string name);
+        Task<bool> HasProduct(int categoryId);
+        Task DeleteCategory(int categoryId);
+        Task<int> GetCategoryCount();
+        Task<int> GetProductCountInCategory(int categoryId);
 
 
-        //Category GetByName(string name);
-        IQueryable<Category> SearchCategory(string term);
-        IQueryable<Category> FindCategory(Func<Category, bool> condition);
-        IQueryable<Category> FindCategory(int categoryId);
-        bool HasProduct(int categoryId);
-        void DeleteCategory(int categoryId);
-        IQueryable<Category> GetAllCategories();
     }
 }

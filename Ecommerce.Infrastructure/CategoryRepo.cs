@@ -8,54 +8,43 @@ namespace Ecommerce.Infrastructure
     public class CategoryRepo : GenericRepo<Category>, ICategoryRepo
     {
         private readonly ContextDB _context;
-        private readonly DbSet<Category> _dbset;
 
         public CategoryRepo(ContextDB context) : base(context)
         {
             _context = context;
-            _dbset = context.Set<Category>();
         }
 
-        public void DeleteCategory(int categoryId)
+        public async Task<Category?> GetByName(string name)
         {
-            var category = _context.categories.Find(categoryId);
+            return await _context.categories.FirstOrDefaultAsync(c => c.Name == name);
+        }
 
-            if (!HasProduct(categoryId))
+        public async Task<bool> HasProduct(int categoryId)
+        {
+            return await _context.products.AnyAsync(p => p.CategoryID == categoryId);
+        }
+
+        public async Task DeleteCategory(int categoryId)
+        {
+            var category = await _context.categories.FindAsync(categoryId);
+            if (!await HasProduct(categoryId))
             {
                 _context.categories.Remove(category);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
 
-        //public Category GetByName(string name)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public bool HasProduct(int categoryId)
+        public async Task<int> GetCategoryCount()
         {
-            return _context.products.Any(p => p.CategoryID == categoryId);
+            return await _context.categories.CountAsync();
         }
 
-        public IQueryable<Category> SearchCategory(string term)
+        public async Task<int> GetProductCountInCategory(int categoryId)
         {
-            return _context.categories.Where(c => c.Name.Contains(term)
-            || c.Description.Contains(term));
-        }
-    
-        public IQueryable<Category> GetAllCategories()
-        {
-            return _dbset;
+            return await _context.products.CountAsync(p => p.CategoryID == categoryId);
         }
 
-        IQueryable<Category> ICategoryRepo.FindCategory(Func<Category, bool> condition)
-        {
-            return _dbset.Where(condition).AsQueryable();
-        }
-
-        IQueryable<Category> ICategoryRepo.FindCategory(int categoryId)
-        {
-            return _dbset.Where(c => c.CategoryId == categoryId).AsQueryable();
-        }
+       
     }
 }
+    

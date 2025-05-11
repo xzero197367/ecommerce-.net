@@ -18,7 +18,8 @@ namespace Ecommerce.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                    .UseSqlServer("Data Source=.;Initial Catalog=ECommerce;Integrated Security=true;Encrypt=false");
+                .UseLazyLoadingProxies()
+                    .UseSqlServer("Data Source=DESKTOP-255SQ51\\PETER;Initial Catalog=ECommerce;Integrated Security=true;Encrypt=false");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
