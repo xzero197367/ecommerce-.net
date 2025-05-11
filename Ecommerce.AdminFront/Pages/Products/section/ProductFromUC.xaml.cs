@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using Autofac;
 using Ecommerce.AdminFront.Classes.AutoFac;
+using Ecommerce.Application.Services.CategoryServices;
 using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs;
-using Ecommerce.Models;
 
 namespace Ecommerce.AdminFront.Pages.Products.sections
 {
@@ -27,14 +17,20 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
     public partial class ProductFromUC : UserControl
     {
         private readonly IProductServices _productService;
+        private readonly ICategoryServices categoryServices;
+
+        public Func<ProductCreateDto, Task<bool>> OnSaveProduct { get; set; } = (p) => Task.FromResult(false);
+
+
         public ProductFromUC()
         {
             InitializeComponent();
             var container = AutoFac.Inject();
             _productService = container.Resolve<IProductServices>();
+            categoryServices = container.Resolve<ICategoryServices>();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtname.Text) ||
                 string.IsNullOrWhiteSpace(txtprice.Text) ||
@@ -54,22 +50,27 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                 ImagePath = txtimage.Text,
                 CategoryID = int.TryParse(txtcat.Text, out var categoryId) ? categoryId : 0 
             };
-
-            try
+            bool res = await OnSaveProduct?.Invoke(dto);
+            if(res)
             {
-                _productService.CreateProductAsync(dto);
                 MessageBox.Show("success create product");
                 this.txtname.Clear();
                 this.txtprice.Clear();
                 this.txtimage.Clear();
                 this.txtus.Clear();
                 this.txtcat.Effect = null;
-
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"An error occurred : {ex.Message}");
+                MessageBox.Show($"An error occurred ");
             }
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtcat.ItemsSource =  await categoryServices.GetCategoriesAsync();
+            txtcat.DisplayMemberPath = "Name";
+            txtcat.SelectedValuePath = "Id";
         }
     }
 }

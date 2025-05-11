@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Products.sections"
              mc:Ignorable="d" >
     <Grid>
-        <ui:ListView x:Name="categoryListView"  Background="Transparent">
+        <ui:ListView x:Name="productListView"  Background="Transparent">
             <ui:ListView.View>
                 <ui:GridView>
                     <ui:GridViewColumn Header="Name" Width="100">

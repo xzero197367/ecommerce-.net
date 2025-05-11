@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿
 using Ecommerce.Application.Contracts;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
@@ -22,19 +17,13 @@ namespace Ecommerce.Application.Services.ProductServices
             _productRepo = productRepo;
         }
 
-        //public ProductDto CreateProduct(ProductDto pro)
-        //{
-        //    var product = pro.Adapt<Product>();
-        //    var createproduct = _productRepo.create(product);
-        //    _productRepo.saveChanges();
-        //    return createproduct.Adapt<ProductDto>();
-        //}
 
-        public async Task CreateProductAsync(ProductCreateDto dto)
+        public async Task<ProductDto> CreateProductAsync(ProductCreateDto dto)
         {
-            var product = dto.Adapt<Product>(); // Mapster
-            await _productRepo.CreateAsync(product);
+            var product = dto.Adapt<Product>();
+            Product resProduct = await _productRepo.CreateAsync(product);
             await _productRepo.SaveChangesAsync();
+            return resProduct.Adapt<ProductDto>();
         }
 
         public ProductDto UpdateProduct(Product product)
@@ -65,11 +54,12 @@ namespace Ecommerce.Application.Services.ProductServices
             return product.Adapt<ProductDto>();
         }
 
-        public List<ProductDto> GetAllProducts()
+        public Task<List<ProductDto>> GetAllProducts()
         {
-            return _productRepo.getAll()
-                .ToList()
-                .Adapt<List<ProductDto>>();
+            //return await _productRepo.getall()
+            //    .ToList()
+            //    .Adapt<List<ProductDto>>();
+            return Task.FromResult(new List<ProductDto>());
         }
 
         public List<ProductDto> SearchProducts(string keyword)
@@ -86,73 +76,7 @@ namespace Ecommerce.Application.Services.ProductServices
                 .Adapt<List<ProductDto>>();
         }
 
-        public ProductDto CreateProduct(ProductDto product)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        //public partial class ProductListForm : Form
-        //{
-        //    private readonly IProductService _productService;
-
-        //   public ProductListForm()
-        //{
-        //    InitializeComponent();
-
-        //    var container = AutofacConfig.Inject();
-        //    _productService = container.Resolve<IProductService>();
-        //}
-
-        //private async void ProductListForm_Load(object sender, EventArgs e)
-        //{
-        //    var products = await _productService.GetAllProductsAsync();
-        //    dgvProducts.DataSource = products;
-        //}
-        // }
-
-
-        //public async Task<List<ProductDto>> GetAllProductsAsync()
-        //{
-        //    var products = await _productRepo.GetAll();
-
-
-        //    //return products.Select(p => new ProductDto
-        //    //{
-        //    //    ProductID = p.ProductId,
-        //    //    Name = p.Name,
-        //    //    Price = p.Price,
-        //    //    UnitsInStock = p.UnitsInStock,
-        //    //    CategoryName = p.Category != null ? p.Category.Name : "DONT"
-        //    //}).ToList();
-
-        //    return products.Adapt<List<ProductDto>>(); // Using Mapster for mapping
-        //}
-
-
-
-        //public async Task<ProductDetailDto?> GetProductByIdAsync(int id)
-        //{
-        //    var product = await _productRepo.GetAsync(p => p.ProductId == id);
-
-        //    if (product == null)
-        //        return null;
-
-        //    //return new ProductDetailDto
-        //    //{
-        //    //    ProductID = product.ProductId,
-        //    //    Name = product.Name,
-        //    //   // Description = product.
-        //    //    Price = product.Price,
-        //    //    UnitsInStock = product.UnitsInStock,
-        //    //    ImagePath = product.ImagePath,
-        //    //    CategoryName = product.Category?.Name ?? "Unknown"
-        //    //};
-        //    return product.Adapt<ProductDetailDto>(); // Using Mapster for mapping
-        //}
+   
 
     }
 }

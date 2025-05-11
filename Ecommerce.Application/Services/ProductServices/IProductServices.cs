@@ -10,13 +10,12 @@ namespace Ecommerce.Application.Services.ProductServices
 {
    public interface IProductServices
     {
-       ProductDto CreateProduct(ProductDto product);
+        Task<ProductDto> CreateProductAsync(ProductCreateDto product);
 
-        Task CreateProductAsync(ProductCreateDto dto);
         ProductDto UpdateProduct(Product product);
         void DeleteProduct(int id);
         ProductDto GetProductById(int id);
-        List<ProductDto> GetAllProducts();
+        Task<List<ProductDto>> GetAllProducts();
         List<ProductDto> SearchProducts(string keyword);
         List<ProductDto> GetProductsByCategory(int categoryId);
     }

@@ -8,6 +8,7 @@
     xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Page_Loaded"
       Title="Home">
 
 
@@ -42,7 +43,7 @@
                     <!-- Popup (Popover) -->
                     <Popup x:Name="PopoverPopup" AllowsTransparency="True" Placement="MousePoint" IsOpen="False" StaysOpen="False">
                         <Border Background="{DynamicResource PrimaryBackgroundColor}" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Padding="10">
-                            <sections:ProductFromUC/>
+                            <sections:ProductFromUC x:Name="productForm"/>
                         </Border>
                     </Popup>
                 </Grid>
@@ -52,7 +53,7 @@
             </Grid>
 
             <Grid Margin="10" Grid.Row="2">
-                <sections:ProductTableUC/>
+                <sections:ProductTableUC x:Name="productTable"/>
             </Grid>
 
 
