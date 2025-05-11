@@ -32,7 +32,7 @@ namespace Ecommerce.AdminFront.Pages
 
         private void DashboardLayoutUC_OnLoaded(object sender, RoutedEventArgs e)
         {
-            RootFrame.Navigate(typeof(HomeUC));
+            //RootFrame.Navigate(typeof(HomeUC));
         }
 
         private void show_user_view(object sender, RoutedEventArgs e)

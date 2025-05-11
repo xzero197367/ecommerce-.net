@@ -16,12 +16,13 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
     /// </summary>
     public partial class CategoryFromUC : UserControl
     {
-        private readonly ICategoryServices _categoryService;
+        private CategoryHandler categoryHandler;
+        public Action AfterSaveAction { get; set; } = () => { };
         public CategoryFromUC()
         {
+            categoryHandler = new CategoryHandler();
             InitializeComponent();
-            var container = AutoFac.Inject();
-            _categoryService = container.Resolve<ICategoryServices>();
+        
         }
 
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -38,17 +39,19 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
                 Description = GetRichTextBoxText(txtdesc),
             };
 
-            try
+            bool isSaved = await categoryHandler.CreateCategory(dto);
+            if (isSaved)
             {
-                await _categoryService.CreateCategoryAsync(dto);
                 MessageBox.Show("successuful added");
                 this.txtname.Clear();
                 ClearRichTextBox(txtdesc);
+                AfterSaveAction.Invoke();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Eroorrrrrrrrr: {ex.Message}");
+                MessageBox.Show($"Eroorrrrrrrrr:");
             }
+            
         }
 
         private string GetRichTextBoxText(RichTextBox richTextBox)

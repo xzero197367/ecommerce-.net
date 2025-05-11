@@ -17,8 +17,9 @@ public partial class LandingPageUC : UserControl
         BodyGrid = bodyGrid;
    
     }
-    
-    
 
-    
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+
+    }
 }

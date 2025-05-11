@@ -10,6 +10,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
         public ProductTableUC()
         {
             InitializeComponent();
+            categoryListView.DataContext = new List<string>();
         }
     }
 }

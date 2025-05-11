@@ -7,7 +7,7 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d">
     <ui:Card  Padding="20" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
-            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Width="100%">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center">
                 <!-- First Row with Quick Links -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <ui:Button Content="Home" Width="80" Margin="10"

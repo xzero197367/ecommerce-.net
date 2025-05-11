@@ -9,7 +9,7 @@
              xmlns:sections="clr-namespace:Ecommerce.AdminFront.ClientPages.Landing.sections"
           
              
-             mc:Ignorable="d">
+             mc:Ignorable="d" Loaded="UserControl_Loaded">
    <Grid>
        <Grid.RowDefinitions>
            <RowDefinition Height="Auto"></RowDefinition>

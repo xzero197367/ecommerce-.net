@@ -27,8 +27,9 @@ namespace Ecommerce.Application.Services.UserServices
             user.UserPassword = HashPassword(user.UserPassword);
             User user1 = user.Adapt<User>();
 
-            User reUser = _userRepo.create(user1);
-            UserDto u = reUser.Adapt<UserDto>();
+            User resultUser = _userRepo.create(user1);
+            
+            UserDto u = resultUser.Adapt<UserDto>();
             _userRepo.saveChanges();
 
             return u;

@@ -1,6 +1,9 @@
 ﻿using Autofac;
 using Ecommerce.AdminFront.Classes.AutoFac;
+using Ecommerce.AdminFront.ClientPages.Landing.sections;
+using Ecommerce.AdminFront.ClientPages.Landing;
 using Ecommerce.Application.Services.UserServices;
+using Ecommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ecommerce.DTOs;
 
 namespace Ecommerce.AdminFront.Pages.Auth
 {
@@ -23,12 +27,11 @@ namespace Ecommerce.AdminFront.Pages.Auth
     /// </summary>
     public partial class LoginPageUC : UserControl
     {
-        private readonly IUserServices userServices;
+        private AuthHandler authHandler;
         public LoginPageUC()
         {
+            authHandler = new AuthHandler();
             InitializeComponent();
-            var container = AutoFac.Inject();
-            userServices = container.Resolve<IUserServices>();
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -47,8 +50,8 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 return;
             }
 
-            userServices.Login(txtEmail.Text, txtPassword.Password);
-            btnLogin.IsEnabled = true;
+            UserDto user = authHandler.Login(txtEmail.Text, txtPassword.Password);
+            authHandler.AfterAuth(user);
         }
     }
 }

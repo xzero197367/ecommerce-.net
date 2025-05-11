@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using Ecommerce.AdminFront.Classes.AutoFac;
 using Ecommerce.Application.Services.UserServices;
 using Autofac;
+using Ecommerce.AdminFront.ClientPages.Landing;
 using Ecommerce.Context;
 using Ecommerce.Infrastructure;
 
@@ -69,15 +70,18 @@ namespace Ecommerce.AdminFront.Pages.Auth
             //UserRepo userRepo = new UserRepo(contextDB);
             //UserServices userServices2 = new UserServices(userRepo);
 
-            userServices.Register(newUser);
+            UserDto signedUser = userServices.Register(newUser);
+            
             btnRegister.IsEnabled = true;
             MessageBox.Show("User registered successfully!");
-
+            onSignIn(signedUser);
         }
 
-        
-
-       
+        private void onSignIn(UserDto user)
+        {
+            MainWindowEntry.currentUser = user;
+            LandingPageUC.BodyGrid.Children.Clear();
+        }
 
     }
 }
