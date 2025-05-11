@@ -11,7 +11,10 @@ namespace Ecommerce.Application.Contracts
 
         //Category GetByName(string name);
         IQueryable<Category> SearchCategory(string term);
+        IQueryable<Category> FindCategory(Func<Category, bool> condition);
+        IQueryable<Category> FindCategory(int categoryId);
         bool HasProduct(int categoryId);
         void DeleteCategory(int categoryId);
+        IQueryable<Category> GetAllCategories();
     }
 }

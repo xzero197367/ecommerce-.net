@@ -8,7 +8,7 @@
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
     <Grid>
-        <ui:ListView Background="Transparent" ItemsSource="{Binding Categories}">
+        <ui:ListView x:Name="categoryListView" Background="Transparent" ItemsSource="{Binding}">
             <ui:ListView.View>
                 <ui:GridView>
                     <ui:GridViewColumn Header="Name" Width="100">
@@ -52,12 +52,16 @@
                     <ui:GridViewColumn Header="Actions" Width="100">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label
-                                    Width="200" >
-                                    <Label.Content>
-                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=ProductsCount}"/>
-                                    </Label.Content>
-                                </Label>
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    >
+                                    <ui:Button Icon="{ui:SymbolIcon Edit24}"
+           Click="edit_category_click"/>
+                                    <ui:Button Icon="{ui:SymbolIcon Delete24}"
+                                               Click="delete_category_click"/>
+                                    
+                                </StackPanel>
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>

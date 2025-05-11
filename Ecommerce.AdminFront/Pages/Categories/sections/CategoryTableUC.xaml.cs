@@ -1,12 +1,7 @@
 ﻿
-using Autofac;
-using Ecommerce.AdminFront.Classes.AutoFac;
-using Ecommerce.Application.Services.CategoryServices;
-using Ecommerce.Application.Services.ProductServices;
-using Ecommerce.Context;
+
 using Ecommerce.DTOs;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Ecommerce.AdminFront.Pages.Categories.sections
@@ -16,68 +11,38 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
     /// </summary>
     public partial class CategoryTableUC : UserControl
     {
-        
-        private readonly ICategoryServices _categoryService;
-
-        
-        public ObservableCollection<CategoryDto> Categories { get; set; }
-
-
+        public Action RefreshCategories { get; set; } = ()=> { };
+        private CategoryHandler categoryHandler;
+       
 
         public CategoryTableUC()
 
         {
+            categoryHandler = new CategoryHandler();
             InitializeComponent();
-            
+           
 
+        }
 
-            var container = AutoFac.Inject();
-            _categoryService = container.Resolve<ICategoryServices>();
-
-            Categories = new ObservableCollection<CategoryDto>();
-
-            //Categories = new ObservableCollection<CategoryDto>
-            // {
-            //     new CategoryDto
-            //     {
-            //         CategoryId = 1,
-            //         Name = "Electronics",
-            //         Description = "Electronic gadgets and devices.",
-            //         Products = new List<ProductDto>
-            //         {
-            //             new ProductDto(), new ProductDto() // dummy products
-            //         }
-            //     },
-            //     new CategoryDto
-            //     {
-            //         CategoryId = 2,
-            //         Name = "Books",
-            //         Description = "All kinds of books.",
-            //         Products = new List<ProductDto>() // empty
-            //     }
-            // };
-
+        private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            //var list = await categoryHandler.GetCategories();
+            //Categories = new ObservableCollection<CategoryDto>(list);
             //DataContext = this;
-
         }
 
+        private async void delete_category_click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
+            var res = await categoryHandler.DeleteCategory(category.CategoryId);
+            MessageBox.Show(res.message);
+            RefreshCategories();
+        }
+
+        private void edit_category_click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
             
-
-        public async void LoadCategories()
-        {
-            var categoriesFromDb = await _categoryService.GetCategoriesAsync();
-            foreach (var category in categoriesFromDb)
-            {
-                Categories.Add(category);
-            }
-
-           // DataContext = this; 
-        }
-
-
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-
         }
     }
 }
