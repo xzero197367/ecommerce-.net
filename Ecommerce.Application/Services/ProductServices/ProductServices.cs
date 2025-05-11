@@ -84,8 +84,5 @@ namespace Ecommerce.Application.Services.ProductServices
                 .ToList()
                 .Adapt<List<ProductDto>>();
         }
-
-
-
     }
 }
