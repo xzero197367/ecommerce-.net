@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.CategoryServices
 {
-    class CategoryServices:ICategoryServices
+   public class CategoryServices:ICategoryServices
     {
         private readonly ICategoryRepo _categoryRepo;
 
@@ -71,9 +71,6 @@ namespace Ecommerce.Application.Services.CategoryServices
             return await _categoryRepo.GetProductCountInCategory(categoryId);
 
         }
-        public async Task SaveChanges()
-        {
-            await _categoryRepo.saveChanges();
-        }
     }
+ 
 }

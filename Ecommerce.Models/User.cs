@@ -27,8 +27,8 @@ namespace Ecommerce.Models
         public bool IsActive { set; get; } = true;
         public DateTime DateCreated { set; get; }
         public DateTime? LastLoginDate { set; get; }
-        public ICollection<CartItem> CartItems { set; get; }
-        public ICollection<Order> Orders { set; get; }
+        public virtual ICollection<CartItem> CartItems { set; get; }
+        public virtual ICollection<Order> Orders { set; get; }
     }
 
     public enum UserRole

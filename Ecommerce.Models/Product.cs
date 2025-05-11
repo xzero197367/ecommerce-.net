@@ -12,9 +12,9 @@ namespace Ecommerce.Models
         public int UnitsInStock { get; set; }
         public string ImagePath { get; set; }
         public int CategoryID { get; set; }
-        public Category Category { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
-        public ICollection<CartItem> CartItems { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
 
     }
 }

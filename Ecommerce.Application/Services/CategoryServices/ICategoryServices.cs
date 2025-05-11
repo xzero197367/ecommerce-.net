@@ -18,6 +18,5 @@ namespace Ecommerce.Application.Services.CategoryServices
         Task<CategoryDto?> DeleteCategory(int categoryId);
         Task<int> GetCategoryCount();
         Task<int> GetProductCountInCategory(int categoryId);
-        Task SaveChanges();
     }
 }

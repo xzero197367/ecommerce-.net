@@ -18,12 +18,10 @@ namespace Ecommerce.Infrastructure
         {
             _context = context;
         }
-
         public async Task<Category?> GetByName(string name)
         {
             return await _context.categories.FirstOrDefaultAsync(c => c.Name == name);
         }
-
 
         public async Task<bool> HasProduct(int categoryId)
         {
@@ -33,11 +31,10 @@ namespace Ecommerce.Infrastructure
         public async Task DeleteCategory(int categoryId)
         {
             var category = await _context.categories.FindAsync(categoryId);
-          
                 if (!await HasProduct(categoryId))
                 {
-                    _context.categories.Remove(category);
-                    await _context.SaveChangesAsync();
+                  _context.categories.Remove(category);
+                  await _context.SaveChangesAsync();
                 }
             
         }
