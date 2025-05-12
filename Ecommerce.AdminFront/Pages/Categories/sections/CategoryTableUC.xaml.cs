@@ -1,24 +1,25 @@
 ﻿
 
 using Ecommerce.DTOs;
+using Mapster;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Ecommerce.AdminFront.Pages.Categories.sections
 {
-    /// <summary>
-    /// Interaction logic for CategoryTableUC.xaml
-    /// </summary>
     public partial class CategoryTableUC : UserControl
     {
         public Action RefreshCategories { get; set; } = ()=> { };
-        private CategoryHandler categoryHandler;
-       
+        public Func<int, Task<(bool status, string message)>> OnDeleteCategory { get; set; } = (id) => Task.FromResult((false, "Error occurred while deleting the category. Please try again later."));
+
+        public Func<int, CategoryCreateDto, Task<(bool status, string message)>> OnUpdateCategory { get; set; } = (id, dto) => Task.FromResult((false, "Error occurred while updating from table the category. Please try again later."));
+
+        private PopupWindow popupWindow;
+        private CategoryFromUC categoryFrom;
 
         public CategoryTableUC()
 
         {
-            categoryHandler = new CategoryHandler();
             InitializeComponent();
            
 
@@ -26,15 +27,13 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
 
         private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            //var list = await categoryHandler.GetCategories();
-            //Categories = new ObservableCollection<CategoryDto>(list);
-            //DataContext = this;
+
         }
 
         private async void delete_category_click(object sender, System.Windows.RoutedEventArgs e)
         {
             CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
-            var res = await categoryHandler.DeleteCategory(category.CategoryId);
+            var res = await OnDeleteCategory.Invoke(category.CategoryId);
             MessageBox.Show(res.message);
             RefreshCategories();
         }
@@ -42,7 +41,18 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
         private void edit_category_click(object sender, System.Windows.RoutedEventArgs e)
         {
             CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
+            popupWindow = new PopupWindow();
+            categoryFrom = new CategoryFromUC() { 
+                onSaveAction = (dto) => OnUpdateCategory(category.CategoryId, category.Adapt<CategoryCreateDto>()), 
+                categoryCreateDto = category.Adapt<CategoryCreateDto>(),
+            };
+            categoryFrom.btnSave.Content = "Update";
+            popupWindow.containerGrid.Children.Add(categoryFrom);
+            popupWindow.SizeToContent = SizeToContent.WidthAndHeight;
+            popupWindow.ShowDialog();
             
         }
+
+       
     }
 }

@@ -26,25 +26,6 @@ namespace Ecommerce.Application.Services.CategoryServices
             return created.Adapt<CategoryDto>();
         }
 
-        //public async Task<List<CategoryDto>> GetCategoriesAsync()
-        //{
-        //    List<Category> categories = await _categoryRepo.GetAllCategories().ToListAsync();
-
-        //    return categories.Adapt<List<CategoryDto>>(); // Mapster
-        //        //.Include(c => c.Products) 
-        //        //.Select(c => new CategoryDto
-        //        //{
-        //        //    CategoryId = c.CategoryId,
-        //        //    Name = c.Name,
-        //        //    Description = c.Description,
-        //        //    Products = c.Products.Select(p => new ProductDto
-        //        //    {
-        //        //        ProductId = p.ProductId,
-        //        //        Name = p.Name
-        //        //    }).ToList()
-        //        //})
-        //        //.ToListAsync();
-        //}
 
         public async Task<(bool status, string message)> DeleteCategoryAsync(int id)
         {

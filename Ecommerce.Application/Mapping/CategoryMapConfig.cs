@@ -19,6 +19,10 @@ namespace Ecommerce.Application.Mapping
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.Products, src => src.Products.Adapt<Product>());
+
+            TypeAdapterConfig<CategoryDto, CategoryCreateDto>.NewConfig()
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Description, src => src.Description);
         }
     }
 }

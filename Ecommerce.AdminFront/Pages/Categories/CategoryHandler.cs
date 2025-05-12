@@ -10,12 +10,23 @@ namespace Ecommerce.AdminFront.Pages.Categories
     class CategoryHandler
     {
         private readonly ICategoryServices _categoryService;
-        public CategoryHandler()
+        private CategoryHandler()
         {
             var container = AutoFac.Inject();
             _categoryService = container.Resolve<ICategoryServices>();
-
         }
+
+        private static CategoryHandler? _instance;
+
+        public static CategoryHandler GetInstance()
+        {
+            if(_instance == null)
+            {
+                _instance = new CategoryHandler();
+            }
+            return _instance;
+        }
+
 
         public async Task<(bool status, string message)> DeleteCategory(int id)
         {
@@ -30,16 +41,27 @@ namespace Ecommerce.AdminFront.Pages.Categories
             }
         }
 
-        public async Task<bool> CreateCategory(CategoryCreateDto dto)
+        public async Task<(bool status, string message)> onUpdateCategory(int id, CategoryCreateDto dto)
+        {
+            var res = await _categoryService.UpdateCategoryAsync(id, dto);
+
+            if (res == null)
+            {
+                return (false, "something went wrong");
+            }
+            return (true, "Category updated successfully");
+        }
+
+        public async Task<(bool status, string message)> CreateCategory(CategoryCreateDto dto)
         {
             try
             {
-                await _categoryService.CreateCategoryAsync(dto);
-                return true;
+               await _categoryService.CreateCategoryAsync(dto);
+               return (true, "Category created successfully");
             }
             catch (Exception ex)
             {
-                return false;
+                return (false, "something went wrong");
             }
         }
 

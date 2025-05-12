@@ -32,10 +32,10 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <ui:TextBox Width="300" PlaceholderText="Search by Category Name..."/>
+                    <ui:TextBox x:Name="txtSearch" Width="300" PlaceholderText="Search by Category Name..."/>
                 </StackPanel>
 
-            
+
                 <Grid Grid.Column="1">
                     <!-- Button that triggers the Popover -->
                     <ui:Button Appearance="Primary"

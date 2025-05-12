@@ -2,12 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using Autofac;
-using Ecommerce.AdminFront.Classes.AutoFac;
-using Ecommerce.Application.Services.CategoryServices;
-using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs;
-using Mapster;
 
 namespace Ecommerce.AdminFront.Pages.Categories.sections
 {
@@ -16,13 +11,26 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
     /// </summary>
     public partial class CategoryFromUC : UserControl
     {
-        private CategoryHandler categoryHandler;
+        //private CategoryHandler categoryHandler;
         public Action AfterSaveAction { get; set; } = () => { };
+        public Func<CategoryCreateDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the category from form. Please try again later."));
+
+        public CategoryCreateDto categoryCreateDto { get; set; } = null;
+
         public CategoryFromUC()
         {
-            categoryHandler = new CategoryHandler();
+            //categoryHandler = new CategoryHandler();
             InitializeComponent();
         
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(categoryCreateDto != null)
+            {
+                txtname.Text = categoryCreateDto.Name;
+                SetRichTextBoxText(txtdesc, categoryCreateDto.Description);
+            }
         }
 
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -39,19 +47,25 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
                 Description = GetRichTextBoxText(txtdesc),
             };
 
-            bool isSaved = await categoryHandler.CreateCategory(dto);
-            if (isSaved)
+            //bool isSaved = await categoryHandler.CreateCategory(dto);
+
+            var res = await onSaveAction.Invoke(dto);
+            if (res.status)
             {
-                MessageBox.Show("successuful added");
+                
                 this.txtname.Clear();
                 ClearRichTextBox(txtdesc);
                 AfterSaveAction.Invoke();
             }
-            else
-            {
-                MessageBox.Show($"Eroorrrrrrrrr:");
-            }
-            
+            MessageBox.Show(res.message);
+
+        }
+
+        private string SetRichTextBoxText(RichTextBox richTextBox, string text)
+        {
+            var textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+            textRange.Text = text;
+            return textRange.Text.Trim();
         }
 
         private string GetRichTextBoxText(RichTextBox richTextBox)
@@ -64,5 +78,7 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
         {
             richTextBox.Document.Blocks.Clear();
         }
+
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Ecommerce.AdminFront.ClientPages.Landing;
+using Ecommerce.Application.Mapping;
 using Ecommerce.DTOs;
 
 namespace Ecommerce.AdminFront;
@@ -13,6 +14,6 @@ public partial class MainWindowEntry : Window
     {
         InitializeComponent();
         MainGrid = mainGrid;
-        
+        MappesterConfig.Congfigure();
     }
 }

@@ -18,7 +18,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
     /// </summary>
     public partial class ProductFromUC : UserControl
     {
-        private readonly IProductServices _productService;
+        //private readonly IProductServices _productService;
         private readonly ICategoryServices categoryServices;
 
         public Func<ProductCreateDto, Task<bool>> OnSaveProduct { get; set; } = (p) => Task.FromResult(false);
@@ -28,7 +28,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
         {
             InitializeComponent();
             var container = AutoFac.Inject();
-            _productService = container.Resolve<IProductServices>();
+            //_productService = container.Resolve<IProductServices>();
             categoryServices = container.Resolve<ICategoryServices>();
         }
 

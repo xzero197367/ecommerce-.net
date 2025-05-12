@@ -8,7 +8,11 @@ namespace Ecommerce.Application.Mapping
         {
           
             UserMapConfig.Config();
-            
+            CartItemMapConfig.Config();
+            CategoryMapConfig.Config();
+            OrderMapConfig.Config();
+            OrderDetailsMapConfig.Config();
+
       
         }
     }

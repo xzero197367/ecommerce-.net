@@ -1,4 +1,5 @@
 ﻿
+using Ecommerce.AdminFront;
 using Ecommerce.AdminFront.Pages.Categories;
 using Ecommerce.DTOs;
 using System.Collections.ObjectModel;
@@ -7,29 +8,54 @@ using System.Windows.Controls;
 
 namespace WPFModernVerticalMenu.Pages.Categories
 {
-    /// <summary>
-    /// Lógica de interacción para Dashboard.xaml
-    /// </summary>
+    
     public partial class CategoriesPage : Page
     {
         private CategoryHandler categoryHandler;
+        private List<CategoryDto> categories = new List<CategoryDto>();
         public CategoriesPage()
         {
-            categoryHandler = new CategoryHandler();
+            categoryHandler = CategoryHandler.GetInstance();
             InitializeComponent();
+            
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            categoryForm.AfterSaveAction += refreshCategories;
+            categoryForm.AfterSaveAction = refreshCategories;
+            categoryTable.OnUpdateCategory += categoryHandler.onUpdateCategory;
+
+            categoryForm.onSaveAction = async (dto) =>
+            {
+                var res = await categoryHandler.CreateCategory(dto);
+                return res;
+            };
+            categoryTable.OnDeleteCategory = async (id) =>
+            {
+                var res = await categoryHandler.DeleteCategory(id);
+                return res;
+            };
+            
             refreshCategories();
+
+            txtSearch.TextChanged += TxtSearch_TextChanged;
+        }
+
+       
+
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            categoryTable.categoryListView.DataContext = categories
+                .Where(c => c.Name.ToLower().Contains(txtSearch.Text.ToLower()))
+                .ToList();
         }
 
         public async void refreshCategories()
         {
-            var list = await categoryHandler.GetCategories();
-            categoryTable.categoryListView.DataContext = list;
+            categories = await categoryHandler.GetCategories();
+            categoryTable.categoryListView.DataContext = categories;
             DataContext = this;
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

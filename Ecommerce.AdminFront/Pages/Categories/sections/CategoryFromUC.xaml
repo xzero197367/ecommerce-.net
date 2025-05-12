@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
     <Border Padding="5" BorderThickness="2" CornerRadius="10" 
             Background="{ui:ThemeResource ApplicationBackgroundBrush}"
@@ -13,7 +14,7 @@
             <ui:RichTextBox x:Name="txtdesc" AcceptsReturn="True" MinHeight="50" Margin="0 5 0 10"
                      VerticalScrollBarVisibility="Auto"
                      ></ui:RichTextBox>
-            <ui:Button Style="{DynamicResource SaveButtonStyle}" Click="Button_Click">Save</ui:Button>
+            <ui:Button x:Name="btnSave" Appearance="Primary" HorizontalAlignment="Stretch" Click="Button_Click">Save</ui:Button>
         </StackPanel>
     </Border>
 </UserControl>

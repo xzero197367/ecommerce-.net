@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Context.Migrations
 {
     [DbContext(typeof(ContextDB))]
-    [Migration("20250511134821_init")]
+    [Migration("20250512081648_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -21,6 +21,9 @@ namespace Ecommerce.Context.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
