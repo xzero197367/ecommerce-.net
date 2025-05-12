@@ -15,6 +15,8 @@ namespace Ecommerce.Application.Contracts
 
         Task<T?> getById(int id);
         Task<IQueryable<T>> getAll();
+
+        Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
         Task saveChanges();
     }
 }

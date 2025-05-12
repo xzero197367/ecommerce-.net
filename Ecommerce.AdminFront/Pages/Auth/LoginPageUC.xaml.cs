@@ -50,7 +50,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 return;
             }
 
-            UserDto user = authHandler.Login(txtEmail.Text, txtPassword.Password);
+            UserDto? user = await authHandler.LoginAsync(txtEmail.Text, txtPassword.Password);
             authHandler.AfterAuth(user);
         }
     }

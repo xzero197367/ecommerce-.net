@@ -27,7 +27,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
             userServices = container.Resolve<IUserServices>();
         }
 
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        private async void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             btnRegister.IsEnabled = false;
             if (string.IsNullOrWhiteSpace(txtFname.Text))
@@ -66,15 +66,19 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 UserRole = Models.UserRole.Client,
             };
 
-            //ContextDB contextDB = new ContextDB();
-            //UserRepo userRepo = new UserRepo(contextDB);
-            //UserServices userServices2 = new UserServices(userRepo);
+            try
+            {
+                UserDto signedUser = await userServices.RegisterAsync(newUser);
 
-            UserDto signedUser = userServices.Register(newUser);
-            
-            btnRegister.IsEnabled = true;
-            MessageBox.Show("User registered successfully!");
-            onSignIn(signedUser);
+                btnRegister.IsEnabled = true;
+                MessageBox.Show("User registered successfully!");
+                onSignIn(signedUser);
+            }
+            catch (Exception ex)
+            {
+                btnRegister.IsEnabled = true;
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
 
         private void onSignIn(UserDto user)

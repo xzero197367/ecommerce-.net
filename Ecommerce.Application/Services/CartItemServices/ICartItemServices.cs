@@ -14,5 +14,7 @@ namespace Ecommerce.Application.Services.CartItemServices
         public void updateCartItem(CartItemCreateDto cartItem, int cartItemId);
         public CartItemDto getCartItem(int cartItemId);
         public List<CartItemDto> getAllUserCartItems(int userId);
+
+
     }
 }

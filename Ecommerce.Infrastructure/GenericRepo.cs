@@ -40,6 +40,11 @@ namespace Ecommerce.Infrastructure
         {
             return _dbSet.AsQueryable();
         }
+
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.FirstOrDefaultAsync(predicate);
+        }
         public async Task<T?> getById(int id)
         {
             return await _dbSet.FindAsync(id);

@@ -18,22 +18,49 @@ namespace Ecommerce.Application.Services.UserServices
 
         //public UserDto? Login(string email, string password)
         //{
-        //    User user = _userRepo(u => u.UserEmail == email && u.UserPassword == password);
+        //    // Corrected the usage of _userRepo to call the appropriate method
+        //    User? user = _userRepo.getAll()
+        //                          .Result
+        //                          .FirstOrDefault(u => u.UserEmail == email && u.UserPassword == password);
+
         //    return user is not null ? user.Adapt<UserDto>() : null;
         //}
 
-        //public UserDto Register(UserCreateDto user)
-        //{
-        //    user.UserPassword = HashPassword(user.UserPassword);
-        //    User user1 = user.Adapt<User>();
+        public async Task<UserDto?> LoginAsync(string email, string password)
+        {
+            var user = await _userRepo.GetAsync(u =>
+                u.UserEmail == email && u.UserPassword == password);
 
-        //    User resultUser = _userRepo.create(user1);
-            
-        //    UserDto u = resultUser.Adapt<UserDto>();
-        //    _userRepo.saveChanges();
+            return user is not null ? user.Adapt<UserDto>() : null;
+        }
+        public UserDto Register(UserCreateDto user)
+        {
+            user.UserPassword = HashPassword(user.UserPassword);
+            User user1 = user.Adapt<User>();
 
-        //    return u;
-        //}
+        
+            User resultUser = _userRepo.create(user1).Result;
+
+            UserDto u = resultUser.Adapt<UserDto>();
+            _userRepo.saveChanges();
+
+            return u;
+        }
+        public async Task<UserDto> RegisterAsync(UserCreateDto user)
+        {
+           
+            user.UserPassword = HashPassword(user.UserPassword);
+
+           
+            User userEntity = user.Adapt<User>();
+
+        
+            User resultUser = await _userRepo.create(userEntity);
+            await _userRepo.saveChanges();
+
+            return resultUser.Adapt<UserDto>();
+        }
+
 
         public string HashPassword(string password)
         {
@@ -52,15 +79,7 @@ namespace Ecommerce.Application.Services.UserServices
             return Convert.ToBase64String(hashBytes);
         }
 
-        public UserDto? Login(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
 
-        public UserDto Register(UserCreateDto user)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool VerifyPassword(string password, string storedHash)
         {

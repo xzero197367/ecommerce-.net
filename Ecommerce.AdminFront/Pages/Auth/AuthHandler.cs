@@ -18,14 +18,14 @@ namespace Ecommerce.AdminFront.Pages.Auth
             userServices = container.Resolve<IUserServices>();
         }
 
-        public UserDto Login(string username, string password)
+        public async Task<UserDto?> LoginAsync(string username, string password)
         {
-            return userServices.Login(username, password);
+            return await userServices.LoginAsync(username, password);
         }
 
-        public UserDto Register(UserCreateDto newUser)
+        public async Task<UserDto> RegisterAsync(UserCreateDto newUser)
         {
-            return userServices.Register(newUser);
+            return await userServices.RegisterAsync(newUser);
         }
 
         public void AfterAuth(UserDto user)
