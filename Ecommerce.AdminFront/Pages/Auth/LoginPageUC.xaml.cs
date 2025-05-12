@@ -50,8 +50,18 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 return;
             }
 
+
             UserDto? user = await authHandler.LoginAsync(txtEmail.Text, txtPassword.Password);
-            authHandler.AfterAuth(user);
+            if (user != null)
+            {
+                authHandler.AfterAuth(user);
+
+            }
+            else
+            {
+                MessageBox.Show("invalid email or password");
+                btnLogin.IsEnabled = true;
+            }
         }
     }
 }

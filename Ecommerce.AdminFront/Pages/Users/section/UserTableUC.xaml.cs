@@ -1,4 +1,7 @@
 ﻿
+using Autofac;
+using Ecommerce.AdminFront.Classes.AutoFac;
+using Ecommerce.Application.Services.UserServices;
 using Ecommerce.DTOs;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
@@ -10,49 +13,20 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
     /// </summary>
     public partial class UserTableUC : UserControl
     {
-        public ObservableCollection<UserDto> Users { get; set; }
+        private readonly IUserServices _userService;
 
         public UserTableUC()
         {
             InitializeComponent();
-            Users = new ObservableCollection<UserDto>
-            {
-                new UserDto()
-                {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    UserName = "johndoe",
-                    CartItems = new List<CartItemDto>(),
-                    Orders = new List<OrderDto>(),
-                    DateCreated = DateTime.Now,
-                    LastLoginDate = DateTime.Now,
-                    IsActive = true,
-                    UserEmail = "john@doe.com",
-                    UserPassword = "password",
-                    UserRole = Models.UserRole.Admin,
-                },
-                new UserDto()
-                {
-                    FirstName = "John",
-                    LastName = "Doe",
-                    UserName = "johndoe",
-                    CartItems = new List<CartItemDto>(),
-                    Orders = new List<OrderDto>(),
-                    DateCreated = DateTime.Now,
-                    LastLoginDate = DateTime.Now,
-                    IsActive = true,
-                    UserEmail = "john@doe.com",
-                    UserPassword = "password",
-                    UserRole = Models.UserRole.Admin,
-                }
-            };
 
-            DataContext = this;
+            var container = AutoFac.Inject();
+            _userService = container.Resolve<IUserServices>();
+
         }
 
-        private void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-
+          //  userListView.DataContext = await _userService.();
         }
     }
 }

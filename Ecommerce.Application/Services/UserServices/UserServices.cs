@@ -1,5 +1,5 @@
-﻿
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using Ecommerce.Application.Contracts;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
@@ -7,7 +7,7 @@ using Mapster;
 
 namespace Ecommerce.Application.Services.UserServices
 {
-   public class UserServices : IUserServices
+    public class UserServices : IUserServices
 
     {
         private readonly IUserRepo _userRepo;
@@ -16,29 +16,59 @@ namespace Ecommerce.Application.Services.UserServices
             _userRepo = userRepo;
         }
 
-        //public UserDto? Login(string email, string password)
-        //{
-        //    // Corrected the usage of _userRepo to call the appropriate method
-        //    User? user = _userRepo.getAll()
-        //                          .Result
-        //                          .FirstOrDefault(u => u.UserEmail == email && u.UserPassword == password);
-
-        //    return user is not null ? user.Adapt<UserDto>() : null;
-        //}
-
         public async Task<UserDto?> LoginAsync(string email, string password)
         {
-            var user = await _userRepo.GetAsync(u =>
-                u.UserEmail == email && u.UserPassword == password);
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || !IsValidEmail(email))
+            {
+                return null;
+            }
+
+            // Find user by email using ToLower()
+            User? user = (await _userRepo.getAll())
+                .FirstOrDefault(u => u.UserEmail.ToLower() == email.ToLower());
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            // Verify password
+            bool isPasswordValid = VerifyPassword(password, user.UserPassword);
+            if (!isPasswordValid)
+            {
+                return null;
+            }
+
+            // Map to DTO
+            return user.Adapt<UserDto>();
+        }
+        public static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            // Regex pattern for email validation
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, emailPattern);
+        }
+        public UserDto? Login(string email, string password)
+        {
+            // Corrected the usage of _userRepo to call the appropriate method
+            User? user = _userRepo.getAll()
+                                  .Result
+                                  .FirstOrDefault(u => u.UserEmail == email && u.UserPassword == password);
 
             return user is not null ? user.Adapt<UserDto>() : null;
         }
+
+
         public UserDto Register(UserCreateDto user)
         {
+
             user.UserPassword = HashPassword(user.UserPassword);
             User user1 = user.Adapt<User>();
 
-        
+
             User resultUser = _userRepo.create(user1).Result;
 
             UserDto u = resultUser.Adapt<UserDto>();
@@ -48,13 +78,14 @@ namespace Ecommerce.Application.Services.UserServices
         }
         public async Task<UserDto> RegisterAsync(UserCreateDto user)
         {
-           
+
+
             user.UserPassword = HashPassword(user.UserPassword);
 
-           
+
             User userEntity = user.Adapt<User>();
 
-        
+
             User resultUser = await _userRepo.create(userEntity);
             await _userRepo.saveChanges();
 
@@ -99,7 +130,7 @@ namespace Ecommerce.Application.Services.UserServices
             return true;
         }
 
-       
+
 
     }
 }

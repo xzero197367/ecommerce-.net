@@ -35,7 +35,7 @@
 
                 <Grid Grid.Column="1">
                     <!-- Button that triggers the Popover -->
-                    <ui:Button  Appearance="Primary" Click="Button_Click">Create Category</ui:Button>
+                    <ui:Button  Appearance="Primary" Click="Button_Click">Create User</ui:Button>
 
                     <!-- Popup (Popover) -->
                     <Popup x:Name="PopoverPopup" AllowsTransparency="True" Placement="MousePoint" IsOpen="False" StaysOpen="False">

@@ -8,7 +8,7 @@
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
     <Grid>
-        <ui:ListView Background="Transparent" ItemsSource="{Binding Users}">
+        <ui:ListView x:Name="userListView" Background="Transparent" ItemsSource="{Binding Users}">
             <ui:ListView.View>
                 <ui:GridView>
                     <ui:GridViewColumn Header="User ID" Width="100">

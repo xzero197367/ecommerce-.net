@@ -23,6 +23,8 @@ namespace Ecommerce.AdminFront.Classes.AutoFac
             builder.RegisterType<CategoryRepo>().As<ICategoryRepo>();
             builder.RegisterType<CategoryServices>().As<ICategoryServices>();
 
+
+
             return builder.Build();
         }
     }

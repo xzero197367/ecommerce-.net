@@ -9,22 +9,22 @@
              mc:Ignorable="d" >
     <Border Padding="5" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="2" CornerRadius="10" Background="{DynamicResource SecundaryBackgroundColor}" Width="200">
         <StackPanel Orientation="Vertical">
-            <ui:TextBox Margin="0 5 0 0" serv:PlaceholderService.Placeholder="First Name"></ui:TextBox>
-            <ui:TextBox Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Last Name"></ui:TextBox>
+            <ui:TextBox x:Name="txtfname" Margin="0 5 0 0" serv:PlaceholderService.Placeholder="First Name"></ui:TextBox>
+            <ui:TextBox x:Name="txtlname" Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Last Name"></ui:TextBox>
 
-            <ui:TextBox Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Username"></ui:TextBox>
-            <ui:TextBox Margin="0 5" serv:PlaceholderService.Placeholder="Email"></ui:TextBox>
+            <ui:TextBox x:Name="txtusername" Margin="0 5 0 0"  serv:PlaceholderService.Placeholder="Username"></ui:TextBox>
+            <ui:TextBox x:Name="txtemail" Margin="0 5" serv:PlaceholderService.Placeholder="Email"></ui:TextBox>
             
-            <ui:PasswordBox Padding="2" serv:PasswordPlaceholderService.Placeholder="Enter password" 
+            <ui:PasswordBox x:Name="txtpass" Padding="2" serv:PasswordPlaceholderService.Placeholder="Enter password" 
                          ></ui:PasswordBox>
             
             
             
-            <ComboBox Text="Role" Margin="0 5 0 5" >
+            <ComboBox x:Name="txtrole" Text="Role" Margin="0 5 0 5" >
                 <ComboBoxItem>Admin</ComboBoxItem>
                 <ComboBoxItem>Client</ComboBoxItem>
             </ComboBox>
-            <ui:Button HorizontalAlignment="Stretch" Appearance="Primary">Save</ui:Button>
+            <ui:Button HorizontalAlignment="Stretch" Appearance="Primary" Click="Button_Click">Save</ui:Button>
         </StackPanel>
     </Border>
 </UserControl>
