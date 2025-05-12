@@ -27,9 +27,9 @@ namespace Ecommerce.Application.Services.ProductServices
             return resProduct.Adapt<ProductDto>();
         }
 
-        public async Task<ProductDto> UpdateProductAsync(Product product)
+        public async Task<ProductDto> UpdateProductAsync(int id, ProductCreateDto product)
         {
-            var existingProduct = await _productRepo.getById(product.ProductId);
+            var existingProduct = await _productRepo.getById(id);
             if (existingProduct == null)
                 throw new Exception("Product not found");
 
@@ -47,14 +47,15 @@ namespace Ecommerce.Application.Services.ProductServices
         }
 
 
-        public async Task DeleteProductAsync(int id)
+        public async Task<(bool status, string message)> DeleteProductAsync(int id)
         {
             var product = await _productRepo.getById(id);
             if (product == null)
-                return;
+                return (false, "Product not found");
 
-            _productRepo.delete(product);
+            await _productRepo.delete(product);
             await _productRepo.saveChanges();
+            return (true, "Product deleted successfully");
         }
 
         public async Task<List<ProductDto>> GetAllProducts()

@@ -32,7 +32,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <ui:TextBox PlaceholderText="Search for Product...." Width="200"/>
+                    <ui:TextBox x:Name="txtSearch" PlaceholderText="Search for Product...." Width="200"/>
                 </StackPanel>
 
 

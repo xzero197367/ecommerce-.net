@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Ecommerce.AdminFront.Classes.AutoFac;
+using Ecommerce.AdminFront.Pages.Products;
 using Ecommerce.Application.Contracts;
 using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -13,33 +15,42 @@ namespace WPFModernVerticalMenu.Pages.Products
     /// </summary>
     public partial class ProductsPage : Page
     {
-        private readonly IProductServices _productService;
+        private ProductHandler productHandler;
+        private ObservableCollection<ProductDto> products;
         public ProductsPage()
         {
-            var container = AutoFac.Inject();
-            _productService = container.Resolve<IProductServices>();
-
+            productHandler = ProductHandler.GetInstance();
             InitializeComponent();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            productTable.productListView.DataContext = await _productService.GetAllProducts();
-
+            RefreshProducts();
             productForm.OnSaveProduct += OnSaveProduct;
-           
+            txtSearch.TextChanged += OnSearchTextChanged;
+
+        }
+
+        private async void RefreshProducts()
+        {
+            var items = await productHandler.GetProducts();
+            products = new ObservableCollection<ProductDto>(items);
+            productTable.productListView.DataContext = products;
+        }
+
+        private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        {
+            
         }
 
         private async Task<bool> OnSaveProduct(ProductCreateDto product)
         {
-            var res = await _productService.CreateProductAsync(product);
-            if (res != null)
+            var res = await productHandler.CreateProduct(product);
+            if (res.status)
             {
-                productTable.productListView.DataContext = await _productService.GetAllProducts();
+                RefreshProducts();
                 PopoverPopup.IsOpen = false;
 
-
-                productTable.productListView.DataContext = await _productService.GetAllProducts();
                 return true;
             }
             return false;

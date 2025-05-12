@@ -9,7 +9,7 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
 {
     public partial class CategoryTableUC : UserControl
     {
-        public Action RefreshCategories { get; set; } = ()=> { };
+        public Func<Task> RefreshCategories { get; set; } = () => Task.CompletedTask;
         public Func<int, Task<(bool status, string message)>> OnDeleteCategory { get; set; } = (id) => Task.FromResult((false, "Error occurred while deleting the category. Please try again later."));
 
         public Func<int, CategoryCreateDto, Task<(bool status, string message)>> OnUpdateCategory { get; set; } = (id, dto) => Task.FromResult((false, "Error occurred while updating from table the category. Please try again later."));
@@ -34,23 +34,27 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
         {
             CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
             var res = await OnDeleteCategory.Invoke(category.CategoryId);
-            MessageBox.Show(res.message);
-            RefreshCategories();
+            //MessageBox.Show(res.message);
+            await RefreshCategories.Invoke();
         }
 
-        private void edit_category_click(object sender, System.Windows.RoutedEventArgs e)
+        private async void edit_category_click(object sender, System.Windows.RoutedEventArgs e)
         {
             CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
             popupWindow = new PopupWindow();
             categoryFrom = new CategoryFromUC() { 
-                onSaveAction = (dto) => OnUpdateCategory(category.CategoryId, category.Adapt<CategoryCreateDto>()), 
+                onSaveAction = async delegate (CategoryCreateDto dto) {
+                    var res =  await OnUpdateCategory(category.CategoryId, dto);
+                    popupWindow.Close();
+                    return res;
+                }, 
                 categoryCreateDto = category.Adapt<CategoryCreateDto>(),
             };
             categoryFrom.btnSave.Content = "Update";
             popupWindow.containerGrid.Children.Add(categoryFrom);
             popupWindow.SizeToContent = SizeToContent.WidthAndHeight;
             popupWindow.ShowDialog();
-            
+            await RefreshCategories.Invoke();
         }
 
        

@@ -36,7 +36,7 @@ namespace Ecommerce.Application.Services.CategoryServices
             if (await _categoryRepo.HasProduct(id))
                 return (false, "Cannot delete category because it has related products.");
 
-            _categoryRepo.delete(category);
+            await _categoryRepo.delete(category);
             await _categoryRepo.saveChanges();
 
             return (true, "Category deleted successfully.");

@@ -12,7 +12,7 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
     public partial class CategoryFromUC : UserControl
     {
         //private CategoryHandler categoryHandler;
-        public Action AfterSaveAction { get; set; } = () => { };
+        public Func<Task> AfterSaveAction { get; set; } = () => Task.CompletedTask;
         public Func<CategoryCreateDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the category from form. Please try again later."));
 
         public CategoryCreateDto categoryCreateDto { get; set; } = null;
@@ -55,9 +55,9 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
                 
                 this.txtname.Clear();
                 ClearRichTextBox(txtdesc);
-                AfterSaveAction.Invoke();
+                await AfterSaveAction.Invoke();
             }
-            MessageBox.Show(res.message);
+            //MessageBox.Show(res.message);
 
         }
 

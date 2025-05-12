@@ -12,8 +12,8 @@ namespace Ecommerce.Application.Services.ProductServices
     {
         Task<ProductDto> CreateProductAsync(ProductCreateDto product);
 
-        Task<ProductDto> UpdateProductAsync(Product product);
-        Task DeleteProductAsync(int id);
+        Task<ProductDto> UpdateProductAsync(int id, ProductCreateDto product);
+        Task<(bool status, string message)> DeleteProductAsync(int id);
         Task<List<ProductDto>> GetAllProducts();
         List<ProductDto> SearchProducts(string keyword);
         List<ProductDto> GetProductsByCategory(int categoryId);

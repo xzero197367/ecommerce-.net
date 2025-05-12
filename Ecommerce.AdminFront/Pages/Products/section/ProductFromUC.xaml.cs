@@ -6,7 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using Autofac;
 using Ecommerce.AdminFront.Classes.AutoFac;
-using Ecommerce.Application.Services.CategoryServices;
+using Ecommerce.AdminFront.Pages.Categories;
+using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
@@ -14,22 +15,21 @@ using Ecommerce.Models;
 namespace Ecommerce.AdminFront.Pages.Products.sections
 {
     /// <summary>
-    /// Interaction logic for CategoryFromUC.xaml
+    /// Interaction logic for ProductFromUC.xaml
     /// </summary>
     public partial class ProductFromUC : UserControl
     {
-        //private readonly IProductServices _productService;
-        private readonly ICategoryServices categoryServices;
+ 
+        public Func<Task> AfterSaveAction { get; set; } = () => Task.CompletedTask;
+        public Func<ProductCreateDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the product from form. Please try again later."));
 
-        public Func<ProductCreateDto, Task<bool>> OnSaveProduct { get; set; } = (p) => Task.FromResult(false);
-
+        public ProductCreateDto productCreateDto { get; set; } = null;
+        private CategoryHandler categoryHandler;
 
         public ProductFromUC()
         {
             InitializeComponent();
-            var container = AutoFac.Inject();
-            //_productService = container.Resolve<IProductServices>();
-            categoryServices = container.Resolve<ICategoryServices>();
+            categoryHandler = CategoryHandler.GetInstance();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -58,34 +58,26 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
 
 
 
-            bool res = await OnSaveProduct?.Invoke(dto);
-            if(res)
+            var res = await onSaveAction.Invoke(dto);
+            if(res.status)
             {
-                MessageBox.Show("success create product");
+            
                 this.txtname.Clear();
                 this.txtprice.Clear();
                 this.txtimage.Clear();
                 this.txtus.Clear();
                 this.txtcat.Effect = null;
                 this.txtDescription.Document.Blocks.Clear();
+                AfterSaveAction?.Invoke();
             }
-            else
-            {
-                MessageBox.Show($"An error occurred ");
-            }
+            MessageBox.Show(res.message);
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //txtcat.ItemsSource =  await categoryServices.GetCategoriesAsync();
-            //txtcat.DisplayMemberPath = "Name";
-            //txtcat.SelectedValuePath = "Id";
-
-            txtcat.ItemsSource = await categoryServices.GetCategoriesAsync();
+            txtcat.ItemsSource = await categoryHandler.GetCategories();
             txtcat.DisplayMemberPath = "Name";
-            txtcat.SelectedValuePath = "CategoryId";
-
-
+            txtcat.SelectedValuePath = "ProductId";
         }
     }
 }

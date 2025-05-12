@@ -12,17 +12,19 @@ namespace WPFModernVerticalMenu.Pages.Categories
     public partial class CategoriesPage : Page
     {
         private CategoryHandler categoryHandler;
-        private List<CategoryDto> categories = new List<CategoryDto>();
+        private ObservableCollection<CategoryDto> categories;
         public CategoriesPage()
         {
             categoryHandler = CategoryHandler.GetInstance();
             InitializeComponent();
             
         }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             categoryForm.AfterSaveAction = refreshCategories;
-            categoryTable.OnUpdateCategory += categoryHandler.onUpdateCategory;
+            categoryTable.OnUpdateCategory = categoryHandler.onUpdateCategory;
+
+            categoryTable.RefreshCategories = refreshCategories;
 
             categoryForm.onSaveAction = async (dto) =>
             {
@@ -35,7 +37,7 @@ namespace WPFModernVerticalMenu.Pages.Categories
                 return res;
             };
             
-            refreshCategories();
+            await refreshCategories();
 
             txtSearch.TextChanged += TxtSearch_TextChanged;
         }
@@ -49,11 +51,11 @@ namespace WPFModernVerticalMenu.Pages.Categories
                 .ToList();
         }
 
-        public async void refreshCategories()
+        public async Task refreshCategories()
         {
-            categories = await categoryHandler.GetCategories();
-            categoryTable.categoryListView.DataContext = categories;
-            DataContext = this;
+            var items = await categoryHandler.GetCategories();
+            categories = new ObservableCollection<CategoryDto>(items);
+            categoryTable.categoryListView.ItemsSource = categories;
         }
 
 
