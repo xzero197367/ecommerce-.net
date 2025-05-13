@@ -25,7 +25,7 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
 
         }
 
-        private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

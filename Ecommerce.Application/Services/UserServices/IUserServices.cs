@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Ecommerce.DTOs;
 using Ecommerce.Models;
 
@@ -17,10 +13,23 @@ namespace Ecommerce.Application.Services.UserServices
 
         Task<UserDto> RegisterAsync(UserCreateDto user);
 
+        Task<UserDto> UpdateUserAsync(int id, UserCreateDto user);
+        
+        Task<List<UserDto>> GetUsersAsync();
+
+        Task<UserDto?> GetUserByIdAsync(int id);
+
+        Task<(bool status, string message)> DeleteUserAsync(int id);
+
+
+
       //  UserDto Register(UserCreateDto user);
 
-        string HashPassword(string password);
+        //string HashPassword(string password);
 
-        bool VerifyPassword(string password, string storedHash);
+        //bool VerifyPassword(string password, string storedHash);
+
+
     }
+
 }

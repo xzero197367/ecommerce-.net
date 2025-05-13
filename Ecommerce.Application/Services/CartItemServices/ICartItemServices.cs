@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.CartItemServices
 {
-    interface ICartItemServices
+    public interface ICartItemServices
     {
-        public void addToCartItem(CartItemCreateDto cartItem);
-        public void removeFromCartItem(int cartItemId);
-        public void updateCartItem(CartItemCreateDto cartItem, int cartItemId);
+        public CartItemDto addToCartItem(CartItemCreateDto cartItem);
+        public Task<(bool status, string message)> removeFromCartItem(int cartItemId);
+        public Task<CartItemDto> updateCartItem(CartItemCreateDto cartItem, int cartItemId);
         public CartItemDto getCartItem(int cartItemId);
         public List<CartItemDto> getAllUserCartItems(int userId);
 

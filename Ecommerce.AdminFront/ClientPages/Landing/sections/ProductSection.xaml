@@ -6,9 +6,22 @@
              xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Landing.sections"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" Padding="5">
-        <StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
+        <ListView x:Name="productsListView">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <components:ProductCardUC />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--<StackPanel>
             <Label FontSize="24">Products</Label>
             <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center">
                 <components:ProductCardUC/>
@@ -18,6 +31,6 @@
                 <components:ProductCardUC/>
                 <components:ProductCardUC/>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
     </ScrollViewer>
 </UserControl>

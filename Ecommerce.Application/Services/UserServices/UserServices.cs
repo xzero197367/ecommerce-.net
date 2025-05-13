@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Ecommerce.Application.Contracts;
 using Ecommerce.DTOs;
@@ -78,8 +79,6 @@ namespace Ecommerce.Application.Services.UserServices
         }
         public async Task<UserDto> RegisterAsync(UserCreateDto user)
         {
-
-
             user.UserPassword = HashPassword(user.UserPassword);
 
 
@@ -91,6 +90,56 @@ namespace Ecommerce.Application.Services.UserServices
 
             return resultUser.Adapt<UserDto>();
         }
+
+        public async Task<UserDto> UpdateUserAsync(int id, UserCreateDto user)
+        {
+            var existingUser = await _userRepo.getById(id);
+            if (existingUser == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            // Update the properties of the existing user
+            existingUser.UserName = user.UserName;
+            existingUser.UserEmail = user.UserEmail;
+            existingUser.UserPassword = HashPassword(user.UserPassword);
+            existingUser.FirstName = user.FirstName;
+            existingUser.LastName = user.LastName;
+            existingUser.UserRole = user.UserRole;
+
+            await _userRepo.saveChanges();
+
+            return existingUser.Adapt<UserDto>();
+        }
+
+        public async Task<List<UserDto>> GetUsersAsync()
+        {
+            var items =  await _userRepo.GetAllUsers();
+
+            return items.Adapt<List<UserDto>>();
+        }
+
+        public async Task<UserDto?> GetUserByIdAsync(int id)
+        {
+            var user = await _userRepo.getById(id);
+            return user?.Adapt<UserDto>();
+        }
+
+        public async Task<(bool status, string message)> DeleteUserAsync(int id)
+        {
+            var user = await _userRepo.getById(id);
+            if (user == null)
+            {
+                return (false, "User not found");
+            }
+
+            await _userRepo.delete(user);
+            await _userRepo.saveChanges();
+
+            return (true, "User deleted successfully");
+        }
+
+
 
 
         public string HashPassword(string password)
@@ -130,7 +179,6 @@ namespace Ecommerce.Application.Services.UserServices
             return true;
         }
 
-
-
+       
     }
 }

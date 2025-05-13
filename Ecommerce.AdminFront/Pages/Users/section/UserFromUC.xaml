@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
     <Border Padding="5" BorderBrush="{DynamicResource PrimaryBackgroundColor}" BorderThickness="2" CornerRadius="10" Background="{DynamicResource SecundaryBackgroundColor}" Width="200">
         <StackPanel Orientation="Vertical">
@@ -24,7 +25,9 @@
                 <ComboBoxItem>Admin</ComboBoxItem>
                 <ComboBoxItem>Client</ComboBoxItem>
             </ComboBox>
-            <ui:Button HorizontalAlignment="Stretch" Appearance="Primary" Click="Button_Click">Save</ui:Button>
+
+
+            <ui:Button x:Name="btnSave" HorizontalAlignment="Stretch" Appearance="Primary" Click="Button_Click">Save</ui:Button>
         </StackPanel>
     </Border>
 </UserControl>

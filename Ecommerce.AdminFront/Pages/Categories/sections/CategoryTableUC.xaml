@@ -65,6 +65,8 @@
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>
+                    
+                    
                 
                 </ui:GridView>
             </ui:ListView.View>

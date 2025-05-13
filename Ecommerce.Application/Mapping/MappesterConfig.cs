@@ -12,7 +12,7 @@ namespace Ecommerce.Application.Mapping
             CategoryMapConfig.Config();
             OrderMapConfig.Config();
             OrderDetailsMapConfig.Config();
-
+            ProductMapConfig.Config();
       
         }
     }

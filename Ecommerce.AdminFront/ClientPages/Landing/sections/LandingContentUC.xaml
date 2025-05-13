@@ -13,7 +13,7 @@
                 <sections:CategorySection/>
                 <sections:ProductSection/>
                
-                <!-- <sections:FooterUC/> -->
+                 <sections:FooterUC/> 
             
             </StackPanel>
         </ScrollViewer>

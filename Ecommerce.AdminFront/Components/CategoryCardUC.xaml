@@ -8,7 +8,7 @@
              mc:Ignorable="d">
     <ui:Card Margin="5">
         <StackPanel MaxWidth="200">
-            <ui:Image Source="../../Resources/ecommerce.jpeg" Width="200" CornerRadius="20"></ui:Image>
+            <ui:Image Source="/Resources/ecommerce.jpeg" Width="200" CornerRadius="20"></ui:Image>
             <Label FontSize="24" FontWeight="Bold" Content="{Binding Name}" Margin="0 5"></Label>
             <ui:TextBlock  Width="200" TextWrapping="Wrap" Text="{Binding Description}"></ui:TextBlock>
         </StackPanel>

@@ -1,11 +1,27 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Ecommerce.AdminFront.ClientPages.Product;
+using Ecommerce.DTOs;
 
 namespace Ecommerce.AdminFront.Components;
 
 public partial class ProductCardUC : UserControl
 {
+
+
+    public ProductDto Product
+    {
+        get { return (ProductDto)GetValue(ProductProperty); }
+        set { SetValue(ProductProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Product.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProductProperty =
+        DependencyProperty.Register("Product", typeof(ProductDto), typeof(ProductCardUC), new PropertyMetadata(null));
+
+
+
+
     public ProductCardUC()
     {
         InitializeComponent();

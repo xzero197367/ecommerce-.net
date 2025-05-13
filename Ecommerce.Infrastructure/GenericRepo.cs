@@ -1,5 +1,6 @@
 
 using System.Linq.Expressions;
+using System.Windows;
 using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +20,16 @@ namespace Ecommerce.Infrastructure
 
         public async Task<T> create(T entity)
         {
-            var createdEntity = await _context.AddAsync(entity);
-            await _context.SaveChangesAsync();
-            return createdEntity.Entity;
+            try
+            {
+                var createdEntity = await _dbSet.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return createdEntity.Entity;
+            }
+            catch(DbUpdateException ex)
+            {
+                throw new Exception($"Error creating entity, {ex.Message}", ex);
+            }
         }
         public async Task<T> update(T entity)
         {

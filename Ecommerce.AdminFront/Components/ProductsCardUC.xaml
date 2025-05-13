@@ -10,13 +10,13 @@
     <ui:Card Margin="5"  Width="250">
         <StackPanel>
             <!-- Product Image -->
-            <ui:Image Source="../Resources/products/product1.jpg" CornerRadius="20" 
+            <ui:Image Source="{Binding ImagePath}" CornerRadius="20" 
                       Stretch="UniformToFill" Height="200" MaxWidth="200"  />
 
-            <TextBlock Text="$99.99" FontSize="16" HorizontalAlignment="Right" Foreground="Green" Margin="10,5" />
+            <TextBlock Text="{Binding Price}" FontSize="16" HorizontalAlignment="Right" Foreground="Green" Margin="10,5" />
             <!-- Product Info -->
-            <TextBlock Text="Product Name" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" Margin="10,0" />
-            <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." TextWrapping="Wrap"
+            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" Margin="10,0" />
+            <TextBlock Text="{Binding Description}" TextWrapping="Wrap"
                        FontSize="12" HorizontalAlignment="Left" Margin="10,5" />
 
           

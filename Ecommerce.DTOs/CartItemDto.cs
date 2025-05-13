@@ -5,6 +5,7 @@ namespace Ecommerce.DTOs
     {
         public int ProductID { get; set; }
         public int Quantity { get; set; }
+        public int UserID { get; set; }
         public DateTime DateAdded { get; set; }
     }
    public class CartItemDto

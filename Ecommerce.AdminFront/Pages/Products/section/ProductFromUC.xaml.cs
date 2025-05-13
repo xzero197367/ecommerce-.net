@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using Autofac;
-using Ecommerce.AdminFront.Classes.AutoFac;
+using System.Windows.Media.Imaging;
 using Ecommerce.AdminFront.Pages.Categories;
-using Ecommerce.Application.Services.ProductServices;
-using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
+using Microsoft.Win32;
 
 namespace Ecommerce.AdminFront.Pages.Products.sections
 {
@@ -25,18 +23,40 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
 
         public ProductCreateDto productCreateDto { get; set; } = null;
         private CategoryHandler categoryHandler;
+        private string imagePath = "";
 
         public ProductFromUC()
         {
             InitializeComponent();
             categoryHandler = CategoryHandler.GetInstance();
         }
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtcat.ItemsSource = await categoryHandler.GetCategories();
+            txtcat.DisplayMemberPath = "Name";
+            txtcat.SelectedValuePath = "CategoryId";
+
+            if(productCreateDto != null)
+            {
+                txtname.Text = productCreateDto.Name;
+                txtprice.Text = productCreateDto.Price.ToString();
+                //txtimage.Text = productCreateDto.ImagePath;
+                txtus.Text = productCreateDto.UnitsInStock.ToString();
+                txtcat.SelectedValue = productCreateDto.CategoryID;
+                txtDescription.Document.Blocks.Clear();
+                txtDescription.AppendText(productCreateDto.Description); // Assuming you want to set the description in the TextBox
+            }
+            else
+            {
+                txtcat.SelectedIndex = 0;
+            }
+        }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtname.Text) ||
                 string.IsNullOrWhiteSpace(txtprice.Text) ||
-                string.IsNullOrWhiteSpace(txtimage.Text) ||
+                //string.IsNullOrWhiteSpace(txtimage.Text) ||
                 string.IsNullOrWhiteSpace(txtus.Text) ||
                 string.IsNullOrWhiteSpace(txtcat.Text)
                 )
@@ -45,39 +65,90 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                 return;
             }
 
-            var dto = new ProductCreateDto
+            CategoryDto category = txtcat.SelectedItem as CategoryDto;
+
+            productCreateDto = new ProductCreateDto
             {
                 Name = txtname.Text.Trim(),
                 Price = decimal.TryParse(txtprice.Text, out var price) ? price : 0,
                 UnitsInStock = int.TryParse(txtus.Text, out var stock) ? stock : 0,
-                ImagePath = txtimage.Text,
-                CategoryID = (int)(txtcat.SelectedValue ?? 0),
+                ImagePath = imagePath ?? "Resources/ecommerce.jpeg",
+                CategoryID = category.CategoryId,
                 Description = new TextRange(txtDescription.Document.ContentStart, txtDescription.Document.ContentEnd).Text.Trim()
             };
 
 
 
 
-            var res = await onSaveAction.Invoke(dto);
+            var res = await onSaveAction.Invoke(productCreateDto);
             if(res.status)
             {
             
                 this.txtname.Clear();
                 this.txtprice.Clear();
-                this.txtimage.Clear();
+                //this.txtimage.Clear();
+                ImagePreview.Source = null;
                 this.txtus.Clear();
                 this.txtcat.Effect = null;
                 this.txtDescription.Document.Blocks.Clear();
                 AfterSaveAction?.Invoke();
             }
-            MessageBox.Show(res.message);
+            else
+            {
+                MessageBox.Show(res.message);
+            }
+            
         }
 
-        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void txtcat_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            txtcat.ItemsSource = await categoryHandler.GetCategories();
-            txtcat.DisplayMemberPath = "Name";
-            txtcat.SelectedValuePath = "ProductId";
+            //var item = (sender as ComboBox)?.SelectedItem as CategoryDto;
+            //MessageBox.Show(item?.CategoryId.ToString() ?? "No category selected");
+            //MessageBox.Show(txtcat.SelectedValue.ToString() + " " + txtcat.Text);
+        }
+
+        private void PickImage_Click(object sender, RoutedEventArgs e)
+        {
+            // Step 1: Open File Dialog
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.jpeg, *.png, *.bmp)|*.jpg;*.jpeg;*.png;*.bmp",
+                Title = "Select an Image"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string originalPath = openFileDialog.FileName;
+
+                // Step 2: Display Image Preview
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(originalPath);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                ImagePreview.Source = bitmap;
+
+                // Step 3: Copy image to output folder
+                string outputFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+                Directory.CreateDirectory(outputFolder);
+
+                string fileName = System.IO.Path.GetFileName(originalPath);
+                string newPath = System.IO.Path.Combine(outputFolder, fileName);
+
+                File.Copy(originalPath, newPath, true);
+
+                // Step 4: Get relative path starting from output folder
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string relativePath = newPath.Replace(baseDir, ""); // now it's like "Images/myImage.jpg"
+
+                // Step 5: Show both
+                PathText.Text = $"Original: {originalPath}\nRelative: {relativePath}";
+
+                imagePath = relativePath;
+
+                // Step 4: Show new path
+                //PathText.Text = $"Original: {originalPath}\nCopied to: {newPath}";
+            }
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using Autofac;
-using Ecommerce.AdminFront.Classes.AutoFac;
+﻿
 using Ecommerce.AdminFront.Pages.Products;
-using Ecommerce.Application.Contracts;
-using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -26,12 +23,13 @@ namespace WPFModernVerticalMenu.Pages.Products
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshProducts();
-            productForm.OnSaveProduct += OnSaveProduct;
+            productForm.onSaveAction += productHandler.CreateProduct;
+            productForm.AfterSaveAction = RefreshProducts;
             txtSearch.TextChanged += OnSearchTextChanged;
 
         }
 
-        private async void RefreshProducts()
+        private async Task RefreshProducts()
         {
             var items = await productHandler.GetProducts();
             products = new ObservableCollection<ProductDto>(items);
@@ -41,19 +39,6 @@ namespace WPFModernVerticalMenu.Pages.Products
         private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
         {
             
-        }
-
-        private async Task<bool> OnSaveProduct(ProductCreateDto product)
-        {
-            var res = await productHandler.CreateProduct(product);
-            if (res.status)
-            {
-                RefreshProducts();
-                PopoverPopup.IsOpen = false;
-
-                return true;
-            }
-            return false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

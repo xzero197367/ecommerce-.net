@@ -51,12 +51,16 @@
                     <ui:GridViewColumn Header="Actions" Width="100">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label 
-                                    Width="200" >
-                                    <Label.Content>
-                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=ProductsCount}"/>
-                                    </Label.Content>
-                                </Label>
+                                <StackPanel
+                         Orientation="Horizontal"
+                         HorizontalAlignment="Center"
+                         >
+                                    <ui:Button Icon="{ui:SymbolIcon Edit24}"
+Click="edit_product_click"/>
+                                    <ui:Button Icon="{ui:SymbolIcon Delete24}"
+                                    Click="delete_product_click"/>
+
+                                </StackPanel>
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>

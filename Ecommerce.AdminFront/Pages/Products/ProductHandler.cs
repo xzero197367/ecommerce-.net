@@ -62,7 +62,7 @@ namespace Ecommerce.AdminFront.Pages.Products
             }
             catch (Exception ex)
             {
-                return (false, "something went wrong");
+                return (false, $"${ex.Message}");
             }
         }
 

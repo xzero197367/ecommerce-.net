@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Ecommerce.DTOs;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Ecommerce.AdminFront.Components;
@@ -7,7 +8,21 @@ public partial class CartCardUC : UserControl
 {
     private int _quantity = 1; // Default quantity
     private double _price = 99.99; // Product price
-    
+
+
+
+    public CartItemDto CartItem
+    {
+        get { return (CartItemDto)GetValue(CartItemProperty); }
+        set { SetValue(CartItemProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for CartItem.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CartItemProperty =
+        DependencyProperty.Register("CartItem", typeof(CartItemDto), typeof(CartCardUC), new PropertyMetadata(null));
+
+
+
     public CartCardUC()
     {
         InitializeComponent();

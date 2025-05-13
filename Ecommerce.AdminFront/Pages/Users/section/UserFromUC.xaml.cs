@@ -1,25 +1,33 @@
 ﻿
 using System.Windows;
 using System.Windows.Controls;
-using Autofac;
-using Ecommerce.AdminFront.Classes.AutoFac;
-using Ecommerce.Application.Services.UserServices;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
 
 namespace Ecommerce.AdminFront.Pages.Users.sections
 {
-    /// <summary>
-    /// Interaction logic for CategoryFromUC.xaml
-    /// </summary>
+  
     public partial class UserFromUC : UserControl
     {
-        private readonly IUserServices usersercices;
+        public Func<Task> AfterSaveAction { get; set; } = () => Task.CompletedTask;
+        public Func<UserCreateDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the user from form. Please try again later."));
+
+        public UserCreateDto userCreateDto { get; set; } = null;
+
         public UserFromUC()
         {
             InitializeComponent();
-            var container = AutoFac.Inject();
-            usersercices = container.Resolve<IUserServices>();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(userCreateDto != null) {
+                txtfname.Text = userCreateDto.FirstName;
+                txtlname.Text = userCreateDto.LastName;
+                txtemail.Text = userCreateDto.UserEmail;
+                txtpass.Text = userCreateDto.UserPassword;
+                txtrole.Text = userCreateDto.UserRole.ToString();
+            }
         }
 
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -51,16 +59,25 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
             };
 
            
-                var result = await usersercices.RegisterAsync(dto); 
-                if (result == null)
+                var result = await  onSaveAction.Invoke(dto);
+                if (result.status)
                 {
-                    MessageBox.Show("User creation failed.");
+                    //MessageBox.Show("User creation successfully.");
+                    this.txtfname.Clear();
+                    this.txtlname.Clear();
+                    this.txtemail.Clear();
+                    this.txtpass.Clear();
+                    this.txtrole.SelectedIndex = -1;
+                    await AfterSaveAction.Invoke();
+
                     return;
                 }
 
-                MessageBox.Show("User created successfully.");
+                MessageBox.Show(result.message);
               
             
         }
+
+        
     }
 }

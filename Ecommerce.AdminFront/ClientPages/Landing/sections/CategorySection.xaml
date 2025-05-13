@@ -8,7 +8,7 @@
              xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" Padding="5">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" Padding="5" Margin="10 0">
         <ListView x:Name="categoryListView" ItemsSource="{Binding}">
             <ListView.ItemTemplate>
                 <DataTemplate>

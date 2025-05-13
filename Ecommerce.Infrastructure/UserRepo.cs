@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Ecommerce.Application.Contracts;
 using Ecommerce.Context;
 using Ecommerce.Models;
@@ -18,6 +15,11 @@ namespace Ecommerce.Infrastructure
         {
             _context = context;
             _dbSet = context.Set<User>();
+        }
+
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<List<User>> GetAllAdminUsers()
