@@ -25,6 +25,18 @@ public partial class TopBar : UserControl
         InitializeComponent();
     }
 
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        if(MainWindowEntry.currentUser != null)
+        {
+            authStack.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            authStack.Visibility = Visibility.Collapsed;
+        }
+    }
+
     private void go_dashboard_btn_click(object sender, RoutedEventArgs e)
     {
         dashboard = new DashboardLayoutUC();
@@ -80,4 +92,6 @@ public partial class TopBar : UserControl
         LandingPageUC.BodyGrid.Children.Add(page);
         button.IsEnabled = true;
     }
+
+   
 }

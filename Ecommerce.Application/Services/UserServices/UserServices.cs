@@ -2,17 +2,19 @@
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Ecommerce.Application.Contracts;
+using Ecommerce.Application.Services.GenericServices;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Application.Services.UserServices
 {
-    public class UserServices : IUserServices
+    public class UserServices: GenericServices<UserDto, UserCreateDto, User>, IUserServices
 
     {
         private readonly IUserRepo _userRepo;
-        public UserServices(IUserRepo userRepo)
+        public UserServices(IUserRepo userRepo): base(userRepo)
         {
             _userRepo = userRepo;
         }
@@ -25,8 +27,7 @@ namespace Ecommerce.Application.Services.UserServices
             }
 
             // Find user by email using ToLower()
-            User? user = (await _userRepo.getAll())
-                .FirstOrDefault(u => u.UserEmail.ToLower() == email.ToLower());
+            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower()).FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -52,30 +53,26 @@ namespace Ecommerce.Application.Services.UserServices
             string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             return Regex.IsMatch(email, emailPattern);
         }
-        public UserDto? Login(string email, string password)
+        public async Task<UserDto?> Login(string email, string password)
         {
             // Corrected the usage of _userRepo to call the appropriate method
-            User? user = _userRepo.getAll()
-                                  .Result
-                                  .FirstOrDefault(u => u.UserEmail == email && u.UserPassword == password);
+            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower()).FirstOrDefaultAsync();
 
             return user is not null ? user.Adapt<UserDto>() : null;
         }
 
 
-        public UserDto Register(UserCreateDto user)
+        public async Task<UserDto> Register(UserCreateDto user)
         {
 
             user.UserPassword = HashPassword(user.UserPassword);
             User user1 = user.Adapt<User>();
 
 
-            User resultUser = _userRepo.create(user1).Result;
+            User resultUser = await _userRepo.AddAsync(user1);
+            await _userRepo.SaveChangesAsync();
 
-            UserDto u = resultUser.Adapt<UserDto>();
-            _userRepo.saveChanges();
-
-            return u;
+            return resultUser.Adapt<UserDto>();
         }
         public async Task<UserDto> RegisterAsync(UserCreateDto user)
         {
@@ -85,62 +82,13 @@ namespace Ecommerce.Application.Services.UserServices
             User userEntity = user.Adapt<User>();
 
 
-            User resultUser = await _userRepo.create(userEntity);
-            await _userRepo.saveChanges();
+            User resultUser = await _userRepo.AddAsync(userEntity);
+            await _userRepo.SaveChangesAsync();
 
             return resultUser.Adapt<UserDto>();
         }
 
-        public async Task<UserDto> UpdateUserAsync(int id, UserCreateDto user)
-        {
-            var existingUser = await _userRepo.getById(id);
-            if (existingUser == null)
-            {
-                throw new Exception("User not found");
-            }
-
-            // Update the properties of the existing user
-            existingUser.UserName = user.UserName;
-            existingUser.UserEmail = user.UserEmail;
-            existingUser.UserPassword = HashPassword(user.UserPassword);
-            existingUser.FirstName = user.FirstName;
-            existingUser.LastName = user.LastName;
-            existingUser.UserRole = user.UserRole;
-
-            await _userRepo.saveChanges();
-
-            return existingUser.Adapt<UserDto>();
-        }
-
-        public async Task<List<UserDto>> GetUsersAsync()
-        {
-            var items =  await _userRepo.GetAllUsers();
-
-            return items.Adapt<List<UserDto>>();
-        }
-
-        public async Task<UserDto?> GetUserByIdAsync(int id)
-        {
-            var user = await _userRepo.getById(id);
-            return user?.Adapt<UserDto>();
-        }
-
-        public async Task<(bool status, string message)> DeleteUserAsync(int id)
-        {
-            var user = await _userRepo.getById(id);
-            if (user == null)
-            {
-                return (false, "User not found");
-            }
-
-            await _userRepo.delete(user);
-            await _userRepo.saveChanges();
-
-            return (true, "User deleted successfully");
-        }
-
-
-
+    
 
         public string HashPassword(string password)
         {

@@ -23,7 +23,20 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
 
         public ProductCreateDto productCreateDto { get; set; } = null;
         private CategoryHandler categoryHandler;
-        private string imagePath = "";
+
+
+
+        public string ImagePath
+        {
+            get { return (string)GetValue(ImagePathProperty); }
+            set { SetValue(ImagePathProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ImagePath.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ImagePathProperty =
+            DependencyProperty.Register("ImagePath", typeof(string), typeof(ProductFromUC), new PropertyMetadata(""));
+
+
 
         public ProductFromUC()
         {
@@ -38,6 +51,8 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
 
             if(productCreateDto != null)
             {
+                ImagePath = productCreateDto.ImagePath;
+                displayImageFromDB(ImagePath);
                 txtname.Text = productCreateDto.Name;
                 txtprice.Text = productCreateDto.Price.ToString();
                 //txtimage.Text = productCreateDto.ImagePath;
@@ -72,7 +87,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                 Name = txtname.Text.Trim(),
                 Price = decimal.TryParse(txtprice.Text, out var price) ? price : 0,
                 UnitsInStock = int.TryParse(txtus.Text, out var stock) ? stock : 0,
-                ImagePath = imagePath ?? "Resources/ecommerce.jpeg",
+                ImagePath = ImagePath ?? "Resources/ecommerce.jpeg",
                 CategoryID = category.CategoryId,
                 Description = new TextRange(txtDescription.Document.ContentStart, txtDescription.Document.ContentEnd).Text.Trim()
             };
@@ -107,6 +122,31 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
             //MessageBox.Show(txtcat.SelectedValue.ToString() + " " + txtcat.Text);
         }
 
+        private void displayImageFromDB(string relativePath)
+        {
+     
+            string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(fullPath, UriKind.Absolute);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+
+            ImagePreview.Source = bitmap;
+        
+        }
+
+        private void displayImage(string originalPath)
+        {
+            // Step 2: Display Image Preview
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(originalPath);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            ImagePreview.Source = bitmap;
+        }
         private void PickImage_Click(object sender, RoutedEventArgs e)
         {
             // Step 1: Open File Dialog
@@ -119,14 +159,8 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
             if (openFileDialog.ShowDialog() == true)
             {
                 string originalPath = openFileDialog.FileName;
+                displayImage(originalPath);
 
-                // Step 2: Display Image Preview
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(originalPath);
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-                ImagePreview.Source = bitmap;
 
                 // Step 3: Copy image to output folder
                 string outputFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
@@ -144,11 +178,16 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                 // Step 5: Show both
                 PathText.Text = $"Original: {originalPath}\nRelative: {relativePath}";
 
-                imagePath = relativePath;
+                ImagePath = relativePath;
 
                 // Step 4: Show new path
                 //PathText.Text = $"Original: {originalPath}\nCopied to: {newPath}";
             }
+        }
+
+        private void btnCancell_Click(object sender, RoutedEventArgs e)
+        {
+            AfterSaveAction?.Invoke();
         }
     }
 }

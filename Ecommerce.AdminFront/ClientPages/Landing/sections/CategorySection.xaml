@@ -8,8 +8,12 @@
              xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" Padding="5" Margin="10 0">
-        <ListView x:Name="categoryListView" ItemsSource="{Binding}">
+
+        <ListView x:Name="categoryListView" ItemsSource="{Binding}"  
+                  Padding="10 5"  BorderBrush="Transparent" Margin="20 10"
+                  Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          PreviewMouseWheel="HorizontalListView_PreviewMouseWheel">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <components:CategoryCardUC Category="{Binding}"/>
@@ -30,5 +34,4 @@
                 <components:CategoryCardUC/>
             </StackPanel>
         </StackPanel>-->
-    </ScrollViewer>
 </UserControl>

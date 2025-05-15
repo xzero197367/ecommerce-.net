@@ -18,7 +18,34 @@ namespace Ecommerce.Infrastructure
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T> create(T entity)
+        public async Task<T> GetByIdAsync(int id)
+        {
+            try
+            {
+                var entity = await _dbSet.FindAsync(id);
+                if (entity == null)
+                {
+                    throw new Exception($"Entity with id {id} not found");
+                }
+                return entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception($"Error retrieving entity, {ex.Message}", ex);
+            }
+        }
+
+        public IQueryable<T> GetAllAsync()
+        {
+            return _dbSet.AsQueryable();
+        }
+
+        public IQueryable<T> GetWithConditionAsync(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Where(predicate);
+        }
+
+        public async Task<T> AddAsync(T entity)
         {
             try
             {
@@ -26,43 +53,59 @@ namespace Ecommerce.Infrastructure
                 await _context.SaveChangesAsync();
                 return createdEntity.Entity;
             }
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
-                throw new Exception($"Error creating entity, {ex.Message}", ex);
+                throw new Exception($"Error adding entity, {ex.Message}", ex);
             }
         }
-        public async Task<T> update(T entity)
-        {
-            var updatedEntity = _context.Update(entity);
-            await _context.SaveChangesAsync();
-            return updatedEntity.Entity;
-        }
-        public async Task<T> delete(T entity)
-        {
-            var deletedEntity = _context.Remove(entity);
-            await _context.SaveChangesAsync();
 
-            return deletedEntity.Entity;
-        }
-        public async Task<IQueryable<T>> getAll()
+        public async Task<T> UpdateAsync(T entity)
         {
-            return _dbSet.AsQueryable();
+            try
+            {
+                var updatedEntity = _dbSet.Update(entity);
+                await _context.SaveChangesAsync();
+                return updatedEntity.Entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception($"Error updating entity, {ex.Message}", ex);
+            }
         }
 
-        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
+        public async Task<bool> SaveChangesAsync()
         {
-            return await _dbSet.FirstOrDefaultAsync(predicate);
-        }
-        public async Task<T?> getById(int id)
-        {
-            return await _dbSet.FindAsync(id);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception($"Error saving changes, {ex.Message}", ex);
+            }
         }
 
-        public async Task saveChanges()
-        {
-            await _context.SaveChangesAsync();
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            try
+            {
+                var entity = await _dbSet.FindAsync(id);
+                if (entity == null)
+                {
+                    throw new Exception($"Entity with id {id} not found");
+                }
+                _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception($"Error deleting entity, {ex.Message}", ex);
+            }
         }
+
 
 
     }

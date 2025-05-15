@@ -18,6 +18,8 @@ namespace Ecommerce.AdminFront.Pages.Categories
 
         private static CategoryHandler? _instance;
 
+       
+
         public static CategoryHandler GetInstance()
         {
             if(_instance == null)
@@ -27,13 +29,15 @@ namespace Ecommerce.AdminFront.Pages.Categories
             return _instance;
         }
 
+        public ICategoryServices CategoryService => _categoryService;
+
 
         public async Task<(bool status, string message)> DeleteCategory(int id)
         {
             try
             {
-                var res = await _categoryService.DeleteCategoryAsync(id);
-                return res;
+                var res = await _categoryService.DeleteAsync(id);
+                return (res, res ? "Category deleted successfully" : "something went wrong");
             }
             catch (Exception ex)
             {
@@ -43,7 +47,13 @@ namespace Ecommerce.AdminFront.Pages.Categories
 
         public async Task<(bool status, string message)> onUpdateCategory(int id, CategoryCreateDto dto)
         {
-            var res = await _categoryService.UpdateCategoryAsync(id, dto);
+            var category = new CategoryDto
+            {
+                CategoryId = id,
+                Name = dto.Name,
+                Description = dto.Description
+            };
+            var res = await _categoryService.UpdateAsync(category);
 
             if (res == null)
             {
@@ -56,7 +66,7 @@ namespace Ecommerce.AdminFront.Pages.Categories
         {
             try
             {
-               await _categoryService.CreateCategoryAsync(dto);
+               await _categoryService.AddAsync(dto);
                return (true, "Category created successfully");
             }
             catch (Exception ex)
@@ -67,7 +77,7 @@ namespace Ecommerce.AdminFront.Pages.Categories
 
         public async Task<List<CategoryDto>> GetCategories()
         {
-            return  await _categoryService.GetCategoriesAsync();
+            return  await _categoryService.GetAllAsync();
         }
 
     }

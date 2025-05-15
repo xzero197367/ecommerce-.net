@@ -33,8 +33,8 @@ namespace Ecommerce.AdminFront.Pages.Users
         {
             try
             {
-                var res = await userServices.DeleteUserAsync(id);
-                return res;
+                var res = await userServices.DeleteAsync(id);
+                return (res, res ? "Category deleted successfully" : "something went wrong");
             }
             catch (Exception ex)
             {
@@ -44,7 +44,17 @@ namespace Ecommerce.AdminFront.Pages.Users
 
         public async Task<(bool status, string message)> onUpdateUser(int id, UserCreateDto dto)
         {
-            var res = await userServices.UpdateUserAsync(id, dto);
+            var user = new UserDto()
+            {
+                UserID = id,
+                UserName = dto.UserName,
+                UserPassword = dto.UserPassword,
+                UserEmail = dto.UserEmail,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                UserRole = dto.UserRole
+            };
+            var res = await userServices.UpdateAsync(user);
 
             if (res == null)
             {
@@ -68,7 +78,7 @@ namespace Ecommerce.AdminFront.Pages.Users
 
         public async Task<List<UserDto>> GetUsers()
         {
-            return await userServices.GetUsersAsync();
+            return await userServices.GetAllAsync();
         }
 
 

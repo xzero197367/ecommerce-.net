@@ -32,8 +32,8 @@ namespace Ecommerce.AdminFront.Pages.CartItems
         {
             try
             {
-                var res = await cartItemServices.removeFromCartItem(id);
-                return res;
+                var res = await cartItemServices.DeleteAsync(id);
+                return (res, res ? "CartItem deleted successfully" : "something went wrong");
             }
             catch (Exception ex)
             {
@@ -43,7 +43,15 @@ namespace Ecommerce.AdminFront.Pages.CartItems
 
         public async Task<(bool status, string message)> onUpdateCartItem(int id, CartItemCreateDto dto)
         {
-            var res = await cartItemServices.updateCartItem(dto, id);
+            var cartItem = new CartItemDto()
+            {
+                CartItemID = id,
+                ProductID = dto.ProductID,
+                Quantity = dto.Quantity,
+                UserID = MainWindowEntry.currentUser.UserID,
+                DateAdded = DateTime.Now
+            };
+            var res = await cartItemServices.UpdateAsync(cartItem);
 
             if (res == null)
             {
@@ -56,7 +64,7 @@ namespace Ecommerce.AdminFront.Pages.CartItems
         {
             try
             {
-                cartItemServices.addToCartItem(dto);
+                await cartItemServices.AddAsync(dto);
                 return (true, "CartItem created successfully");
             }
             catch (Exception ex)
@@ -67,7 +75,7 @@ namespace Ecommerce.AdminFront.Pages.CartItems
 
         public async Task<List<CartItemDto>> GetCartItems()
         {
-            return cartItemServices.getAllUserCartItems(MainWindowEntry.currentUser.UserID);
+            return await cartItemServices.GetWithConditionAsync((cartItem)=>cartItem.UserID == MainWindowEntry.currentUser.UserID);
         }
 
 

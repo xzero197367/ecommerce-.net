@@ -10,18 +10,40 @@ namespace Ecommerce.Application.Mapping
     {
         public static void Config()
         {
-            TypeAdapterConfig<OrderDetailsCreateDto, OrderDetail>.NewConfig()
+            // Create DTO → Entity
+            TypeAdapterConfig<OrderDetailsCreateDto, OrderDetail>
+                .NewConfig()
                 .Map(dest => dest.OrderID, src => src.OrderID)
                 .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.Quantity, src => src.Quantity);
 
-            TypeAdapterConfig<OrderDetailsDto, OrderDetail>.NewConfig()
+            // Full DTO → Entity
+            TypeAdapterConfig<OrderDetailsDto, OrderDetail>
+                .NewConfig()
+                .Map(dest => dest.OrderDetailID, src => src.OrderDetailID)
                 .Map(dest => dest.OrderID, src => src.OrderID)
                 .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.Quantity, src => src.Quantity)
+                .Map(dest => dest.Order, src => src.Order != null
+                    ? src.Order.Adapt<Order>()
+                    : null)
+                .Map(dest => dest.Product, src => src.Product != null
+                    ? src.Product.Adapt<Product>()
+                    : null);
+
+            // Optional: Entity → DTO if needed
+            TypeAdapterConfig<OrderDetail, OrderDetailsDto>
+                .NewConfig()
                 .Map(dest => dest.OrderDetailID, src => src.OrderDetailID)
-                .Map(dest => dest.Order, src => src.Order.Adapt<Order>())
-                .Map(dest => dest.Product, src => src.Product.Adapt<Product>());
+                .Map(dest => dest.OrderID, src => src.OrderID)
+                .Map(dest => dest.ProductId, src => src.ProductId)
+                .Map(dest => dest.Quantity, src => src.Quantity)
+                .Map(dest => dest.Order, src => src.Order != null
+                    ? src.Order.Adapt<OrderDto>()
+                    : null)
+                .Map(dest => dest.Product, src => src.Product != null
+                    ? src.Product.Adapt<ProductDto>()
+                    : null);
         }
     }
 }

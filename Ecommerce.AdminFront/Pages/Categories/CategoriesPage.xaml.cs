@@ -52,6 +52,8 @@ namespace WPFModernVerticalMenu.Pages.Categories
 
         public async Task refreshCategories()
         {
+            PopoverPopup.IsOpen = false;
+            PopoverPopup.StaysOpen = false;
             var items = await categoryHandler.GetCategories();
             categories = new ObservableCollection<CategoryDto>(items);
             categoryTable.categoryListView.ItemsSource = categories;
@@ -61,12 +63,14 @@ namespace WPFModernVerticalMenu.Pages.Categories
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             PopoverPopup.IsOpen = true;
+            PopoverPopup.StaysOpen = true;
         }
 
         // Close popover when the close button is clicked
         private void ClosePopover(object sender, RoutedEventArgs e)
         {
             PopoverPopup.IsOpen = false;
+            PopoverPopup.StaysOpen = false;
         }
 
       

@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Components"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:product="clr-namespace:Ecommerce.AdminFront.ClientPages.Product"
+             xmlns:product="clr-namespace:Ecommerce.AdminFront.ClientPages.Product" xmlns:convertors="clr-namespace:Ecommerce.AdminFront.Controls.Convertors"
              mc:Ignorable="d">
+
     <ui:Card Margin="5"  Width="250">
         <StackPanel>
             <!-- Product Image -->
-            <ui:Image Source="{Binding ImagePath}" CornerRadius="20" 
+            <ui:Image Source="{Binding ImagePath, Converter={StaticResource RelativePathToImageConverter}}" CornerRadius="20" 
                       Stretch="UniformToFill" Height="200" MaxWidth="200"  />
 
             <TextBlock Text="{Binding Price}" FontSize="16" HorizontalAlignment="Right" Foreground="Green" Margin="10,5" />

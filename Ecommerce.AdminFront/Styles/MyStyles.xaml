@@ -8,4 +8,7 @@
     <!--     <Setter Property="Background" Value="DarkGreen" /> -->
     <!--     <Setter Property="Foreground" Value="White" /> -->
     <!-- </Style> -->
+    <Style TargetType="AccessText">
+        <Setter Property="FontFamily" Value="Comic Sans MS" />
+    </Style>
 </ResourceDictionary>

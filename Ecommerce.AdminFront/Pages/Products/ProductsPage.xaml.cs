@@ -24,16 +24,20 @@ namespace WPFModernVerticalMenu.Pages.Products
         {
             RefreshProducts();
             productForm.onSaveAction += productHandler.CreateProduct;
-            productForm.AfterSaveAction = RefreshProducts;
+            productForm.AfterSaveAction += RefreshProducts;
+            productTable.OnUpdateProduct += productHandler.onUpdateProduct;
+            productTable.OnDeleteProduct += productHandler.DeleteProduct;
             txtSearch.TextChanged += OnSearchTextChanged;
 
         }
 
         private async Task RefreshProducts()
         {
+            PopoverPopup.IsOpen = false;
+            PopoverPopup.StaysOpen = false;
             var items = await productHandler.GetProducts();
             products = new ObservableCollection<ProductDto>(items);
-            productTable.productListView.DataContext = products;
+            productTable.productListView.ItemsSource = products;
         }
 
         private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -44,6 +48,7 @@ namespace WPFModernVerticalMenu.Pages.Products
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             PopoverPopup.IsOpen = true;
+            PopoverPopup.StaysOpen = true;
         }
 
         

@@ -28,13 +28,15 @@ namespace Ecommerce.AdminFront.Pages.Products
             return _instance;
         }
 
+        public IProductServices ProductService => productServices;
+
 
         public async Task<(bool status, string message)> DeleteProduct(int id)
         {
             try
             {
-                var res = await productServices.DeleteProductAsync(id);
-                return res;
+                var res = await productServices.DeleteAsync(id);
+                return (res, res ? "Category deleted successfully" : "something went wrong");
             }
             catch (Exception ex)
             {
@@ -44,7 +46,17 @@ namespace Ecommerce.AdminFront.Pages.Products
 
         public async Task<(bool status, string message)> onUpdateProduct(int id, ProductCreateDto dto)
         {
-            var res = await productServices.UpdateProductAsync(id, dto);
+            var product = new ProductDto()
+            {
+                ProductId = id,
+                Name = dto.Name,
+                Description = dto.Description,
+                Price = dto.Price,
+                UnitsInStock = dto.UnitsInStock,
+                ImagePath = dto.ImagePath,
+                CategoryID = dto.CategoryID
+            };
+            var res = await productServices.UpdateAsync(product);
 
             if (res == null)
             {
@@ -57,7 +69,7 @@ namespace Ecommerce.AdminFront.Pages.Products
         {
             try
             {
-                await productServices.CreateProductAsync(dto);
+                await productServices.AddAsync(dto);
                 return (true, "Product created successfully");
             }
             catch (Exception ex)
@@ -68,7 +80,7 @@ namespace Ecommerce.AdminFront.Pages.Products
 
         public async Task<List<ProductDto>> GetProducts()
         {
-            return await productServices.GetAllProducts();
+            return await productServices.GetAllAsync();
         }
 
 

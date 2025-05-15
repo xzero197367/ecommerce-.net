@@ -79,6 +79,9 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
             richTextBox.Document.Blocks.Clear();
         }
 
-        
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            AfterSaveAction.Invoke();
+        }
     }
 }

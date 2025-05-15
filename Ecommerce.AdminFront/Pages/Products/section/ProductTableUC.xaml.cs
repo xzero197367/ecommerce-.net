@@ -42,13 +42,18 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                     popupWindow.Close();
                     return res;
                 },
+                AfterSaveAction = async () =>
+                {
+                    popupWindow.Close();
+                    await RefreshProducts.Invoke();
+                },
                 productCreateDto = product.Adapt<ProductCreateDto>(),
             };
             productFrom.btnSave.Content = "Update";
             popupWindow.containerGrid.Children.Add(productFrom);
             popupWindow.SizeToContent = SizeToContent.WidthAndHeight;
             popupWindow.ShowDialog();
-            await RefreshProducts.Invoke();
+            //await RefreshProducts.Invoke();
         }
     }
 }

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Landing.sections"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d">
     <ui:Card  Padding="0">
         <!-- TOP BAR -->
@@ -30,7 +31,9 @@
             <!-- Right Icons -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0" >
            
-                <Border Padding="5" CornerRadius="5" BorderBrush="Gray" BorderThickness="2">
+                <Border Padding="5" CornerRadius="5" BorderBrush="Gray" BorderThickness="2"
+                        x:Name="authStack"
+                        >
                     <StackPanel Orientation="Horizontal">
                         <ui:Button Content="Login" Appearance="Primary" ToolTip="Settings" Tag="Login"
                                    Click="BtnHomeIcon_OnClick"/>
@@ -38,6 +41,11 @@
                                    Click="BtnHomeIcon_OnClick"/>
                     </StackPanel>
                 </Border>
+                
+                
+                <ui:Button x:Name="btnUserPopup" Icon="{ui:SymbolIcon Person24}" Margin="5 0"></ui:Button>
+                
+                
                 <components:ThemeToggleUC />
                 <ui:DropDownButton Content="Hello" Icon="{ui:SymbolIcon Person24}" Margin="10 0">
                     <ui:DropDownButton.Flyout>
