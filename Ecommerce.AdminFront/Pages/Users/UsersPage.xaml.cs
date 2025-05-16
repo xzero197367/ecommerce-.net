@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using Autofac;
+using Ecommerce.AdminFront.ClientPages.Landing.sections;
 using Ecommerce.AdminFront.Pages.Users;
 using Ecommerce.DTOs;
 
@@ -28,6 +29,7 @@ namespace WPFModernVerticalMenu.Pages.Users
         private async void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             userForm.AfterSaveAction = refreshUsers;
+            
             userTable.OnUpdateUser = userHandler.onUpdateUser;
 
             userTable.RefreshUsers = refreshUsers;

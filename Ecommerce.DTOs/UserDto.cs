@@ -12,6 +12,7 @@ namespace Ecommerce.DTOs
         public string UserPassword { set; get; }
         public string UserEmail { set; get; }
         public string FirstName { set; get; }
+        public string ImagePath { set; get; } = string.Empty; // Store the relative path of the image
         public string LastName { set; get; }
         public UserRole UserRole { get; set; }
     }
@@ -22,6 +23,7 @@ namespace Ecommerce.DTOs
         public int UserID { set; get; }
         public string UserName { set; get; }
         public string UserPassword { set; get; }
+        public string ImagePath { set; get; } = string.Empty; // Store the relative path of the image
         public string UserEmail { set; get; }
         public string FirstName { set; get; }
         public string LastName { set; get; }

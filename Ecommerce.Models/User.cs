@@ -15,6 +15,7 @@ namespace Ecommerce.Models
 
         // Hash the Password:
         public string UserPassword { set; get; }
+        public string ImagePath { set; get; } = string.Empty; // Store the relative path of the image
 
         [EmailAddress]
         public string UserEmail { set; get; }

@@ -6,6 +6,7 @@ using Ecommerce.AdminFront.ClientPages.Settings;
 using Ecommerce.AdminFront.Components;
 using Ecommerce.AdminFront.Pages;
 using Ecommerce.AdminFront.Pages.Auth;
+using Ecommerce.AdminFront.Pages.Users;
 
 namespace Ecommerce.AdminFront.ClientPages.Landing.sections;
 
@@ -13,6 +14,8 @@ public partial class TopBar : UserControl
 {
     private DashboardLayoutUC dashboard;
     private PopoverUC popover;
+    public static TopBar Instance { get; private set; } = null;
+    private UserHandler userHandler;
 
     private UIElement page;
     
@@ -22,18 +25,25 @@ public partial class TopBar : UserControl
     // private SettingPageUC settingPage;
     public TopBar()
     {
+       userHandler = UserHandler.GetInstance();
         InitializeComponent();
+        Instance = this;
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        if(MainWindowEntry.currentUser != null)
+        profilePopup.popup = popup;
+        
+        if (MainWindowEntry.currentUser != null)
         {
-            authStack.Visibility = Visibility.Visible;
+          
+            authStack.Visibility = Visibility.Collapsed;
+            btnUserPopup.Visibility = Visibility.Visible;
         }
         else
         {
-            authStack.Visibility = Visibility.Collapsed;
+            authStack.Visibility = Visibility.Visible;
+            btnUserPopup.Visibility = Visibility.Collapsed;
         }
     }
 
@@ -93,5 +103,23 @@ public partial class TopBar : UserControl
         button.IsEnabled = true;
     }
 
-   
+    private void btnUserPopup_Click(object sender, RoutedEventArgs e)
+    {
+        if (popup.IsOpen)
+        {
+            popup.IsOpen = false;
+            if (profilePopup.OnSaveAction == null)
+            {
+                profilePopup.OnSaveAction += async (dto) =>
+                {
+                    var res = await userHandler.onUpdateUser(MainWindowEntry.currentUser.UserID, dto);
+                    return res;
+                };
+            }
+        }
+        else
+        {
+            popup.IsOpen = true;
+        }
+    }
 }

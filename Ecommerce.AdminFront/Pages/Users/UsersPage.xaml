@@ -4,8 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-        xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections"
+        xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections" 
       mc:Ignorable="d" 
+      Background="{ui:ThemeResource}"
       d:DesignHeight="450" d:DesignWidth="800"
       Unloaded="Page_Unloaded"
       Title="Dashboard">
@@ -19,7 +20,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ui:TextBlock Text="Orders" FontSize="30" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
+            <ui:TextBlock Text="Users" FontSize="30" Foreground="{DynamicResource PrimaryTextColor}" FontWeight="Bold"
              VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
             <Grid Grid.Row="1" ClipToBounds="False" 
@@ -41,7 +42,10 @@
                     <!-- Popup (Popover) -->
                     <Popup x:Name="PopoverPopup" AllowsTransparency="True" Placement="MousePoint" IsOpen="False" StaysOpen="False">
                         <Border Background="{DynamicResource PrimaryBackgroundColor}" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Padding="10">
-                            <sections:UserFromUC x:Name="userForm"/>
+                            <Grid>
+                                <sections:UserFromUC x:Name="userForm"  Visibility="Collapsed"/>
+                                <sections:ProfilePopup x:Name="profilePopup"/>
+                            </Grid>
                         </Border>
                     </Popup>
                 </Grid>

@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.Pages.Users.sections.ProfilePopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:local="Ecommerce.AdminFront.Pages.Users.section"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" >
+    <Border Padding="5" Background="{ui:ThemeResource}" CornerRadius="10">
+        <StackPanel Margin="5" >
+            <Grid VerticalAlignment="Center" Margin="10">
+                <ui:Button x:Name="btnEditInfo" Click="btnEditInfo_Click" Icon="{ui:SymbolIcon Edit24}" VerticalAlignment="Top"
+                            HorizontalAlignment="Left"></ui:Button>
+                <ui:Image CornerRadius="20" x:Name="ImagePreview" MinWidth="100" Height="200"
+                  Source="{Binding ImagePath, Converter={StaticResource RelativePathToImageConverter}}"
+                  Stretch="Uniform" />
+                <ui:Button x:Name="btnChangeImage" Appearance="Secondary" Click="PickImage_Click" VerticalAlignment="Top"
+      HorizontalAlignment="Right"
+      Icon="{ui:SymbolIcon DrawImage24}" Margin="0,0,0,10" />
+                <TextBlock Visibility="Collapsed" MaxWidth="250" x:Name="PathText" TextWrapping="Wrap" Margin="0,10,0,0" />
+            </Grid>
+
+            <StackPanel Orientation="Vertical">
+                <ui:TextBox x:Name="txtFname" Text="{Binding User.FirstName, Mode=TwoWay}" />
+                <ui:TextBox x:Name="txtLname" Text="{Binding User.LastName, Mode=TwoWay}" Margin="0 5" />
+                <ui:TextBox x:Name="txtUsername" Text="{Binding User.UserName, Mode=TwoWay}"  />
+               
+                <ui:TextBox x:Name="txtEmail" Text="{Binding User.UserEmail, Mode=TwoWay}"   Margin="0 5"/>
+            
+            
+            </StackPanel>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <ui:Button x:Name="btnSave" Visibility="Collapsed" Appearance="Primary"
+   Click="btnSave_Click" HorizontalAlignment="Stretch" Margin="5">Save</ui:Button>
+                <ui:Button x:Name="btnCancel" Click="btnCancel_Click" Grid.Column="1" Visibility="Collapsed" Appearance="Caution"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>

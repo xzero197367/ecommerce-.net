@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Landing.sections"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
+             xmlns:section="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections" xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d">
     <ui:Card  Padding="0">
@@ -43,7 +43,10 @@
                 </Border>
                 
                 
-                <ui:Button x:Name="btnUserPopup" Icon="{ui:SymbolIcon Person24}" Margin="5 0"></ui:Button>
+                <ui:Button Click="btnUserPopup_Click" x:Name="btnUserPopup" Icon="{ui:SymbolIcon Person24}" Margin="5 0"></ui:Button>
+                <Popup IsOpen="False" x:Name="popup"> 
+                    <section:ProfilePopup x:Name="profilePopup"/>
+                </Popup>
                 
                 
                 <components:ThemeToggleUC />
@@ -63,7 +66,7 @@
                         </ContextMenu>
                     </ui:DropDownButton.Flyout>
                 </ui:DropDownButton>
-                <ui:Button Appearance="Info" Content="Dashboard" Click="go_dashboard_btn_click"></ui:Button>
+                <ui:Button Appearance="Info" Visibility="Collapsed" Content="Dashboard" Click="go_dashboard_btn_click"></ui:Button>
             </StackPanel>
         </Grid>
     </ui:Card>

@@ -83,10 +83,10 @@
     <Compile Update="Pages\Products\section\ProductFromUC.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Users\section\UserTableUC.xaml.cs">
+    <Compile Update="Pages\Users\sections\UserTableUC.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Users\section\UserFromUC.xaml.cs">
+    <Compile Update="Pages\Users\sections\UserFromUC.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

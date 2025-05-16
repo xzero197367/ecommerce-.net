@@ -4,6 +4,7 @@ using Ecommerce.DTOs;
 using Ecommerce.Application.Services.UserServices;
 using Ecommerce.AdminFront.Classes.AutoFac;
 using Autofac;
+using System.Windows;
 
 namespace Ecommerce.AdminFront.Pages.Auth
 {
@@ -32,6 +33,9 @@ namespace Ecommerce.AdminFront.Pages.Auth
         {
             MainWindowEntry.currentUser = user;
             landingContentUC = new LandingContentUC();
+            TopBar.Instance.authStack.Visibility = Visibility.Collapsed;
+            TopBar.Instance.btnUserPopup.Visibility = Visibility.Visible;
+            TopBar.Instance.profilePopup.User = MainWindowEntry.currentUser;
             LandingPageUC.BodyGrid.Children.Clear();
             LandingPageUC.BodyGrid.Children.Add(landingContentUC);
         }

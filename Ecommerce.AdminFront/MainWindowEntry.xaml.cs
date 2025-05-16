@@ -9,7 +9,7 @@ namespace Ecommerce.AdminFront;
 public partial class MainWindowEntry : Window
 {
     public static Grid MainGrid { get; private set; }
-    public static UserDto currentUser { get; set; }
+    public static UserDto currentUser { get; set; } = null;
     public MainWindowEntry()
     {
         InitializeComponent();
