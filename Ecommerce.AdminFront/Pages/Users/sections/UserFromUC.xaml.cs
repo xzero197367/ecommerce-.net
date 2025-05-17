@@ -1,18 +1,19 @@
-﻿
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
 
 namespace Ecommerce.AdminFront.Pages.Users.sections
 {
-  
     public partial class UserFromUC : UserControl
     {
         public Func<Task> AfterSaveAction { get; set; } = () => Task.CompletedTask;
-        public Func<UserCreateDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the user from form. Please try again later."));
 
-        public UserCreateDto userCreateDto { get; set; } = null;
+        public Func<UserDto, Task<(bool status, string message)>> onSaveAction { get; set; } =
+            (dto) => Task.FromResult((false,
+                "Error occurred while saving the user from form. Please try again later."));
+
+        public UserDto userCreateDto { get; set; } = null;
 
         public UserFromUC()
         {
@@ -21,12 +22,15 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if(userCreateDto != null) {
+            if (userCreateDto != null)
+            {
+                txtpass.Visibility = Visibility.Collapsed;
                 txtfname.Text = userCreateDto.FirstName;
                 txtlname.Text = userCreateDto.LastName;
                 txtemail.Text = userCreateDto.UserEmail;
                 txtpass.Text = userCreateDto.UserPassword;
                 txtrole.Text = userCreateDto.UserRole.ToString();
+                txtusername.Text = userCreateDto.UserName;
             }
         }
 
@@ -48,36 +52,47 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
                 return;
             }
 
-            var dto = new UserCreateDto
+
+            if (userCreateDto != null)
             {
-                FirstName = txtfname.Text.Trim(),
-                LastName = txtlname.Text.Trim(),
-                UserName = txtfname.Text.Trim() + txtlname.Text.Trim(),
-                UserEmail = txtemail.Text.Trim(),
-                UserPassword = txtpass.Text.Trim(),
-                UserRole = userRole
-            };
-
-           
-                var result = await  onSaveAction.Invoke(dto);
-                if (result.status)
+                userCreateDto.FirstName = txtfname.Text.Trim();
+                userCreateDto.LastName = txtlname.Text.Trim();
+                userCreateDto.UserName = txtfname.Text.Trim() + txtlname.Text.Trim();
+                userCreateDto.UserEmail = txtemail.Text.Trim();
+                // userCreateDto.UserPassword = txtpass.Text.Trim();
+                userCreateDto.UserRole = userRole;
+            }
+            else
+            {
+                userCreateDto= new UserDto
                 {
-                    //MessageBox.Show("User creation successfully.");
-                    this.txtfname.Clear();
-                    this.txtlname.Clear();
-                    this.txtemail.Clear();
-                    this.txtpass.Clear();
-                    this.txtrole.SelectedIndex = -1;
-                    await AfterSaveAction.Invoke();
+                    FirstName = txtfname.Text.Trim(),
+                    LastName = txtlname.Text.Trim(),
+                    UserName = txtfname.Text.Trim() + txtlname.Text.Trim(),
+                    UserEmail = txtemail.Text.Trim(),
+                    UserPassword = txtpass.Text.Trim(),
+                    UserRole = userRole
+                };
+            }
 
-                    return;
-                }
-
-                MessageBox.Show(result.message);
-              
             
-        }
 
-        
+
+            var result = await onSaveAction.Invoke(userCreateDto);
+            if (result.status)
+            {
+                //MessageBox.Show("User creation successfully.");
+                this.txtfname.Clear();
+                this.txtlname.Clear();
+                this.txtemail.Clear();
+                this.txtpass.Clear();
+                this.txtrole.SelectedIndex = -1;
+                await AfterSaveAction.Invoke();
+
+                return;
+            }
+
+            MessageBox.Show(result.message);
+        }
     }
 }

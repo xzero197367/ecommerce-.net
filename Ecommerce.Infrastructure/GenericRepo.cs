@@ -50,7 +50,9 @@ namespace Ecommerce.Infrastructure
             try
             {
                 var createdEntity = await _dbSet.AddAsync(entity);
+                createdEntity.State = EntityState.Added; // Set the state to Added
                 await _context.SaveChangesAsync();
+                createdEntity.State = EntityState.Detached; // Detach the entity from the context
                 return createdEntity.Entity;
             }
             catch (DbUpdateException ex)
@@ -59,12 +61,34 @@ namespace Ecommerce.Infrastructure
             }
         }
 
+        public async Task<bool> DeleteWithConditionAsync(Expression<Func<T, bool>> predicate)
+        {
+            try
+            {
+                var entities = _dbSet.Where(predicate);
+                if (!entities.Any())
+                {
+                    throw new Exception($"No entities found matching the condition");
+                }
+                _dbSet.RemoveRange(entities);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception($"Error deleting entities, {ex.Message}", ex);
+            }
+        }
+
         public async Task<T> UpdateAsync(T entity)
         {
             try
             {
                 var updatedEntity = _dbSet.Update(entity);
+                updatedEntity.State = EntityState.Modified; // Set the state to Modified
                 await _context.SaveChangesAsync();
+                updatedEntity.State = EntityState.Detached; // Detach the entity from the context
+             
                 return updatedEntity.Entity;
             }
             catch (DbUpdateException ex)

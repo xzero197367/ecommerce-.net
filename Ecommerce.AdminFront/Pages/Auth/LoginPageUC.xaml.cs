@@ -13,7 +13,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
         private AuthHandler authHandler;
         public LoginPageUC()
         {
-            authHandler = new AuthHandler();
+            authHandler = AuthHandler.Instance;
             InitializeComponent();
         }
 

@@ -2,7 +2,9 @@
 using Ecommerce.AdminFront.Classes.AutoFac;
 using Ecommerce.Application.Services.CartItemServices;
 using Ecommerce.DTOs;
+using Ecommerce.Models;
 using System;
+using System.Linq.Expressions;
 
 
 namespace Ecommerce.AdminFront.Pages.CartItems
@@ -41,17 +43,10 @@ namespace Ecommerce.AdminFront.Pages.CartItems
             }
         }
 
-        public async Task<(bool status, string message)> onUpdateCartItem(int id, CartItemCreateDto dto)
+        public async Task<(bool status, string message)> onUpdateCartItem(CartItemDto dto)
         {
-            var cartItem = new CartItemDto()
-            {
-                CartItemID = id,
-                ProductID = dto.ProductID,
-                Quantity = dto.Quantity,
-                UserID = MainWindowEntry.currentUser.UserID,
-                DateAdded = DateTime.Now
-            };
-            var res = await cartItemServices.UpdateAsync(cartItem);
+            
+            var res = await cartItemServices.UpdateAsync(dto);
 
             if (res == null)
             {
@@ -60,7 +55,7 @@ namespace Ecommerce.AdminFront.Pages.CartItems
             return (true, "CartItem updated successfully");
         }
 
-        public async Task<(bool status, string message)> CreateCartItem(CartItemCreateDto dto)
+        public async Task<(bool status, string message)> CreateCartItem(CartItemDto dto)
         {
             try
             {
@@ -76,6 +71,11 @@ namespace Ecommerce.AdminFront.Pages.CartItems
         public async Task<List<CartItemDto>> GetCartItems()
         {
             return await cartItemServices.GetWithConditionAsync((cartItem)=>cartItem.UserID == MainWindowEntry.currentUser.UserID);
+        }
+
+        public async Task<bool> DeleteWithCondition(Expression<Func<CartItem, bool>> condition)
+        {
+            return await cartItemServices.DeleteWithConditionAsync(condition);
         }
 
 

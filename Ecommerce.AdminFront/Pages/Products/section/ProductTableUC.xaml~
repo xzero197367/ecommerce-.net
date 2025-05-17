@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.Pages.Products.sections.ProductTableUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Products.sections" xmlns:convertors="clr-namespace:Ecommerce.AdminFront.Controls.Convertors"
+             mc:Ignorable="d" >
+
+    
+    <Grid>
+        <ui:ListView x:Name="productListView"  Background="Transparent" ItemsSource="{Binding}">
+            <ui:ListView.View>
+                <ui:GridView>
+
+                    <ui:GridViewColumn Header="Image" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Width="200" Height="150" Source="{Binding ImagePath, Converter={StaticResource RelativePathToImageConverter}}">
+                                </Image>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
+                    <ui:GridViewColumn Header="Name" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label 
+                                 Width="200" >
+                                    <Label.Content>
+                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=Name}"/>
+                                    </Label.Content>
+                                </Label>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+                    <ui:GridViewColumn Header="Description" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label 
+                                    Width="200" >
+                                    <Label.Content>
+                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=Description}"/>
+                                    </Label.Content>
+                                </Label>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
+                    <ui:GridViewColumn Header="Price" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label 
+                                    Width="200" >
+                                    <Label.Content>
+                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=Price}"/>
+                                    </Label.Content>
+                                </Label>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
+                    <ui:GridViewColumn Header="UnitsInStock" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label 
+                  Width="200" >
+                                    <Label.Content>
+                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=UnitsInStock}"/>
+                                    </Label.Content>
+                                </Label>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
+                    <ui:GridViewColumn Header="Category" Width="200">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label 
+                  Width="200" >
+                                    <Label.Content>
+                                        <AccessText TextWrapping="Wrap" Text="{Binding Path=Category.Name}"/>
+                                    </Label.Content>
+                                </Label>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
+                   
+
+                    <ui:GridViewColumn Header="Actions" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel
+                         Orientation="Horizontal"
+                         HorizontalAlignment="Center"
+                         >
+                                    <ui:Button Icon="{ui:SymbolIcon Edit24}"
+Click="edit_product_click"/>
+                                    <ui:Button Icon="{ui:SymbolIcon Delete24}"
+                                    Click="delete_product_click"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
+                </ui:GridView>
+            </ui:ListView.View>
+        </ui:ListView>  
+    </Grid>
+</UserControl>

@@ -24,9 +24,7 @@
                        >
             </ui:Button>
 
-            <!-- Search Box -->
-            <ui:AutoSuggestBox PlaceholderText="Search products..." Grid.Column="1" MaxWidth="300"
-                               Margin="20,10" VerticalAlignment="Center"/>
+          
 
             <!-- Right Icons -->
             <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0" >
@@ -56,17 +54,25 @@
                             <MenuItem Icon="{ui:SymbolIcon Home28}" Header="Home" Tag="Home"
                                       Click="BtnHomeIcon_OnClick" />
                             <MenuItem Icon="{ui:SymbolIcon Cart24}" Header="Cart" Tag="Cart"
+                                      Visibility="Collapsed" x:Name="cartMenuItem" 
                                       Click="BtnHomeIcon_OnClick" />
                             <MenuItem Icon="{ui:SymbolIcon Person28}" Header="Account"  Margin="5 0"
                                       Click="BtnHomeIcon_OnClick"
+                                      x:Name="profileMenuItem"
+                                      Visibility="Collapsed"
                                       Tag="Profile" />
                             
-                            <MenuItem Icon="{ui:SymbolIcon Settings28}" ToolTip="Settings" Width="40" Height="40" Tag="Settings"
+                            <MenuItem Icon="{ui:SymbolIcon Settings28}" Header="Settings"  Tag="Settings" Visibility="Collapsed" x:Name="settingMenuItem"
+                                      Click="BtnHomeIcon_OnClick"/>
+
+                     
+                            <MenuItem Icon="{ui:SymbolIcon SignOut24}" Header="Log Out" Tag="LogOut"
+                                      x:Name="logOutMenuItem" Visibility="Collapsed"
                                       Click="BtnHomeIcon_OnClick"/>
                         </ContextMenu>
                     </ui:DropDownButton.Flyout>
                 </ui:DropDownButton>
-                <ui:Button Appearance="Info" Visibility="Collapsed" Content="Dashboard" Click="go_dashboard_btn_click"></ui:Button>
+                <ui:Button x:Name="btnDashboard" Appearance="Info" Visibility="Collapsed" Content="Dashboard" Click="go_dashboard_btn_click"></ui:Button>
             </StackPanel>
         </Grid>
     </ui:Card>

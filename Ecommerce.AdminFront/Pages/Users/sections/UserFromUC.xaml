@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Background="{ui:ThemeResource ApplicationBackgroundBrush}"
              xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" >

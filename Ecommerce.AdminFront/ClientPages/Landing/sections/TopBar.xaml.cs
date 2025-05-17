@@ -7,6 +7,8 @@ using Ecommerce.AdminFront.Components;
 using Ecommerce.AdminFront.Pages;
 using Ecommerce.AdminFront.Pages.Auth;
 using Ecommerce.AdminFront.Pages.Users;
+using Ecommerce.DTOs;
+using Ecommerce.Models;
 
 namespace Ecommerce.AdminFront.ClientPages.Landing.sections;
 
@@ -16,13 +18,10 @@ public partial class TopBar : UserControl
     private PopoverUC popover;
     public static TopBar Instance { get; private set; } = null;
     private UserHandler userHandler;
+    private AuthHandler authHandler = AuthHandler.Instance;
 
     private UIElement page;
     
-    // private LandingContentUC landingContent;
-    // private CartPageUC cartPage;
-    // private ProfilePageUC profilePage;
-    // private SettingPageUC settingPage;
     public TopBar()
     {
        userHandler = UserHandler.GetInstance();
@@ -36,7 +35,7 @@ public partial class TopBar : UserControl
         
         if (MainWindowEntry.currentUser != null)
         {
-          
+            if(MainWindowEntry.currentUser.UserRole == UserRole.Admin) btnDashboard.Visibility = Visibility.Visible;
             authStack.Visibility = Visibility.Collapsed;
             btnUserPopup.Visibility = Visibility.Visible;
         }
@@ -89,6 +88,9 @@ public partial class TopBar : UserControl
             case "Register":
                 page = new RegisterPageUC();
                 break;
+            case "LogOut":
+                 authHandler.Logout();
+                return;
             default:
                 return;
         }
@@ -107,12 +109,15 @@ public partial class TopBar : UserControl
     {
         if (popup.IsOpen)
         {
+            // popup.StaysOpen = false;
             popup.IsOpen = false;
             if (profilePopup.OnSaveAction == null)
             {
                 profilePopup.OnSaveAction += async (dto) =>
                 {
-                    var res = await userHandler.onUpdateUser(MainWindowEntry.currentUser.UserID, dto);
+                    UserDto user = dto;
+                    user.UserID = MainWindowEntry.currentUser.UserID;
+                    var res = await userHandler.onUpdateUser(user);
                     return res;
                 };
             }
@@ -120,6 +125,7 @@ public partial class TopBar : UserControl
         else
         {
             popup.IsOpen = true;
+            // popup.StaysOpen = true;
         }
     }
 }

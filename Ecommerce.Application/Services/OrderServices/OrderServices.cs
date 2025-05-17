@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿
 using Ecommerce.Application.Contracts;
 using Ecommerce.Application.Services.GenericServices;
 using Ecommerce.DTOs;
@@ -12,7 +7,7 @@ using Mapster;
 
 namespace Ecommerce.Application.Services.OrderServices
 {
-    public class OrderServices: GenericServices<OrderDto, OrderCreateDto, Order>, IOrderServices
+    public class OrderServices: GenericServices<OrderDto, Order>, IOrderServices
     {
         private readonly IOrderRepo orderRepo;
 

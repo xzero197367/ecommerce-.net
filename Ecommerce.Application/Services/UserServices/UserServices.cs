@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using Ecommerce.Application.Contracts;
@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Application.Services.UserServices
 {
-    public class UserServices: GenericServices<UserDto, UserCreateDto, User>, IUserServices
+    public class UserServices: GenericServices<UserDto, User>, IUserServices
 
     {
         private readonly IUserRepo _userRepo;
@@ -27,7 +27,8 @@ namespace Ecommerce.Application.Services.UserServices
             }
 
             // Find user by email using ToLower()
-            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower()).FirstOrDefaultAsync();
+            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower())
+                .FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -40,9 +41,8 @@ namespace Ecommerce.Application.Services.UserServices
             {
                 return null;
             }
-
-            // Map to DTO
             return user.Adapt<UserDto>();
+           
         }
         public static bool IsValidEmail(string email)
         {
@@ -56,13 +56,15 @@ namespace Ecommerce.Application.Services.UserServices
         public async Task<UserDto?> Login(string email, string password)
         {
             // Corrected the usage of _userRepo to call the appropriate method
-            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower()).FirstOrDefaultAsync();
+            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower())
+                // .Include(u=>u.CartItems)
+                .FirstOrDefaultAsync();
 
             return user is not null ? user.Adapt<UserDto>() : null;
         }
 
 
-        public async Task<UserDto> Register(UserCreateDto user)
+        public async Task<UserDto> Register(UserDto user)
         {
 
             user.UserPassword = HashPassword(user.UserPassword);
@@ -74,18 +76,19 @@ namespace Ecommerce.Application.Services.UserServices
 
             return resultUser.Adapt<UserDto>();
         }
-        public async Task<UserDto> RegisterAsync(UserCreateDto user)
+        public async Task<UserDto> RegisterAsync(UserDto user1)
         {
-            user.UserPassword = HashPassword(user.UserPassword);
+            user1.UserPassword = HashPassword(user1.UserPassword);
 
 
-            User userEntity = user.Adapt<User>();
+            User userEntity = user1.Adapt<User>();
 
 
-            User resultUser = await _userRepo.AddAsync(userEntity);
+            User user = await _userRepo.AddAsync(userEntity);
             await _userRepo.SaveChangesAsync();
 
-            return resultUser.Adapt<UserDto>();
+            return user.Adapt<UserDto>();
+           
         }
 
     

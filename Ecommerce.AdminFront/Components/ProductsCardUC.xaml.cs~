@@ -1,0 +1,75 @@
+﻿using System.Windows;
+using System.Windows.Controls;
+using Ecommerce.AdminFront.ClientPages.Landing;
+using Ecommerce.AdminFront.ClientPages.Product;
+using Ecommerce.AdminFront.Pages.Auth;
+using Ecommerce.AdminFront.Pages.CartItems;
+using Ecommerce.AdminFront.Pages.Users;
+using Ecommerce.DTOs;
+using Mapster;
+
+namespace Ecommerce.AdminFront.Components;
+
+public partial class ProductCardUC : UserControl
+{
+
+    private ProductDetailsUC productDetails;
+    private CartItemHandler cartItemHandler = CartItemHandler.GetInstance();
+    public ProductDto Product
+    {
+        get { return (ProductDto)GetValue(ProductProperty); }
+        set { SetValue(ProductProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Product.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProductProperty =
+        DependencyProperty.Register("Product", typeof(ProductDto), typeof(ProductCardUC), new PropertyMetadata(null));
+
+
+
+
+    public ProductCardUC()
+    {
+        InitializeComponent();
+    }
+    
+    private async void OpenDialogButton_Click(object sender, RoutedEventArgs e)
+    {
+        PopoverUC popover = new PopoverUC(onClose: () =>
+        {
+            MainWindowEntry.MainGrid.Children.RemoveAt(1);
+        });
+        productDetails = new ProductDetailsUC(){Product = Product};
+        popover.ContainerGrid.Children.Add(productDetails);
+        MainWindowEntry.MainGrid.Children.Add(popover);
+      
+    }
+
+    private void ProductCardUC_OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (MainWindowEntry.currentUser != null)
+        {
+            if(MainWindowEntry.cartItems.Any(c=>c.ProductID == Product.ProductId)) btnAddToCart.Visibility = Visibility.Collapsed;
+        }
+    }
+
+    private async void BtnAddToCart_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (MainWindowEntry.currentUser == null)
+        {
+            if (MessageBox.Show( "You must be logged in to add items to your cart.", "Login First", MessageBoxButton.YesNo) ==
+                MessageBoxResult.Yes
+               )
+            {
+                LandingPageUC.BodyGrid.Children.Clear();
+                LandingPageUC.BodyGrid.Children.Add(new LoginPageUC());
+            }
+            return;
+        }
+        CartItemCreateDto cartItemCreateDto = new CartItemCreateDto()
+            {ProductID = Product.ProductId, Quantity = 1, UserID = MainWindowEntry.currentUser.UserID};
+        await cartItemHandler.CreateCartItem(cartItemCreateDto);
+        MainWindowEntry.cartItems = await cartItemHandler.GetCartItems();
+        btnAddToCart.Visibility = Visibility.Collapsed;
+    }
+}

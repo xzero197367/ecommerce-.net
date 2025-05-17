@@ -12,8 +12,8 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical" Width="200">
                     <ui:TextBox x:Name="txtname"  PlaceholderText="Name"></ui:TextBox>
-                    <ui:TextBox x:Name="txtprice"  Margin="0 5" PlaceholderText="Price"></ui:TextBox>
-                    <ui:TextBox x:Name="txtus"  PlaceholderText="UnitsInStock"></ui:TextBox>
+                    <ui:NumberBox x:Name="txtprice"  Margin="0 5" PlaceholderText="Price"></ui:NumberBox>
+                    <ui:NumberBox x:Name="txtus"  PlaceholderText="UnitsInStock"></ui:NumberBox>
                     <!--<ui:TextBox x:Name="txtimage"  Margin="0 5"  PlaceholderText="ImagePath"></ui:TextBox>-->
                     <ComboBox x:Name="txtcat" ItemsSource="{Binding}"
       SelectionChanged="txtcat_SelectionChanged"

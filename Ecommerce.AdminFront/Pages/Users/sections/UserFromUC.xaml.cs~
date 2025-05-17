@@ -1,0 +1,97 @@
+﻿using System.Windows;
+using System.Windows.Controls;
+using Ecommerce.DTOs;
+using Ecommerce.Models;
+
+namespace Ecommerce.AdminFront.Pages.Users.sections
+{
+    public partial class UserFromUC : UserControl
+    {
+        public Func<Task> AfterSaveAction { get; set; } = () => Task.CompletedTask;
+
+        public Func<UserDto, Task<(bool status, string message)>> onSaveAction { get; set; } =
+            (dto) => Task.FromResult((false,
+                "Error occurred while saving the user from form. Please try again later."));
+
+        public UserDto userCreateDto { get; set; } = null;
+
+        public UserFromUC()
+        {
+            InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (userCreateDto != null)
+            {
+                txtpass.Visibility = Visibility.Collapsed;
+                txtfname.Text = userCreateDto.FirstName;
+                txtlname.Text = userCreateDto.LastName;
+                txtemail.Text = userCreateDto.UserEmail;
+                txtpass.Text = userCreateDto.UserPassword;
+                txtrole.Text = userCreateDto.UserRole.ToString();
+            }
+        }
+
+        private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtfname.Text) ||
+                string.IsNullOrEmpty(txtlname.Text) ||
+                string.IsNullOrEmpty(txtemail.Text) ||
+                string.IsNullOrEmpty(txtpass.Text) ||
+                string.IsNullOrEmpty(txtrole.Text))
+            {
+                MessageBox.Show("Please fill all fields");
+                return;
+            }
+
+            if (!Enum.TryParse<UserRole>(txtrole.Text.Trim(), true, out var userRole))
+            {
+                MessageBox.Show("Invalid role. Please enter a valid role (e.g., 'Client' or 'Admin').");
+                return;
+            }
+
+
+            if (userCreateDto != null)
+            {
+                userCreateDto.FirstName = txtfname.Text.Trim();
+                userCreateDto.LastName = txtlname.Text.Trim();
+                userCreateDto.UserName = txtfname.Text.Trim() + txtlname.Text.Trim();
+                userCreateDto.UserEmail = txtemail.Text.Trim();
+                // userCreateDto.UserPassword = txtpass.Text.Trim();
+                userCreateDto.UserRole = userRole;
+            }
+            else
+            {
+                userCreateDto= new UserDto
+                {
+                    FirstName = txtfname.Text.Trim(),
+                    LastName = txtlname.Text.Trim(),
+                    UserName = txtfname.Text.Trim() + txtlname.Text.Trim(),
+                    UserEmail = txtemail.Text.Trim(),
+                    UserPassword = txtpass.Text.Trim(),
+                    UserRole = userRole
+                };
+            }
+
+            
+
+
+            var result = await onSaveAction.Invoke(userCreateDto);
+            if (result.status)
+            {
+                //MessageBox.Show("User creation successfully.");
+                this.txtfname.Clear();
+                this.txtlname.Clear();
+                this.txtemail.Clear();
+                this.txtpass.Clear();
+                this.txtrole.SelectedIndex = -1;
+                await AfterSaveAction.Invoke();
+
+                return;
+            }
+
+            MessageBox.Show(result.message);
+        }
+    }
+}

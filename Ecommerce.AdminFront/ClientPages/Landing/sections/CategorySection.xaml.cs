@@ -4,14 +4,18 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Autofac;
 using Ecommerce.AdminFront.Classes.AutoFac;
+using Ecommerce.AdminFront.ClientPages.Product;
 using Ecommerce.AdminFront.Pages.Categories;
 using Ecommerce.Application.Services.CategoryServices;
+using Ecommerce.DTOs;
+using WPFModernVerticalMenu.Pages.Products;
 
 namespace Ecommerce.AdminFront.ClientPages.Landing.sections;
 
 public partial class CategorySection : UserControl
 {
     private CategoryHandler categoryHandler;
+    private ClientProductsPage productsPage;
     public CategorySection()
     {
         InitializeComponent();
@@ -19,8 +23,17 @@ public partial class CategorySection : UserControl
 
     private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
-        //var categories = await categoryHandler.GetCategories();
-        //categoryListView.ItemsSource = categories;
+        categoryListView.SelectionChanged += CategoryListView_SelectionChanged;
+    }
+
+    private void CategoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if(categoryListView.SelectedItem is CategoryDto category)
+        {
+            productsPage = new ClientProductsPage() { CategoryId = category.CategoryId };
+            LandingPageUC.BodyGrid.Children.Clear();
+            LandingPageUC.BodyGrid.Children.Add(productsPage);
+        }
     }
 
     // Attach this event handler to your horizontal ListView

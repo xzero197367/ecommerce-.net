@@ -45,14 +45,9 @@ namespace Ecommerce.AdminFront.Pages.Categories
             }
         }
 
-        public async Task<(bool status, string message)> onUpdateCategory(int id, CategoryCreateDto dto)
+        public async Task<(bool status, string message)> onUpdateCategory(CategoryDto category)
         {
-            var category = new CategoryDto
-            {
-                CategoryId = id,
-                Name = dto.Name,
-                Description = dto.Description
-            };
+            
             var res = await _categoryService.UpdateAsync(category);
 
             if (res == null)
@@ -62,7 +57,7 @@ namespace Ecommerce.AdminFront.Pages.Categories
             return (true, "Category updated successfully");
         }
 
-        public async Task<(bool status, string message)> CreateCategory(CategoryCreateDto dto)
+        public async Task<(bool status, string message)> CreateCategory(CategoryDto dto)
         {
             try
             {

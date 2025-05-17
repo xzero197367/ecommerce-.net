@@ -19,9 +19,9 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
     {
  
         public Func<Task> AfterSaveAction { get; set; } = () => Task.CompletedTask;
-        public Func<ProductCreateDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the product from form. Please try again later."));
+        public Func<ProductDto, Task<(bool status, string message)>> onSaveAction { get; set; } = (dto) => Task.FromResult((false, "Error occurred while saving the product from form. Please try again later."));
 
-        public ProductCreateDto productCreateDto { get; set; } = null;
+        public ProductDto productCreateDto { get; set; } = null;
         private CategoryHandler categoryHandler;
 
 
@@ -82,7 +82,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
 
             CategoryDto category = txtcat.SelectedItem as CategoryDto;
 
-            productCreateDto = new ProductCreateDto
+            ProductDto product = new ProductDto
             {
                 Name = txtname.Text.Trim(),
                 Price = decimal.TryParse(txtprice.Text, out var price) ? price : 0,
@@ -91,11 +91,13 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                 CategoryID = category.CategoryId,
                 Description = new TextRange(txtDescription.Document.ContentStart, txtDescription.Document.ContentEnd).Text.Trim()
             };
+            
+            if(productCreateDto != null && productCreateDto.ProductId != 0)
+            {
+                product.ProductId = productCreateDto.ProductId;
+            }
 
-
-
-
-            var res = await onSaveAction.Invoke(productCreateDto);
+            var res = await onSaveAction.Invoke(product);
             if(res.status)
             {
             

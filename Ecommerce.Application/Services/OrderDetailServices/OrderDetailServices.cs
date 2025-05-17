@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.OrderDetailServices
 {
-    class OrderDetailServices:GenericServices<OrderDetailsDto, OrderDetailsCreateDto, OrderDetail>, IOrderDetailServices
+    class OrderDetailServices:GenericServices<OrderDetailDto, OrderDetail>, IOrderDetailServices
     {
 
         private readonly IOrderDetailRepo orderDetailRepo;

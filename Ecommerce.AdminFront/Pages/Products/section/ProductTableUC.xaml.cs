@@ -12,7 +12,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
         public Func<Task> RefreshProducts { get; set; } = () => Task.CompletedTask;
         public Func<int, Task<(bool status, string message)>> OnDeleteProduct { get; set; } = (id) => Task.FromResult((false, "Error occurred while deleting the product. Please try again later."));
 
-        public Func<int, ProductCreateDto, Task<(bool status, string message)>> OnUpdateProduct { get; set; } = (id, dto) => Task.FromResult((false, "Error occurred while updating from table the product. Please try again later."));
+        public Func< ProductDto, Task<(bool status, string message)>> OnUpdateProduct { get; set; } = ( dto) => Task.FromResult((false, "Error occurred while updating from table the product. Please try again later."));
 
         private PopupWindow popupWindow;
         private ProductFromUC productFrom;
@@ -26,9 +26,12 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
         private async void delete_product_click(object sender, System.Windows.RoutedEventArgs e)
         {
             ProductDto product = ((sender as Button).DataContext as ProductDto)!;
-            var res = await OnDeleteProduct.Invoke(product.ProductId);
-            //MessageBox.Show(res.message);
-            await RefreshProducts.Invoke();
+            if (MessageBox.Show("Are you sure deleting this user", "Delete User", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                var res = await OnDeleteProduct.Invoke(product.ProductId);
+                //MessageBox.Show(res.message);
+                await RefreshProducts.Invoke();
+            }
         }
 
         private async void edit_product_click(object sender, System.Windows.RoutedEventArgs e)
@@ -37,8 +40,8 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
             popupWindow = new PopupWindow();
             productFrom = new ProductFromUC()
             {
-                onSaveAction = async delegate (ProductCreateDto dto) {
-                    var res = await OnUpdateProduct(product.ProductId, dto);
+                onSaveAction = async delegate (ProductDto dto) {
+                    var res = await OnUpdateProduct(dto);
                     popupWindow.Close();
                     return res;
                 },
@@ -47,7 +50,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
                     popupWindow.Close();
                     await RefreshProducts.Invoke();
                 },
-                productCreateDto = product.Adapt<ProductCreateDto>(),
+                productCreateDto = product.Adapt<ProductDto>(),
             };
             productFrom.btnSave.Content = "Update";
             popupWindow.containerGrid.Children.Add(productFrom);

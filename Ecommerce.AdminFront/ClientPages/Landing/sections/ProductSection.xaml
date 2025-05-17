@@ -9,12 +9,17 @@
              Loaded="UserControl_Loaded"
              mc:Ignorable="d">
 
-        <ListView x:Name="productsListView" ItemsSource="{Binding}" Padding="10 5"
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" x:Name="productsListView" ItemsSource="{Binding}" Padding="10 5"
                   BorderBrush="Transparent" Margin="20 10"
                   Background="Transparent"
-                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      PreviewMouseWheel="HorizontalListView_PreviewMouseWheel"
-          ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  PreviewMouseWheel="HorizontalListView_PreviewMouseWheel"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -22,19 +27,19 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <components:ProductCardUC />
+                    <components:ProductCardUC Product="{Binding}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <!--<StackPanel>
-            <Label FontSize="24">Products</Label>
-            <StackPanel Margin="10" Orientation="Horizontal" HorizontalAlignment="Center">
-                <components:ProductCardUC/>
-                <components:ProductCardUC/>
-                <components:ProductCardUC/>
-                <components:ProductCardUC/>
-                <components:ProductCardUC/>
-                <components:ProductCardUC/>
-            </StackPanel>
-        </StackPanel>-->
+        
+        <ui:Button Grid.Column="1" x:Name="btnMore" Width="100" Height="100" Appearance="Caution" 
+                   CornerRadius="100"
+                   Foreground="White"
+                   FontSize="50"
+                   FontWeight="Bold"
+                   Margin="10"
+                   VerticalAlignment="Center"
+                   Click="BtnMore_OnClick" >More</ui:Button>
+    </Grid>
+
 </UserControl>

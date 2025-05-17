@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Components"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:product="clr-namespace:Ecommerce.AdminFront.ClientPages.Product" xmlns:convertors="clr-namespace:Ecommerce.AdminFront.Controls.Convertors"
-             mc:Ignorable="d">
+             Loaded="ProductCardUC_OnLoaded">
 
     <ui:Card Margin="5"  Width="250">
         <StackPanel>
@@ -23,9 +23,9 @@
           
 
             <!-- Add to Cart Button -->
-            <ui:Button Appearance="Info" Content="Add to Cart" Background="#4CAF50" Foreground="White"
-                      
+            <ui:Button x:Name="btnAddToCart" Appearance="Info" Content="Add to Cart" Background="#4CAF50" Foreground="White"
                        BorderBrush="#4CAF50" BorderThickness="1" HorizontalAlignment="Stretch" Margin="10,10,10,10"
+                       Click="BtnAddToCart_OnClick"
                        Height="40" />
             
             <ui:Button Content="More Details"  Click="OpenDialogButton_Click" Appearance="Info" HorizontalAlignment="Stretch" Margin="5"></ui:Button>

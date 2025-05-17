@@ -1,40 +1,21 @@
-﻿
 using Ecommerce.Models;
 
 namespace Ecommerce.DTOs
 {
-
-    // create / update
-    public class UserCreateDto
-    {
-
-        public string UserName { set; get; }
-        public string UserPassword { set; get; }
-        public string UserEmail { set; get; }
-        public string FirstName { set; get; }
-        public string ImagePath { set; get; } = string.Empty; // Store the relative path of the image
-        public string LastName { set; get; }
-        public UserRole UserRole { get; set; }
-    }
-
-    //display
     public class UserDto
     {
-        public int UserID { set; get; }
-        public string UserName { set; get; }
-        public string UserPassword { set; get; }
-        public string ImagePath { set; get; } = string.Empty; // Store the relative path of the image
-        public string UserEmail { set; get; }
-        public string FirstName { set; get; }
-        public string LastName { set; get; }
-        public UserRole UserRole { set; get; }
-        public bool IsActive { set; get; } = true;
-        public DateTime DateCreated { set; get; }
-        public DateTime? LastLoginDate { set; get; }
-        public ICollection<CartItemDto> CartItems { set; get; }
-        public ICollection<OrderDto> Orders { set; get; }
+        public int UserID { get; set; }
+        public string UserName { get; set; }
+        public string UserPassword { get; set; }
+        public string ImagePath { get; set; } = string.Empty; // Store the relative path of the image
+        public string UserEmail { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public UserRole UserRole { get; set; }
+        public bool IsActive { get; set; } = true;
+        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime? LastLoginDate { get; set; }
+        public ICollection<CartItemDto> CartItems { get; set; }
+        public ICollection<OrderDto> Orders { get; set; }
     }
-
-  
-
 }

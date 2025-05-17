@@ -4,12 +4,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Ecommerce.AdminFront.ClientPages.Product;
 
 namespace Ecommerce.AdminFront.ClientPages.Landing.sections;
 
 public partial class ProductSection : UserControl
 {
     private ProductHandler productHandler;
+    private ClientProductsPage productsPage;
     public ProductSection()
     {
         InitializeComponent();
@@ -50,4 +52,10 @@ public partial class ProductSection : UserControl
     }
 
 
+    private void BtnMore_OnClick(object sender, RoutedEventArgs e)
+    {
+        productsPage = new ClientProductsPage();
+        LandingPageUC.BodyGrid.Children.Clear();
+        LandingPageUC.BodyGrid.Children.Add(productsPage);
+    }
 }

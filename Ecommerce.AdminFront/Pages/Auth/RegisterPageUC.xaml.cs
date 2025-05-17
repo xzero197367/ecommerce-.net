@@ -2,13 +2,6 @@
 
 using System.Windows;
 using System.Windows.Controls;
-using System.Security.Cryptography;
-using Ecommerce.AdminFront.Classes.AutoFac;
-using Ecommerce.Application.Services.UserServices;
-using Autofac;
-using Ecommerce.AdminFront.ClientPages.Landing;
-using Ecommerce.Context;
-using Ecommerce.Infrastructure;
 
 namespace Ecommerce.AdminFront.Pages.Auth
 {
@@ -17,14 +10,12 @@ namespace Ecommerce.AdminFront.Pages.Auth
     /// </summary>
     public partial class RegisterPageUC : UserControl
     {
-        private readonly IUserServices userServices;
+        private AuthHandler authHandler;
 
         public RegisterPageUC()
         {
             InitializeComponent();
-
-            var container = AutoFac.Inject();
-            userServices = container.Resolve<IUserServices>();
+            authHandler = AuthHandler.Instance;
         }
 
         private async void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -56,23 +47,23 @@ namespace Ecommerce.AdminFront.Pages.Auth
             }
 
             // Now that everything is validated, create the user
-            UserCreateDto newUser = new()
+            UserDto newUser = new()
             {
                 FirstName = txtFname.Text,
                 LastName = txtLname.Text,
                 UserEmail = txtEmail.Text,
-                UserName = txtEmail.Text,
+                UserName = txtUsername.Text,
                 UserPassword = txtPassword.Password,
                 UserRole = Models.UserRole.Client,
             };
 
             try
             {
-                UserDto signedUser = await userServices.RegisterAsync(newUser);
+                UserDto signedUser = await authHandler.RegisterAsync(newUser);
 
                 btnRegister.IsEnabled = true;
                 MessageBox.Show("User registered successfully!");
-                onSignIn(signedUser);
+                authHandler.AfterAuth(signedUser!);
             }
             catch (Exception ex)
             {
@@ -81,11 +72,6 @@ namespace Ecommerce.AdminFront.Pages.Auth
             }
         }
 
-        private void onSignIn(UserDto user)
-        {
-            MainWindowEntry.currentUser = user;
-            LandingPageUC.BodyGrid.Children.Clear();
-        }
-
+        
     }
 }

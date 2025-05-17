@@ -1,0 +1,45 @@
+using Ecommerce.AdminFront.ClientPages.Landing.sections;
+using Ecommerce.AdminFront.ClientPages.Landing;
+using Ecommerce.DTOs;
+using Ecommerce.Application.Services.UserServices;
+using Ecommerce.AdminFront.Classes.AutoFac;
+using Autofac;
+using System.Windows;
+using Ecommerce.Models;
+
+namespace Ecommerce.AdminFront.Pages.Auth
+{
+    class AuthHandler
+    {
+        private readonly IUserServices userServices;
+        private LandingContentUC landingContentUC;
+
+        public AuthHandler()
+        {
+            var container = AutoFac.Inject();
+            userServices = container.Resolve<IUserServices>();
+        }
+
+        public async Task<UserDto?> LoginAsync(string username, string password)
+        {
+            return await userServices.LoginAsync(username, password);
+        }
+
+        public async Task<UserDto> RegisterAsync(UserDto newUser)
+        {
+            return await userServices.RegisterAsync(newUser);
+        }
+
+        public void AfterAuth(UserDto user)
+        {
+            MainWindowEntry.currentUser = user;
+            landingContentUC = new LandingContentUC();
+            TopBar.Instance.authStack.Visibility = Visibility.Collapsed;
+            TopBar.Instance.btnUserPopup.Visibility = Visibility.Visible;
+            TopBar.Instance.profilePopup.User = MainWindowEntry.currentUser;
+            if (user.UserRole == UserRole.Admin) TopBar.Instance.btnDashboard.Visibility = Visibility.Visible;
+            LandingPageUC.BodyGrid.Children.Clear();
+            LandingPageUC.BodyGrid.Children.Add(landingContentUC);
+        }
+    }
+}

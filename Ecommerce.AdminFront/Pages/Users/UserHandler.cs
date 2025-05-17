@@ -42,18 +42,9 @@ namespace Ecommerce.AdminFront.Pages.Users
             }
         }
 
-        public async Task<(bool status, string message)> onUpdateUser(int id, UserCreateDto dto)
+        public async Task<(bool status, string message)> onUpdateUser(UserDto user)
         {
-            var user = new UserDto()
-            {
-                UserID = id,
-                UserName = dto.UserName,
-                UserPassword = dto.UserPassword,
-                UserEmail = dto.UserEmail,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                UserRole = dto.UserRole
-            };
+            
             var res = await userServices.UpdateAsync(user);
 
             if (res == null)
@@ -63,11 +54,11 @@ namespace Ecommerce.AdminFront.Pages.Users
             return (true, "User updated successfully");
         }
 
-        public async Task<(bool status, string message)> CreateUser(UserCreateDto dto)
+        public async Task<(bool status, string message)> CreateUser(UserDto user)
         {
             try
             {
-                await userServices.RegisterAsync(dto);
+                await userServices.RegisterAsync(user);
                 return (true, "User created successfully");
             }
             catch (Exception ex)

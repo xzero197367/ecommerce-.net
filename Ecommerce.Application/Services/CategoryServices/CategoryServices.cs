@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Application.Services.CategoryServices
 {
-   public class CategoryServices: GenericServices<CategoryDto, CategoryCreateDto, Category> ,ICategoryServices
+   public class CategoryServices: GenericServices<CategoryDto, Category> ,ICategoryServices
          
     {
         private readonly ICategoryRepo _categoryRepo;
@@ -27,7 +27,6 @@ namespace Ecommerce.Application.Services.CategoryServices
                 CategoryId = c.CategoryId,
                 Name = c.Name,
                 Description = c.Description,
-                ProductCount = c.Products.Count()
             }).ToListAsync();
             if (items == null)
                 return null;

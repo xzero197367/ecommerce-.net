@@ -9,7 +9,7 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Services.CategoryServices
 {
-   public  interface ICategoryServices:IGenericService<CategoryDto, CategoryCreateDto, Category>
+   public  interface ICategoryServices:IGenericService<CategoryDto, Category>
     {
 
     }

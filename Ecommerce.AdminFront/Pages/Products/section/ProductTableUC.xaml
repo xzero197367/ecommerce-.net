@@ -9,7 +9,7 @@
 
     
     <Grid>
-        <ui:ListView x:Name="productListView"  Background="Transparent" ItemsSource="{Binding}">
+        <ui:ListView x:Name="productListView" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="Transparent" ItemsSource="{Binding}">
             <ui:ListView.View>
                 <ui:GridView>
 

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.GenericServices
 {
-    public class GenericServices<NormalType, CreateType, OriginType>: IGenericService<NormalType, CreateType, OriginType>
+    public class GenericServices<NormalType, OriginType>: IGenericService<NormalType, OriginType>
     where NormalType : class
-    where CreateType : class
+    where OriginType : class
     {
         private readonly IGenericRepo<OriginType> genericRepo;
 
@@ -34,7 +34,9 @@ namespace Ecommerce.Application.Services.GenericServices
         {
             try
             {
-                var items = await genericRepo.GetAllAsync().ToListAsync();
+                var items = await genericRepo.GetAllAsync()
+                    .AsNoTracking()
+                    .ToListAsync();
                 if (items == null)
                     return null;
                 return items.Adapt<List<NormalType>>();
@@ -44,18 +46,32 @@ namespace Ecommerce.Application.Services.GenericServices
                 throw new Exception("Error while getting all items", ex);
             }
         }
-        public async Task<List<NormalType>> GetWithConditionAsync(Expression<Func<NormalType, bool>> predicate)
+        public virtual async Task<List<NormalType>> GetWithConditionAsync(Expression<Func<OriginType, bool>> predicate)
         {
             try
             {
-                var adaptedPredicate = predicate.Adapt<Expression<Func<OriginType, bool>>>();
 
-                var items = await genericRepo.GetWithConditionAsync(adaptedPredicate).ToListAsync();
+                var items = await genericRepo.GetWithConditionAsync(predicate)
+                    .AsNoTracking()
+                    .ToListAsync();
                 return items.Adapt<List<NormalType>>();
             }
             catch (Exception ex)
             {
                 throw new Exception("Error while getting items with condition", ex);
+            }
+        }
+
+        public async Task<bool> DeleteWithConditionAsync(Expression<Func<OriginType, bool>> predicate)
+        {
+            try
+            {
+                await genericRepo.DeleteWithConditionAsync(predicate);
+                return await genericRepo.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while deleting item with condition", ex);
             }
         }
         public async Task<NormalType> GetByIdAsync(int id)
@@ -71,7 +87,7 @@ namespace Ecommerce.Application.Services.GenericServices
             }
         }
 
-        public async Task<NormalType> AddAsync(CreateType entity)
+        public async Task<NormalType> AddAsync(NormalType entity)
         {
 
             try

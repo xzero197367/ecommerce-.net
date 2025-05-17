@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ecommerce.Application.Contracts;
 
 namespace Ecommerce.Infrastructure
 {
-    public class CartItemRepo:GenericRepo<CartItem>
+    public class CartItemRepo:GenericRepo<CartItem>, ICartItemRepo
     {
         private readonly ContextDB _context;
 

@@ -52,9 +52,7 @@
 
             </Grid>
 
-            <Grid Margin="10" Grid.Row="2">
-                <sections:ProductTableUC x:Name="productTable"/>
-            </Grid>
+                <sections:ProductTableUC x:Name="productTable" Grid.Row="2"/>
 
 
         </Grid>

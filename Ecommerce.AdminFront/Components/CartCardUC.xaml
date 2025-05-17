@@ -10,12 +10,12 @@
         <ui:Card Margin="10" Padding="10">
             <StackPanel Orientation="Horizontal">
                 <StackPanel>
-                    <ui:Image Source="../Resources/products/product1.jpg" CornerRadius="50"
-                              Stretch="Uniform" Width="150" Height="150" />
+                    <ui:Image Source="{Binding Product.ImagePath, Converter={StaticResource RelativePathToImageConverter}}" CornerRadius="20"
+                              Stretch="Uniform"  Height="150" />
                     <!-- Product Name -->
-                    <TextBlock Text="Product Name" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" 
+                    <TextBlock Text="{Binding Product.Name}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" 
                                Width="150"/>
-                    <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit." TextWrapping="Wrap"
+                    <TextBlock Text="{Binding Product.Description}" TextWrapping="Wrap"
                                Width="150"
                                FontSize="12" HorizontalAlignment="Left" Margin="10,5" />
                 </StackPanel>
@@ -24,7 +24,8 @@
                     
 
                     <!-- Product Price -->
-                    <TextBlock Text="$99.99" FontSize="14" Foreground="Green" HorizontalAlignment="Left" Margin="5"/>
+                    <TextBlock Text="{Binding Product.Price}" FontSize="14" Foreground="Green" HorizontalAlignment="Left" Margin="5"/>
+                    <TextBlock Text="{Binding Product.UnitsInStock}" FontSize="14" HorizontalAlignment="Left" Margin="5"/>
 
                     <!-- Quantity Control -->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
@@ -35,7 +36,9 @@
                                    
                                    Width="40" Height="30" BorderBrush="#4CAF50" BorderThickness="1" 
                                    Click="IncreaseQty_Click"/>
-                        <ui:Button Icon="{ui:SymbolIcon Delete24}" Appearance="Danger" Foreground="White" Margin="10 0"
+                        <ui:Button Icon="{ui:SymbolIcon Delete24}" Appearance="Danger" 
+                                   x:Name="btnRemove" Click="BtnRemove_OnClick"
+                                   Foreground="White" Margin="10 0"
                                    Width="40" Height="30" BorderBrush="#4CAF50" BorderThickness="1" 
                                    />
                     </StackPanel>

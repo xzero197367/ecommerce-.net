@@ -1,0 +1,159 @@
+
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using Ecommerce.Application.Contracts;
+using Ecommerce.Application.Services.GenericServices;
+using Ecommerce.DTOs;
+using Ecommerce.Models;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
+
+namespace Ecommerce.Application.Services.UserServices
+{
+    public class UserServices: GenericServices<UserDto, User>, IUserServices
+
+    {
+        private readonly IUserRepo _userRepo;
+        public UserServices(IUserRepo userRepo): base(userRepo)
+        {
+            _userRepo = userRepo;
+        }
+
+        public async Task<UserDto?> LoginAsync(string email, string password)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || !IsValidEmail(email))
+            {
+                return null;
+            }
+
+            // Find user by email using ToLower()
+            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower())
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            // Verify password
+            bool isPasswordValid = VerifyPassword(password, user.UserPassword);
+            if (!isPasswordValid)
+            {
+                return null;
+            }
+            return user.Adapt<UserDto>();
+            // Map to DTO
+            return new UserDto()
+            {
+                UserID = user.UserID,
+                UserEmail = user.UserEmail,
+                UserPassword = user.UserPassword,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserRole = user.UserRole,
+                ImagePath = user.ImagePath,
+                DateCreated = user.DateCreated,
+            };
+        }
+        public static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            // Regex pattern for email validation
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, emailPattern);
+        }
+        public async Task<UserDto?> Login(string email, string password)
+        {
+            // Corrected the usage of _userRepo to call the appropriate method
+            User? user = await _userRepo.GetWithConditionAsync(u => u.UserEmail.ToLower() == email.ToLower())
+                // .Include(u=>u.CartItems)
+                .FirstOrDefaultAsync();
+
+            return user is not null ? user.Adapt<UserDto>() : null;
+        }
+
+
+        public async Task<UserDto> Register(UserDto user)
+        {
+
+            user.UserPassword = HashPassword(user.UserPassword);
+            User user1 = user.Adapt<User>();
+
+
+            User resultUser = await _userRepo.AddAsync(user1);
+            await _userRepo.SaveChangesAsync();
+
+            return resultUser.Adapt<UserDto>();
+        }
+        public async Task<UserDto> RegisterAsync(UserDto user1)
+        {
+            user1.UserPassword = HashPassword(user1.UserPassword);
+
+
+            User userEntity = user1.Adapt<User>();
+
+
+            User user = await _userRepo.AddAsync(userEntity);
+            await _userRepo.SaveChangesAsync();
+
+            return user.Adapt<UserDto>();
+            // Map to DTO
+            return new UserDto()
+            {
+                UserID = user.UserID,
+                UserEmail = user.UserEmail,
+                UserPassword = user.UserPassword,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserRole = user.UserRole,
+                ImagePath = user.ImagePath,
+                DateCreated = user.DateCreated,
+            };
+        }
+
+    
+
+        public string HashPassword(string password)
+        {
+            // Generate a random salt
+            byte[] salt = RandomNumberGenerator.GetBytes(16);
+
+            // Derive a 32-byte key using PBKDF2
+            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
+            byte[] hash = pbkdf2.GetBytes(32);
+
+            // Combine salt + hash and return as base64
+            byte[] hashBytes = new byte[48];
+            Buffer.BlockCopy(salt, 0, hashBytes, 0, 16);
+            Buffer.BlockCopy(hash, 0, hashBytes, 16, 32);
+
+            return Convert.ToBase64String(hashBytes);
+        }
+
+
+
+        public bool VerifyPassword(string password, string storedHash)
+        {
+            byte[] hashBytes = Convert.FromBase64String(storedHash);
+
+            byte[] salt = new byte[16];
+            Buffer.BlockCopy(hashBytes, 0, salt, 0, 16);
+
+            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000, HashAlgorithmName.SHA256);
+            byte[] hash = pbkdf2.GetBytes(32);
+
+            for (int i = 0; i < 32; i++)
+            {
+                if (hashBytes[i + 16] != hash[i])
+                    return false;
+            }
+            return true;
+        }
+
+       
+    }
+}

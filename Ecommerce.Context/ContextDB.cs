@@ -18,8 +18,9 @@ namespace Ecommerce.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseLazyLoadingProxies()
-                    .UseSqlServer("Data Source=.;Initial Catalog=ECommerce;Integrated Security=true;MultipleActiveResultSets=True;Encrypt=false");
+                //.UseLazyLoadingProxies
+                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+            .UseSqlServer("Data Source=.;Initial Catalog=ECommerce;Integrated Security=true;MultipleActiveResultSets=True;Encrypt=false");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,8 +31,7 @@ namespace Ecommerce.Context
             modelBuilder.ApplyConfiguration(new OrderDetailsConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new CartItemConfiguration());
-
-
+            
         }
     }
 

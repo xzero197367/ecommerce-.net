@@ -12,7 +12,7 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
         public Func<Task> RefreshCategories { get; set; } = () => Task.CompletedTask;
         public Func<int, Task<(bool status, string message)>> OnDeleteCategory { get; set; } = (id) => Task.FromResult((false, "Error occurred while deleting the category. Please try again later."));
 
-        public Func<int, CategoryCreateDto, Task<(bool status, string message)>> OnUpdateCategory { get; set; } = (id, dto) => Task.FromResult((false, "Error occurred while updating from table the category. Please try again later."));
+        public Func<CategoryDto, Task<(bool status, string message)>> OnUpdateCategory { get; set; } = (dto) => Task.FromResult((false, "Error occurred while updating from table the category. Please try again later."));
 
         private PopupWindow popupWindow;
         private CategoryFromUC categoryFrom;
@@ -33,9 +33,12 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
         private async void delete_category_click(object sender, System.Windows.RoutedEventArgs e)
         {
             CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
-            var res = await OnDeleteCategory.Invoke(category.CategoryId);
-            //MessageBox.Show(res.message);
-            await RefreshCategories.Invoke();
+            if (MessageBox.Show("Are you sure deleting this user", "Delete User", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                var res = await OnDeleteCategory.Invoke(category.CategoryId);
+                //MessageBox.Show(res.message);
+                await RefreshCategories.Invoke();
+            }
         }
 
         private async void edit_category_click(object sender, System.Windows.RoutedEventArgs e)
@@ -43,12 +46,12 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
             CategoryDto category = ((sender as Button).DataContext as CategoryDto)!;
             popupWindow = new PopupWindow();
             categoryFrom = new CategoryFromUC() { 
-                onSaveAction = async delegate (CategoryCreateDto dto) {
-                    var res =  await OnUpdateCategory(category.CategoryId, dto);
+                onSaveAction = async delegate (CategoryDto dto) {
+                    var res =  await OnUpdateCategory(dto);
                     popupWindow.Close();
                     return res;
                 }, 
-                categoryCreateDto = category.Adapt<CategoryCreateDto>(),
+                categoryCreateDto = category,
             };
             categoryFrom.btnSave.Content = "Update";
             popupWindow.containerGrid.Children.Add(categoryFrom);

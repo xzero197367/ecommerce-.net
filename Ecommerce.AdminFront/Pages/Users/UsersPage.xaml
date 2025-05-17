@@ -6,12 +6,12 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Users.sections" 
       mc:Ignorable="d" 
-      Background="{ui:ThemeResource}"
+      Background="{ui:ThemeResource ApplicationBackgroundBrush}"
       d:DesignHeight="450" d:DesignWidth="800"
-      Unloaded="Page_Unloaded"
+      Loaded="Page_Loaded"
       Title="Dashboard">
 
-    <Border CornerRadius="5" >
+    <Border CornerRadius="5" >  
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -32,6 +32,10 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <ui:TextBox x:Name="txtSearch" PlaceholderText="Search for Category...." Width="200"/>
+                    <ComboBox Margin="10 0" x:Name="roleComboBox" IsEditable="True">
+                        <ComboBoxItem>Admins</ComboBoxItem>
+                        <ComboBoxItem>Clients</ComboBoxItem>
+                    </ComboBox>
                 </StackPanel>
 
 
@@ -43,8 +47,8 @@
                     <Popup x:Name="PopoverPopup" AllowsTransparency="True" Placement="MousePoint" IsOpen="False" StaysOpen="False">
                         <Border Background="{DynamicResource PrimaryBackgroundColor}" CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Padding="10">
                             <Grid>
-                                <sections:UserFromUC x:Name="userForm"  Visibility="Collapsed"/>
-                                <sections:ProfilePopup x:Name="profilePopup"/>
+                                <sections:UserFromUC x:Name="userForm"  />
+                                <!-- <sections:ProfilePopup x:Name="profilePopup"/> -->
                             </Grid>
                         </Border>
                     </Popup>

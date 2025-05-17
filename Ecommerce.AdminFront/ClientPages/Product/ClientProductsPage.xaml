@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Ecommerce.AdminFront.ClientPages.Product.ClientProductsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Product"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
+             Loaded="ProductsPage_OnLoaded"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
+            <ComboBox MinWidth="100" IsEditable="True" x:Name="categoryComboBox" ItemsSource="{Binding Categories}">
+                
+            </ComboBox>
+            <!-- Search Box -->
+            <ui:AutoSuggestBox PlaceholderText="Search products..." Grid.Column="1" MaxWidth="300"
+                               x:Name="filterProducts" TextChanged="FilterProducts_OnTextChanged"
+                               Margin="20,10" VerticalAlignment="Center"/>
+        </StackPanel>
+        <ListView Grid.Row="1" x:Name="productsListView" ItemsSource="{Binding}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4" HorizontalAlignment="Center" VerticalAlignment="Center"> </UniformGrid>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <components:ProductCardUC Product="{Binding}" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

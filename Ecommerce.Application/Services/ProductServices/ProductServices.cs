@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce.Application.Services.ProductServices
 {
-   public class ProductServices : GenericServices<ProductDto, ProductCreateDto, Product>, IProductServices
+   public class ProductServices : GenericServices<ProductDto, Product>, IProductServices
 
 
     {

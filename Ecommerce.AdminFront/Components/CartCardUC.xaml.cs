@@ -1,15 +1,18 @@
 ﻿using Ecommerce.DTOs;
 using System.Windows;
 using System.Windows.Controls;
+using Ecommerce.AdminFront.Pages.CartItems;
 
 namespace Ecommerce.AdminFront.Components;
 
 public partial class CartCardUC : UserControl
 {
-    private int _quantity = 1; // Default quantity
-    private double _price = 99.99; // Product price
-
-
+    //private int _quantity = 1; // Default quantity
+    //private double _price = 99.99; // Product price
+    
+    public Action OnRefreshCatItems = () => { }; 
+    
+    private CartItemHandler cartItemHandler = CartItemHandler.GetInstance();
 
     public CartItemDto CartItem
     {
@@ -29,29 +32,44 @@ public partial class CartCardUC : UserControl
     }
     
     // Increase quantity
-    private void IncreaseQty_Click(object sender, RoutedEventArgs e)
+    private async void IncreaseQty_Click(object sender, RoutedEventArgs e)
     {
-        _quantity++;
-        QuantityText.Text = _quantity.ToString();
+        if(CartItem.Quantity >= CartItem.Product.UnitsInStock) return;
+        CartItem.Quantity++;
+        await cartItemHandler.onUpdateCartItem(
+            CartItem
+        );
+        QuantityText.Text = CartItem.Quantity.ToString();
         UpdateTotalPrice();
     }
 
     // Decrease quantity
-    private void DecreaseQty_Click(object sender, RoutedEventArgs e)
+    private async void DecreaseQty_Click(object sender, RoutedEventArgs e)
     {
-        if (_quantity > 1)
+        if (CartItem.Quantity > 1)
         {
-            _quantity--;
-            QuantityText.Text = _quantity.ToString();
+            await cartItemHandler.onUpdateCartItem(
+                CartItem
+            );
+            CartItem.Quantity--;
+            QuantityText.Text = CartItem.Quantity.ToString();
             UpdateTotalPrice();
         }
     }
 
     // Update total price based on quantity
-    private void UpdateTotalPrice()
+    private async void UpdateTotalPrice()
     {
-        double totalPrice = _quantity * _price;
+        double totalPrice = Convert.ToDouble(CartItem.Quantity * CartItem.Product.Price);
+
         // Update the displayed total price (in the bottom TextBlock)
         txtTotalPrice.Text = $"${totalPrice:0.00}";
+    }
+
+    private async void BtnRemove_OnClick(object sender, RoutedEventArgs e)
+    {
+        await cartItemHandler.DeleteCartItem(CartItem.CartItemID);
+        MainWindowEntry.cartItems = await cartItemHandler.GetCartItems();
+        OnRefreshCatItems?.Invoke();
     }
 }

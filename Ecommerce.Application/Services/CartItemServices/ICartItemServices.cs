@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.CartItemServices
 {
-    public interface ICartItemServices: IGenericService<CartItemDto, CartItemCreateDto, CartItem>
+    public interface ICartItemServices: IGenericService<CartItemDto, CartItem>
     {
 
     }

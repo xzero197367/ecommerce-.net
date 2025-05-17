@@ -8,7 +8,8 @@
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" >
     <Grid>
-        <ui:ListView x:Name="userListView" Background="Transparent" ItemsSource="{Binding Users}">
+        <ui:ListView x:Name="userListView" Background="
+        Transparent" ItemsSource="{Binding Users}">
             <ui:ListView.View>
                 <ui:GridView>
                     <ui:GridViewColumn Header="User ID" Width="100">
@@ -23,12 +24,21 @@
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>
 
-                    <ui:GridViewColumn Header="Username" Width="150">
+         
+
+                    <ui:GridViewColumn Header="Full Name" Width="150">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Width="150">
                                     <Label.Content>
-                                        <AccessText TextWrapping="Wrap" Text="{Binding UserName}" />
+                                        <AccessText TextWrapping="Wrap">
+                                            <AccessText.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="FirstName" />
+                                                    <Binding Path="LastName" />
+                                                </MultiBinding>
+                                            </AccessText.Text>
+                                        </AccessText>
                                     </Label.Content>
                                 </Label>
                             </DataTemplate>

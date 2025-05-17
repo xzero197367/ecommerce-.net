@@ -8,11 +8,21 @@
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              Loaded="UserControl_Loaded"
       mc:Ignorable="d" MinWidth="300">
-    <Grid>
+   
         <StackPanel>
             <Label FontSize="24" FontWeight="Bold">Cart Items</Label>
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ui:ListView>
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <ui:Button x:Name="btnCheckout" Click="btnCheckout_Click" Appearance="Primary" HorizontalAlignment="Right" Content="Checkout"></ui:Button>
+            </StackPanel>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="Red" MaxHeight="1000">
+                <ui:ListView x:Name="cartItemListView" ItemsSource="{Binding}">
                     <ui:ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="4" HorizontalAlignment="Center">
@@ -23,7 +33,7 @@
 
                     <ui:ListView.ItemTemplate>
                         <DataTemplate>
-                            <components:CartCardUC/>
+                            <components:CartCardUC CartItem="{Binding}"/>
                         </DataTemplate>
                     </ui:ListView.ItemTemplate>
 
@@ -41,6 +51,8 @@
                     </ListBoxItem>-->
                 </ui:ListView>
             </ScrollViewer>
-        </StackPanel>
-    </Grid>
+
+        </Grid>
+    </StackPanel>
+   
 </UserControl>

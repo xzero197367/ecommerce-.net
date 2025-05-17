@@ -14,7 +14,7 @@ namespace Ecommerce.Models
 
         public int Quantity { get; set; }
         public DateTime DateAdded { get; set; }
-        
+       
  
     }
 

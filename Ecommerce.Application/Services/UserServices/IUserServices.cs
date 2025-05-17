@@ -5,12 +5,12 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Services.UserServices
 {
-    public interface IUserServices : IGenericService<UserDto, UserCreateDto, User>
+    public interface IUserServices : IGenericService<UserDto, User>
 
     {
         Task<UserDto?> LoginAsync(string email, string password);
 
-        Task<UserDto> RegisterAsync(UserCreateDto user);
+        Task<UserDto> RegisterAsync(UserDto user);
     }
 
 }

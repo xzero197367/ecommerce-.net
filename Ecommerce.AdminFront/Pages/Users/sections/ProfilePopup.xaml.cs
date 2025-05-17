@@ -23,8 +23,10 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
         private string imagePath = string.Empty; // Store the relative path of the image
         public UserDto User { get; set; } = MainWindowEntry.currentUser;
         public Popup popup { get; set; } = null; // Popup control to be closed
-        public Func<UserCreateDto,Task<(bool status, string message)>> OnSaveAction { get; set; } = null; // Function to be called aft
-  
+
+        public Func<UserDto, Task<(bool status, string message)>> OnSaveAction { get; set; } =
+            null; // Function to be called aft
+
 
         public ProfilePopup()
         {
@@ -41,17 +43,15 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
                 txtLname.Text = User.LastName;
                 txtEmail.Text = User.UserEmail;
                 txtUsername.Text = User.UserName;
-                displayImageFromDB(imagePath = User.ImagePath != "" ?User.ImagePath : "Resources/ecommerce.jpeg");
+                displayImageFromDB(imagePath = User.ImagePath != "" ? User.ImagePath : "Resources/ecommerce.jpeg");
 
                 btnSave.Visibility = Visibility.Collapsed;
                 btnCancel.Visibility = Visibility.Collapsed;
             }
-            
         }
 
         private void displayImageFromDB(string relativePath)
         {
-
             string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
 
             BitmapImage bitmap = new BitmapImage();
@@ -61,7 +61,6 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
             bitmap.EndInit();
 
             ImagePreview.Source = bitmap;
-
         }
 
         private void PickImage_Click(object sender, RoutedEventArgs e)
@@ -115,26 +114,29 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
         {
             btnSave.IsEnabled = false;
 
-            
-            if(string.IsNullOrEmpty(User.UserName) || string.IsNullOrEmpty(User.UserEmail) || string.IsNullOrEmpty(User.FirstName) || string.IsNullOrEmpty(User.LastName))
+
+            if (string.IsNullOrEmpty(User.UserName) || string.IsNullOrEmpty(User.UserEmail) ||
+                string.IsNullOrEmpty(User.FirstName) || string.IsNullOrEmpty(User.LastName))
             {
                 MessageBox.Show("Please fill all fields");
                 btnSave.IsEnabled = true;
                 return;
             }
+
             if (string.IsNullOrEmpty(imagePath))
             {
                 MessageBox.Show("Please select an image");
                 btnSave.IsEnabled = true;
                 return;
             }
+
             User.FirstName = txtFname.Text;
             User.LastName = txtLname.Text;
             User.UserEmail = txtEmail.Text;
             User.UserName = txtUsername.Text;
             User.ImagePath = imagePath;
 
-            UserCreateDto user = new UserCreateDto
+            UserDto user = new UserDto
             {
                 UserName = User.UserName,
                 UserEmail = User.UserEmail,
@@ -144,8 +146,12 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
                 UserRole = User.UserRole
             };
 
+            if (User != null && User.UserID != 0)
+            {
+                user.UserID = User.UserID;
+            }
 
-            
+
             var res = await OnSaveAction?.Invoke(user);
 
             if (res.status)
@@ -161,6 +167,7 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            // btnEditInfo.Visibility = Visibility.Visible;
             changeItemVisibility(Visibility.Collapsed, false);
             hideButtons();
         }
@@ -180,16 +187,15 @@ namespace Ecommerce.AdminFront.Pages.Users.sections
 
         private void changeItemVisibility(Visibility visibility, bool enabled)
         {
-            
             btnSave.Visibility = visibility;
             btnCancel.Visibility = visibility;
             btnChangeImage.Visibility = visibility;
-            txtFname.IsReadOnly = enabled;
-            txtLname.IsReadOnly = enabled;
-            txtEmail.IsReadOnly = enabled;
-            txtUsername.IsReadOnly = enabled;
-            txtFname.Focusable = enabled;
-            if (enabled)
+            txtFname.IsReadOnly = !enabled;
+            txtLname.IsReadOnly = !enabled;
+            txtEmail.IsReadOnly = !enabled;
+            txtUsername.IsReadOnly = !enabled;
+            txtFname.Focusable = !enabled;
+            if (!enabled)
             {
                 txtFname.Focus();
             }

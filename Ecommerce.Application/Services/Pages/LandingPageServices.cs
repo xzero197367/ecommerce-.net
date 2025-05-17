@@ -1,11 +1,6 @@
 ﻿using Ecommerce.Application.Services.CategoryServices;
 using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.DTOs.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ecommerce.Application.Services.Pages
 {

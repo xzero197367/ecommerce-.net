@@ -44,19 +44,10 @@ namespace Ecommerce.AdminFront.Pages.Products
             }
         }
 
-        public async Task<(bool status, string message)> onUpdateProduct(int id, ProductCreateDto dto)
+        public async Task<(bool status, string message)> onUpdateProduct(ProductDto productDto)
         {
-            var product = new ProductDto()
-            {
-                ProductId = id,
-                Name = dto.Name,
-                Description = dto.Description,
-                Price = dto.Price,
-                UnitsInStock = dto.UnitsInStock,
-                ImagePath = dto.ImagePath,
-                CategoryID = dto.CategoryID
-            };
-            var res = await productServices.UpdateAsync(product);
+            
+            var res = await productServices.UpdateAsync(productDto);
 
             if (res == null)
             {
@@ -65,7 +56,7 @@ namespace Ecommerce.AdminFront.Pages.Products
             return (true, "Product updated successfully");
         }
 
-        public async Task<(bool status, string message)> CreateProduct(ProductCreateDto dto)
+        public async Task<(bool status, string message)> CreateProduct(ProductDto dto)
         {
             try
             {

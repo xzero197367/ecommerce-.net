@@ -9,7 +9,7 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Application.Services.ProductServices
 {
-   public interface IProductServices: IGenericService<ProductDto, ProductCreateDto, Product>
+   public interface IProductServices: IGenericService<ProductDto, Product>
     {
 
     }
