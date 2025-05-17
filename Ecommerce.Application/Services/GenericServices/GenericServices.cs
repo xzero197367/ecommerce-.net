@@ -87,7 +87,7 @@ namespace Ecommerce.Application.Services.GenericServices
             }
         }
 
-        public async Task<NormalType> AddAsync(NormalType entity)
+        public virtual async Task<NormalType> AddAsync(NormalType entity)
         {
 
             try
@@ -114,6 +114,23 @@ namespace Ecommerce.Application.Services.GenericServices
                 var updated = await genericRepo.UpdateAsync(item);
                 await genericRepo.SaveChangesAsync();
                 return updated.Adapt<NormalType>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while updating item", ex);
+            }
+        }
+
+        public async Task<bool> UpdateRangeAsync(List<NormalType> entities)
+        {
+            try
+            {
+                var items = entities.Adapt<List<OriginType>>();
+                if (items == null)
+                    return false;
+                var updated = await genericRepo.UpdateRangeAsync(items);
+                await genericRepo.SaveChangesAsync();
+                return true;
             }
             catch (Exception ex)
             {

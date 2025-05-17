@@ -20,7 +20,6 @@ public partial class CartCardUC : UserControl
         set { SetValue(CartItemProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for CartItem.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CartItemProperty =
         DependencyProperty.Register("CartItem", typeof(CartItemDto), typeof(CartCardUC), new PropertyMetadata(null));
 
@@ -30,7 +29,14 @@ public partial class CartCardUC : UserControl
     {
         InitializeComponent();
     }
-    
+
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        QuantityText.Text = CartItem.Quantity.ToString();
+        UpdateTotalPrice();
+    }
+
     // Increase quantity
     private async void IncreaseQty_Click(object sender, RoutedEventArgs e)
     {
@@ -72,4 +78,6 @@ public partial class CartCardUC : UserControl
         MainWindowEntry.cartItems = await cartItemHandler.GetCartItems();
         OnRefreshCatItems?.Invoke();
     }
+
+   
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Ecommerce.AdminFront.Pages.Auth;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -10,6 +11,7 @@ public partial class LandingPageUC : UserControl
 {
  
     public static Grid BodyGrid { get; set; }
+    private AuthHandler authHandler = AuthHandler.Instance;
 
     public LandingPageUC()
     {
@@ -19,6 +21,6 @@ public partial class LandingPageUC : UserControl
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-
+        
     }
 }

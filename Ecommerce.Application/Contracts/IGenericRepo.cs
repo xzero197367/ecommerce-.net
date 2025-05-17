@@ -17,5 +17,6 @@ namespace Ecommerce.Application.Contracts
         public Task<bool> DeleteAsync(int id) ;
         public Task<bool> SaveChangesAsync();
         public Task<bool> DeleteWithConditionAsync(Expression<Func<T, bool>> predicate);
+        public Task<bool> UpdateRangeAsync(List<T> entities);
     }
 }

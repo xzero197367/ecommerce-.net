@@ -16,5 +16,6 @@ namespace Ecommerce.Application.Services.GenericServices
         public Task<NormalType> UpdateAsync(NormalType entity);
         public Task<bool> DeleteAsync(int id);
         public Task<bool> DeleteWithConditionAsync(Expression<Func<OriginType, bool>> predicate);
+        public Task<bool> UpdateRangeAsync(List<NormalType> entities);
     }
 }

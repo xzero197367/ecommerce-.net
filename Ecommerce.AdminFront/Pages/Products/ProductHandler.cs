@@ -74,6 +74,11 @@ namespace Ecommerce.AdminFront.Pages.Products
             return await productServices.GetAllAsync();
         }
 
+        public async Task<bool> UpdateProductAsync(List<ProductDto> productDtos)
+        {
+            return await productServices.UpdateRangeAsync(productDtos);
+        }
+
 
     }
 }

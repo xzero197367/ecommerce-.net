@@ -4,9 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Components"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" >
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5" Orientation="Horizontal">
             
+            <ui:TextBox IsReadOnly="true" Text="{Binding OrderID}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" Margin="10,0" />
+
+            <ui:TextBox IsReadOnly="true" Text="{Binding OrderDate}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
+
+            <ui:TextBox IsReadOnly="true" Text="{Binding TotalAmount}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
+
+            <ui:TextBox IsReadOnly="true" Text="{Binding Status}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
+
+        </StackPanel>
+
+        <ui:ListView x:Name="categoryListView" ItemsSource="{Binding Details}"  
+                  Grid.Row="1"
+           Padding="10 5"  BorderBrush="Transparent" Margin="20 10"
+           Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                   PreviewMouseWheel="HorizontalListView_PreviewMouseWheel">
+            <ui:ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:OrderDetailCardUC Detail="{Binding}"/>
+                </DataTemplate>
+            </ui:ListView.ItemTemplate>
+            <ui:ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ui:ListView.ItemsPanel>
+        </ui:ListView>
+
     </Grid>
 </UserControl>

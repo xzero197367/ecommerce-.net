@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using Ecommerce.AdminFront.ClientPages.Cart;
+using Ecommerce.AdminFront.ClientPages.Order;
 using Ecommerce.AdminFront.ClientPages.Profile;
 using Ecommerce.AdminFront.ClientPages.Settings;
 using Ecommerce.AdminFront.Components;
@@ -44,6 +45,9 @@ public partial class TopBar : UserControl
             authStack.Visibility = Visibility.Visible;
             btnUserPopup.Visibility = Visibility.Collapsed;
         }
+        if(MainWindowEntry.currentUser != null) {
+            authHandler.CheckUiVisibile(MainWindowEntry.currentUser);
+        }
     }
 
     private void go_dashboard_btn_click(object sender, RoutedEventArgs e)
@@ -75,6 +79,9 @@ public partial class TopBar : UserControl
                 break;
             case "Cart":
                 page = new CartPageUC();
+                break;
+            case "Order":
+                page = new OrdersClientPage();
                 break;
             case "Profile":
                 page = new ProfilePageUC();

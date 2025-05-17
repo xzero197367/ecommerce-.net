@@ -97,6 +97,20 @@ namespace Ecommerce.Infrastructure
             }
         }
 
+        public async Task<bool> UpdateRangeAsync(List<T> entities)
+        {
+            try
+            {
+                 _dbSet.UpdateRange(entities);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new Exception($"Error updating entity, {ex.Message}", ex);
+            }
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             try

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Components"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d">
     <Grid>
         <ui:Card Margin="10" Padding="10">

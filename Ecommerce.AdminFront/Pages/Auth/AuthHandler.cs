@@ -34,18 +34,24 @@ namespace Ecommerce.AdminFront.Pages.Auth
             return await userServices.RegisterAsync(newUser);
         }
 
-        public async void AfterAuth(UserDto user)
+        public void CheckUiVisibile(UserDto user)
         {
-            MainWindowEntry.currentUser = user;
-            landingContentUC = new LandingContentUC();
             TopBar.Instance.authStack.Visibility = Visibility.Collapsed;
             TopBar.Instance.btnUserPopup.Visibility = Visibility.Visible;
             TopBar.Instance.logOutMenuItem.Visibility = Visibility.Visible;
             TopBar.Instance.profileMenuItem.Visibility = Visibility.Visible;
             TopBar.Instance.settingMenuItem.Visibility = Visibility.Visible;
             TopBar.Instance.cartMenuItem.Visibility = Visibility.Visible;
+            TopBar.Instance.orderMenuItem.Visibility = Visibility.Visible;
             TopBar.Instance.profilePopup.User = MainWindowEntry.currentUser;
             if (user.UserRole == UserRole.Admin) TopBar.Instance.btnDashboard.Visibility = Visibility.Visible;
+        }
+
+        public async void AfterAuth(UserDto user)
+        {
+            MainWindowEntry.currentUser = user;
+            landingContentUC = new LandingContentUC();
+            CheckUiVisibile(user);
             LandingPageUC.BodyGrid.Children.Clear();
             LandingPageUC.BodyGrid.Children.Add(landingContentUC);
             MainWindowEntry.cartItems = await cartItemHandler.GetCartItems();

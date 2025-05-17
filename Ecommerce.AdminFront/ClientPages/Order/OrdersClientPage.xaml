@@ -4,9 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Order"
+              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:components="clr-namespace:Ecommerce.AdminFront.Components"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+<RowDefinition Height="*"/> 
+</Grid.RowDefinitions>
+        <Label FontSize="50" HorizontalAlignment="Center" FontWeight="Bold">Orders</Label>
+        <ui:ListView x:Name="ordersListView" ItemsSource="{Binding}"  
+                     Grid.Row="1"
+           Padding="10 5"  BorderBrush="Transparent" Margin="20 10"
+           Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                   PreviewMouseWheel="HorizontalListView_PreviewMouseWheel">
+            <ui:ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </ui:ListView.ItemsPanel>
+            <ui:ListView.ItemTemplate>
+                <DataTemplate>
+                    <components:OrderItemCardUC Order="{Binding}"/>
+                </DataTemplate>
+            </ui:ListView.ItemTemplate>
+        </ui:ListView>    
     </Grid>
 </UserControl>

@@ -53,9 +53,16 @@
                         <ContextMenu>
                             <MenuItem Icon="{ui:SymbolIcon Home28}" Header="Home" Tag="Home"
                                       Click="BtnHomeIcon_OnClick" />
+                            
                             <MenuItem Icon="{ui:SymbolIcon Cart24}" Header="Cart" Tag="Cart"
                                       Visibility="Collapsed" x:Name="cartMenuItem" 
                                       Click="BtnHomeIcon_OnClick" />
+
+                            <MenuItem Icon="{ui:SymbolIcon TaskListAdd24}" Header="Orders" Tag="Order"
+                                 Visibility="Collapsed" x:Name="orderMenuItem" 
+                                 Click="BtnHomeIcon_OnClick" />
+
+
                             <MenuItem Icon="{ui:SymbolIcon Person28}" Header="Account"  Margin="5 0"
                                       Click="BtnHomeIcon_OnClick"
                                       x:Name="profileMenuItem"

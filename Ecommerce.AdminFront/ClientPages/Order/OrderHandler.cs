@@ -3,6 +3,7 @@
 using Autofac;
 using Ecommerce.AdminFront.Classes.AutoFac;
 using Ecommerce.AdminFront.Pages.CartItems;
+using Ecommerce.AdminFront.Pages.Products;
 using Ecommerce.Application.Services.OrderServices;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
@@ -13,6 +14,7 @@ namespace Ecommerce.AdminFront.ClientPages.Order
     public class OrderHandler
     {
         private CartItemHandler cartItemHandler = CartItemHandler.GetInstance();
+        private ProductHandler productHandler = ProductHandler.GetInstance();
         private readonly IOrderServices orderServices;
         public static OrderHandler Instance { get; } = new OrderHandler();
 
@@ -44,8 +46,19 @@ namespace Ecommerce.AdminFront.ClientPages.Order
             OrderDto result = await orderServices.AddAsync(order);
             if(result != null)
             {
+                
                 await cartItemHandler.DeleteWithCondition(
                     o=>o.UserID == MainWindowEntry.currentUser.UserID);
+                await productHandler.UpdateProductAsync(MainWindowEntry.cartItems.Select(
+                    item=>
+                    {
+                        var product = item.Product;
+                        product.UnitsInStock -= item.Quantity;
+                        return product;
+                    }
+                    ).ToList());
+                
+                MainWindowEntry.cartItems = new List<CartItemDto>();
             }
             return result;
         }

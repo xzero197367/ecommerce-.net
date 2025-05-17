@@ -10,7 +10,7 @@
       mc:Ignorable="d" MinWidth="300">
    
         <StackPanel>
-            <Label FontSize="24" FontWeight="Bold">Cart Items</Label>
+            <Label FontSize="50" HorizontalAlignment="Center" FontWeight="Bold">Cart Items</Label>
 
         <Grid >
             <Grid.RowDefinitions>
@@ -19,7 +19,9 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Horizontal" Margin="5">
-                <ui:Button x:Name="btnCheckout" Click="btnCheckout_Click" Appearance="Primary" HorizontalAlignment="Right" Content="Checkout"></ui:Button>
+                <ui:Button x:Name="btnCheckout" Width="200" Height="60"
+                           FontWeight="Bold" FontSize="30"
+                           Click="btnCheckout_Click"  Appearance="Primary" HorizontalAlignment="Right" Content="Checkout"></ui:Button>
             </StackPanel>
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="Red" MaxHeight="1000">
                 <ui:ListView x:Name="cartItemListView" ItemsSource="{Binding}">
