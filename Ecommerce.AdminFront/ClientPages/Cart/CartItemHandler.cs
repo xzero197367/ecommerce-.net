@@ -9,75 +9,41 @@ namespace Ecommerce.AdminFront.Pages.CartItems
 {
     public class CartItemHandler
     {
-        private ICartItemServices cartItemServices;
+        private ICartItemServices _cartItemServices;
         private CartItemHandler()
         {
             var container = AutoFac.Inject();
-            cartItemServices = container.Resolve<ICartItemServices>();
+            _cartItemServices = container.Resolve<ICartItemServices>();
         }
 
         private static CartItemHandler? _instance;
 
         public static CartItemHandler GetInstance()
         {
-            if (_instance == null)
-            {
-                _instance = new CartItemHandler();
-            }
-            return _instance;
+            return _instance ??= new CartItemHandler();
         }
 
-
-        public async Task<(bool status, string message)> DeleteCartItem(int id)
+        public async Task<List<CartItemDto>> GetCartItemsByUserId(int userId)
         {
-            try
-            {
-                var res = await cartItemServices.DeleteAsync(id);
-                return (res, res ? "CartItem deleted successfully" : "something went wrong");
-            }
-            catch (Exception ex)
-            {
-                return (false, "something went wrong");
-            }
+            return await _cartItemServices.GetCartItemsByUserId(userId);
         }
 
-        public async Task<(bool status, string message)> onUpdateCartItem(int id, CartItemCreateDto dto)
+        public async Task<(bool status, string message)> RemoveCartItem(int cartItemId)
         {
-            var cartItem = new CartItemDto()
-            {
-                CartItemID = id,
-                ProductID = dto.ProductID,
-                Quantity = dto.Quantity,
-                UserID = MainWindowEntry.currentUser.UserID,
-                DateAdded = DateTime.Now
-            };
-            var res = await cartItemServices.UpdateAsync(cartItem);
-
-            if (res == null)
-            {
-                return (false, "something went wrong");
-            }
-            return (true, "CartItem updated successfully");
+            var res = await _cartItemServices.RemoveCartItem(cartItemId);
+            return (res, res ? "Item removed successfully" : "Failed to remove item");
         }
 
-        public async Task<(bool status, string message)> CreateCartItem(CartItemCreateDto dto)
+        public async Task<(bool status, string message)> AddOrUpdate(CartItemDto dto)
         {
-            try
-            {
-                await cartItemServices.AddAsync(dto);
-                return (true, "CartItem created successfully");
-            }
-            catch (Exception ex)
-            {
-                return (false, $"${ex.Message}");
-            }
+            var res = await _cartItemServices.AddOrUpdate(dto);
+            return (res, res ? "Item added/updated successfully" : "Failed to add/update item");
         }
 
-        public async Task<List<CartItemDto>> GetCartItems()
+        public async Task<(bool status, string message)> UpdateQuantity(int cartItemId, int quantity)
         {
-            return await cartItemServices.GetWithConditionAsync((cartItem)=>cartItem.UserID == MainWindowEntry.currentUser.UserID);
+            var res = await _cartItemServices.UpdateQuantity(cartItemId, quantity);
+            return (res, res ? "Quantity updated successfully" : "Failed to update quantity");
         }
-
-
     }
 }

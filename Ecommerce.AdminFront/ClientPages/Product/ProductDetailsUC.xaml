@@ -17,7 +17,7 @@
             <ui:TextBlock Text="In Stock: 32" FontSize="14"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                <ui:Button Appearance="Primary" Content="Add to Cart" Width="120" Margin="0 0 10 0"/>
+                <ui:Button Appearance="Primary" Content="Add to Cart" Width="120" Margin="0 0 10 0" Click="Button_Click"/>
                 <ui:Button Appearance="Secondary" Content="Buy Now" Width="100"/>
             </StackPanel>
         </StackPanel>

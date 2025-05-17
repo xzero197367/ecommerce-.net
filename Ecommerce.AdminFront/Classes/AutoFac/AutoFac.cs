@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Ecommerce.Application.Contracts;
+using Ecommerce.Application.Services.CartItemServices;
 using Ecommerce.Application.Services.CategoryServices;
 using Ecommerce.Application.Services.ProductServices;
 using Ecommerce.Application.Services.UserServices;
@@ -22,7 +23,7 @@ namespace Ecommerce.AdminFront.Classes.AutoFac
             builder.RegisterGeneric(typeof(GenericRepo<>)).As(typeof(IGenericRepo<>));
             builder.RegisterType<CategoryRepo>().As<ICategoryRepo>();
             builder.RegisterType<CategoryServices>().As<ICategoryServices>();
-
+            builder.RegisterType<CartItemServices>().As<ICartItemServices>();
 
 
             return builder.Build();
