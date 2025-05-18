@@ -20,7 +20,7 @@ namespace Ecommerce.Context
             optionsBuilder
                 //.UseLazyLoadingProxies
                  .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-            .UseSqlServer("Data Source=.;Initial Catalog=ECommerce;Integrated Security=true;MultipleActiveResultSets=True;Encrypt=false");
+            .UseSqlServer("Data Source=DESKTOP-255SQ51\\PETER;Initial Catalog=ECommerce;Integrated Security=true;MultipleActiveResultSets=True;Encrypt=false");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

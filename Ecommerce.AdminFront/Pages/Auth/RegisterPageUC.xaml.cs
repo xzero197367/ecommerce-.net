@@ -1,5 +1,6 @@
 ﻿using Ecommerce.DTOs;
-
+using Microsoft.IdentityModel.Tokens;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -39,12 +40,32 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 btnRegister.IsEnabled = true;
                 return;
             }
+            // Email format validation
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            if (!Regex.IsMatch(txtEmail.Text, emailPattern))
+            {
+                MessageBox.Show("Please enter a valid email address.");
+                btnRegister.IsEnabled = true;
+                return;
+            }
             if (string.IsNullOrWhiteSpace(txtPassword.Password))
             {
                 MessageBox.Show("Password is required.");
                 btnRegister.IsEnabled = true;
                 return;
             }
+            if (string.IsNullOrEmpty(txtConfirmPassword.Password)) {
+                MessageBox.Show("Confirm Password is required.");
+                btnRegister.IsEnabled = true;
+                return;
+            }
+            if (txtPassword.Password != txtConfirmPassword.Password)
+            {
+                MessageBox.Show("Passwords do not match.");
+                btnRegister.IsEnabled = true;
+                return;
+            }
+
 
             // Now that everything is validated, create the user
             UserDto newUser = new()
@@ -71,6 +92,7 @@ namespace Ecommerce.AdminFront.Pages.Auth
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
 
         
     }

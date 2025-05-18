@@ -28,8 +28,9 @@
                     <ui:TextBox x:Name="txtUsername"  Margin="0 0 0 5" PlaceholderText="username"/>
                     <ui:TextBox x:Name="txtEmail"  PlaceholderText="Email"/>
                     <ui:PasswordBox x:Name="txtPassword"  Margin="0 5" PlaceholderText="Password"/>
+                    <ui:PasswordBox x:Name="txtConfirmPassword"  Margin="0 5" PlaceholderText="Confirm Password"/>
                     <ui:Button x:Name="btnRegister" Click="btnRegister_Click" Appearance="Primary" HorizontalAlignment="Stretch">Register</ui:Button>
-
+ 
                 </StackPanel>
             </ui:Card>
         </Grid>

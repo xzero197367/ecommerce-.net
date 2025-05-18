@@ -30,8 +30,9 @@
                     <ui:TextBlock Text="Login" FontSize="25" Margin="0 0 0 20" FontWeight="Bold"
                                   VerticalAlignment="Center" HorizontalAlignment="Center" />
                     <ui:TextBox x:Name="txtEmail" serv:PlaceholderService.Placeholder="Email" />
-                    <ui:PasswordBox x:Name="txtPassword" Margin="0 10"
-                                    serv:PasswordPlaceholderService.Placeholder="Password" />
+                    <ui:PasswordBox x:Name="txtPassword" Margin="0 10" serv:PasswordPlaceholderService.Placeholder="Password" />
+
+
                     <ui:Button Appearance="Primary" HorizontalAlignment="Stretch" x:Name="btnLogin"
                                Click="btnLogin_Click">
                         Login

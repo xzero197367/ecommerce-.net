@@ -70,7 +70,7 @@ public partial class TopBar : UserControl
         MainWindowEntry.MainGrid.Children.Add(popover);
     }
 
-    private void BtnHomeIcon_OnClick(object sender, RoutedEventArgs e)
+    public void BtnHomeIcon_OnClick(object sender, RoutedEventArgs e)
     {
         switch ((sender as Control)!.Tag)
         {
