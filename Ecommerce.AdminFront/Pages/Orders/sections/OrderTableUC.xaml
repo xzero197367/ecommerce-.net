@@ -7,9 +7,12 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" >
     <Grid>
-        <ui:ListView Background="Transparent" ItemsSource="{Binding Orders}">
+        <ui:ListView x:Name="orderListView" Background="Transparent" ItemsSource="{Binding Orders}">
             <ui:ListView.View>
                 <ui:GridView>
+
+                    <ui:GridViewColumn Header="Id" Width="100"
+        DisplayMemberBinding="{Binding OrderID}" />
 
                     <ui:GridViewColumn Header="Order Date" Width="120">
                         <ui:GridViewColumn.CellTemplate>
@@ -36,10 +39,24 @@
                     <ui:GridViewColumn Header="User Name" Width="150">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding User.FullName}" />
+                                <TextBlock Text="{Binding User.UserEmail}" />
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>
+
+                    <ui:GridViewColumn Header="Actions" Width="100">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedIndex="{Binding Status}">
+                                    <ComboBoxItem Content="Pending" />
+                                    <ComboBoxItem Content="Approved" />
+                                    <ComboBoxItem Content="Denied" />
+                                    <ComboBoxItem Content="Shipped" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
                 </ui:GridView>
             </ui:ListView.View>
         </ui:ListView>

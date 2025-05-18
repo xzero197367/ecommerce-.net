@@ -42,5 +42,17 @@ namespace Ecommerce.Infrastructure
                 .FirstOrDefaultAsync(u => u.UserEmail == email || u.UserName == username);
         }
 
+        public override async Task<User> AddAsync(User entity)
+        {
+            var users = await _dbSet.CountAsync();
+            if(users == 0)
+            {
+                entity.UserRole = UserRole.Admin;
+                entity.IsActive = true;
+            }
+            await base.AddAsync(entity);
+            return entity;
+        }
+
     }
 }

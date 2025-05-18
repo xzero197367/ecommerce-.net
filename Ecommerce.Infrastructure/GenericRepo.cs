@@ -45,7 +45,7 @@ namespace Ecommerce.Infrastructure
             return _dbSet.Where(predicate);
         }
 
-        public async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             try
             {

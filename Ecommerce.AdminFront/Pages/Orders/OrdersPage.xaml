@@ -8,6 +8,7 @@
          xmlns:sections="clr-namespace:Ecommerce.AdminFront.Pages.Orders.sections"
         xmlns:serv="clr-namespace:Ecommerce.AdminFront.Controls.Services"
       mc:Ignorable="d" 
+      Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dashboard">
 
@@ -31,13 +32,20 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                    <ui:TextBox serv:PlaceholderService.Placeholder="Search for Orders...."  Width="200"/>
+                    <ui:TextBox x:Name="searchText" serv:PlaceholderService.Placeholder="Search for Orders...."  Width="200" Visibility="Collapsed"/>
+                    <ComboBox x:Name="orderStatus" Width="200">
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="Pending" />
+                        <ComboBoxItem Content="Approved" />
+                        <ComboBoxItem Content="Denied" />
+                        <ComboBoxItem Content="Shipped" />
+                    </ComboBox>
                 </StackPanel>
 
             </Grid>
 
             <Grid Margin="10" Grid.Row="2">
-                <sections:OrderTableUC/>
+                <sections:OrderTableUC x:Name="orderTable"/>
             </Grid>
 
 
