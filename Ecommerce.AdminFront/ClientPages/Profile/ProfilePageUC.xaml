@@ -4,9 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ecommerce.AdminFront.ClientPages.Profile"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Label>Profile</Label>
-    </Grid>
+              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Loaded="UserControl_Loaded"
+             mc:Ignorable="d" d:DesignWidth="300">
+    <StackPanel HorizontalAlignment="Center" MinWidth="500">
+        <ui:Card>
+            <Grid>
+                <StackPanel Margin="10">
+                    <ui:TextBlock Text="Profile Page" FontSize="24" HorizontalAlignment="Center" />
+                    <ui:TextBlock Text="First Name:" FontWeight="Bold" />
+                    <ui:TextBox x:Name="FirstName" Text="{Binding FirstName}" />
+                    <ui:TextBlock Text="Last Name:" FontWeight="Bold" />
+                    <ui:TextBox x:Name="LastName" Text="{Binding LastName}" />
+                    <ui:TextBlock Text="Email:" FontWeight="Bold" />
+                    <ui:TextBox x:Name="Email" Text="{Binding UserEmail}" />
+                    <ui:TextBlock Text="Username:" FontWeight="Bold" />
+                    <ui:TextBox x:Name="Username" Text="{Binding UserName}" />
+                    <ui:Button Appearance="Primary" HorizontalAlignment="Stretch" 
+                              Click="update_profile_btn_click"  x:Name="UpdateProfile" Content="Update Profile" Margin="0 5" />
+                </StackPanel>
+            </Grid>
+        </ui:Card>
+        <ui:Card Margin="0 10 0 0">
+            <Grid>
+                <StackPanel Margin="10">
+                    <TextBlock Text="Reset Password" FontSize="24" HorizontalAlignment="Center" />
+                    <ui:PasswordBox x:Name="OldPassword" PlaceholderText="Old Password" />
+                    <ui:PasswordBox x:Name="NewPassword" Margin="0 5" PlaceholderText="New Password" />
+                    <ui:PasswordBox x:Name="ConfirmPassword" PlaceholderText="Confirm Password" />
+                    <ui:Button Appearance="Primary" Click="reset_password_click_btn" HorizontalAlignment="Stretch" x:Name="ResetPassword" Content="Reset Password" Margin="0 5" />
+                </StackPanel>
+            </Grid>
+        </ui:Card>
+    </StackPanel>
 </UserControl>

@@ -72,6 +72,11 @@ namespace Ecommerce.AdminFront.Pages.Users
             return await userServices.GetAllAsync();
         }
 
+        public async Task<UserDto?> ResetPassword(int id, string newPass, string oldPass)
+        {
+            return await userServices.ResetPassword(id, newPass, oldPass);
+        }
+
 
     }
 }

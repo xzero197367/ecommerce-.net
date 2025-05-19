@@ -61,8 +61,7 @@
                             <MenuItem Icon="{ui:SymbolIcon TaskListAdd24}" Header="Orders" Tag="Order"
                                  Visibility="Collapsed" x:Name="orderMenuItem" 
                                  Click="BtnHomeIcon_OnClick" />
-
-
+                            
                             <MenuItem Icon="{ui:SymbolIcon Person28}" Header="Account"  Margin="5 0"
                                       Click="BtnHomeIcon_OnClick"
                                       x:Name="profileMenuItem"

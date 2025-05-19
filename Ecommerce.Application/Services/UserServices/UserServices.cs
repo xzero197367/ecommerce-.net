@@ -19,6 +19,24 @@ namespace Ecommerce.Application.Services.UserServices
             _userRepo = userRepo;
         }
 
+        public async Task<UserDto?> ResetPassword(int id, string newPassword, string oldPassword)
+        {
+            User? user = await _userRepo.GetByIdAsync(id);
+            if (user is null)
+            {
+                return null;
+            }
+            bool isPasswordValid = VerifyPassword(oldPassword, user.UserPassword);
+            if (!isPasswordValid)
+            {
+                return null;
+            }
+            user.UserPassword = HashPassword(newPassword);
+            await _userRepo.UpdateAsync(user);
+            await _userRepo.SaveChangesAsync();
+            return user.Adapt<UserDto>();
+        }
+
         public async Task<UserDto?> LoginAsync(string email, string password)
         {
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || !IsValidEmail(email))

@@ -17,6 +17,8 @@ namespace Ecommerce.Infrastructure
             _dbSet = context.Set<User>();
         }
 
+ 
+
         public async Task<List<User>> GetAllUsers()
         {
             return await _dbSet.ToListAsync();

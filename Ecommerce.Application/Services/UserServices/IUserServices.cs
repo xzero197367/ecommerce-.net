@@ -11,6 +11,7 @@ namespace Ecommerce.Application.Services.UserServices
         Task<UserDto?> LoginAsync(string email, string password);
 
         Task<UserDto> RegisterAsync(UserDto user);
+        Task<UserDto?> ResetPassword(int id, string newPassword, string oldPassword);
     }
 
 }
