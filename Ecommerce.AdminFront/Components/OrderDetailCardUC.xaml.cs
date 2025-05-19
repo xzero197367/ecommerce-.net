@@ -7,50 +7,49 @@ namespace Ecommerce.AdminFront.Components
 {
     public partial class OrderDetailCardUC : UserControl, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty DetailProperty =
-          DependencyProperty.Register(nameof(Detail), typeof(OrderDetailDto), typeof(OrderDetailCardUC),
-              new PropertyMetadata(null, OnDetailChanged));
+
 
         public OrderDetailDto Detail
         {
-            get => (OrderDetailDto)GetValue(DetailProperty);
-            set => SetValue(DetailProperty, value);
+            get { return (OrderDetailDto)GetValue(DetailProperty); }
+            set { SetValue(DetailProperty, value); }
         }
 
-        private string _totalPrice;
+        public static readonly DependencyProperty DetailProperty =
+            DependencyProperty.Register("Detail", typeof(OrderDetailDto), typeof(OrderDetailCardUC), new PropertyMetadata(null));
+
+
+
+
+
         public string TotalPrice
         {
-            get => _totalPrice;
-            set
-            {
-                _totalPrice = value;
-                OnPropertyChanged(nameof(TotalPrice));
-            }
+            get { return (string)GetValue(TotalPriceProperty); }
+            set { SetValue(TotalPriceProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for TotalPrice.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TotalPriceProperty =
+            DependencyProperty.Register("TotalPrice", typeof(string), typeof(OrderDetailCardUC), new PropertyMetadata(null));
+
+
 
         public OrderDetailCardUC()
         {
             InitializeComponent();
         }
 
-        private static void OnDetailChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as OrderDetailCardUC;
-            control?.UpdateFromDetail();
-        }
+    
 
         private void UpdateFromDetail()
         {
             productCardUC.btnAddToCart.Visibility = Visibility.Collapsed;
             if (Detail == null || Detail.Product == null) return;
             TotalPrice = (Detail.Quantity * Detail.Product.Price).ToString("F2");
-            if (productCardUC != null)
-            {
-                productCardUC.Product = Detail.Product;
-             
-            }
-            DataContext = this;
-
+            lblTotalPrice.Text = TotalPrice;
+            txtQty.Text = Detail.Quantity.ToString();
+            productCardUC.Product = Detail.Product;
+            DataContext = Detail;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

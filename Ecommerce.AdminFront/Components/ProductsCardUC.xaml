@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Components"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:product="clr-namespace:Ecommerce.AdminFront.ClientPages.Product" xmlns:convertors="clr-namespace:Ecommerce.AdminFront.Controls.Convertors"
+            
              Loaded="ProductCardUC_OnLoaded">
 
     <ui:Card Margin="5"  Width="250">

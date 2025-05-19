@@ -51,6 +51,7 @@ public partial class ProductCardUC : UserControl
         {
             if(MainWindowEntry.cartItems.Any(c=>c.ProductID == Product.ProductId)) btnAddToCart.Visibility = Visibility.Collapsed;
         }
+        DataContext = Product;
     }
 
     private async void BtnAddToCart_OnClick(object sender, RoutedEventArgs e)

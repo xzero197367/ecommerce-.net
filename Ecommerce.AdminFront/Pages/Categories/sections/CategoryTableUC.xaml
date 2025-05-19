@@ -36,7 +36,7 @@
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>
                 
-                    <ui:GridViewColumn Header="Product Count" Width="200">
+                    <!--<ui:GridViewColumn Header="Product Count" Width="200">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label
@@ -47,7 +47,7 @@
                                 </Label>
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
-                    </ui:GridViewColumn>
+                    </ui:GridViewColumn>-->
                 
                     <ui:GridViewColumn Header="Actions" Width="100">
                         <ui:GridViewColumn.CellTemplate>

@@ -1,4 +1,6 @@
-﻿using Ecommerce.DTOs;
+﻿using Ecommerce.AdminFront.ClientPages.Order;
+using Ecommerce.DTOs;
+using Ecommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,19 @@ namespace Ecommerce.AdminFront.Components
     {
 
         public static readonly DependencyProperty OrderProperty = DependencyProperty.Register("Order", typeof(OrderDto), typeof(OrderItemCardUC), new PropertyMetadata(null));
+
+        private OrderHandler orderHandler = OrderHandler.Instance;
+
+        public Action OnRefreshOrders
+        {
+            get { return (Action)GetValue(OnRefreshOrdersProperty); }
+            set { SetValue(OnRefreshOrdersProperty, value); }
+        }
+
+        public static readonly DependencyProperty OnRefreshOrdersProperty =
+            DependencyProperty.Register("OnRefreshOrders", typeof(Action), typeof(OrderItemCardUC), new PropertyMetadata(null));
+
+
 
         public OrderDto Order
         {
@@ -71,6 +86,15 @@ namespace Ecommerce.AdminFront.Components
             return parent as ScrollViewer;
         }
 
-      
+        private async void cancel_order_click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure canceling the order?", "Cancel Order", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                Order.Status = OrderStatus.Denied;
+                await orderHandler.UpdateOrder(Order);
+
+                OnRefreshOrders?.Invoke();
+            }
+        }
     }
 }

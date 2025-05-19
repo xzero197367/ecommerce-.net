@@ -35,22 +35,10 @@
 
                     <ui:ListView.ItemTemplate>
                         <DataTemplate>
-                            <components:CartCardUC CartItem="{Binding}"/>
+                            <components:CartCardUC CartItem="{Binding}" OnRefreshAction="RefreshCartItems"/>
                         </DataTemplate>
                     </ui:ListView.ItemTemplate>
 
-                    <!--<ui:ListBoxItem>
-                        <components:CartCardUC/>
-                    </ui:ListBoxItem>
-                    <ListBoxItem>
-                        <components:CartCardUC/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <components:CartCardUC/>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <components:CartCardUC/>
-                    </ListBoxItem>-->
                 </ui:ListView>
             </ScrollViewer>
 

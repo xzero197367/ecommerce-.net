@@ -27,6 +27,7 @@ namespace WPFModernVerticalMenu.Pages.Products
             productForm.AfterSaveAction += RefreshProducts;
             productTable.OnUpdateProduct += productHandler.onUpdateProduct;
             productTable.OnDeleteProduct += productHandler.DeleteProduct;
+            productTable.RefreshProducts += RefreshProducts;
             txtSearch.TextChanged += OnSearchTextChanged;
 
         }

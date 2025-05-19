@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ecommerce.AdminFront.Pages.Orders.sections"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Loaded="UserControl_Loaded"
+             Unloaded="UserControl_Unloaded"
              mc:Ignorable="d" >
     <Grid>
         <ui:ListView x:Name="orderListView" Background="Transparent" ItemsSource="{Binding Orders}">
@@ -25,16 +27,28 @@
                     <ui:GridViewColumn Header="Total Amount" Width="100"
                             DisplayMemberBinding="{Binding TotalAmount}" />
 
-                    <ui:GridViewColumn Header="Status" Width="100"
-                            DisplayMemberBinding="{Binding Status}" />
+                    <!--<ui:GridViewColumn Header="Status" Width="100"
+              
+                                       >
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                            <ui:TextBox IsReadOnly="true" 
+                                        Text="{Binding Status}"
+                                        Foreground="White"
+                                        FontWeight="Bold"
+                                        Background="{Binding Status, Converter={StaticResource OrderStatusColorConverter}}"
+                                        Padding="3"  />
+                    </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>-->
 
-                    <ui:GridViewColumn Header="Processed Date" Width="120">
+                    <!--<ui:GridViewColumn Header="Processed Date" Width="120">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding DateProcessed, StringFormat=d}" />
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
-                    </ui:GridViewColumn>
+                    </ui:GridViewColumn>-->
 
                     <ui:GridViewColumn Header="User Name" Width="150">
                         <ui:GridViewColumn.CellTemplate>
@@ -44,15 +58,17 @@
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>
 
-                    <ui:GridViewColumn Header="Actions" Width="100">
+                    <ui:GridViewColumn Header="Status" Width="120">
                         <ui:GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Status}">
-                                    <ComboBoxItem Content="Pending" />
-                                    <ComboBoxItem Content="Approved" />
-                                    <ComboBoxItem Content="Denied" />
-                                    <ComboBoxItem Content="Shipped" />
-                                </ComboBox>
+                                <ComboBox 
+                                    ItemsSource="{Binding DataContext.StatusOptions, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                    SelectedItem="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Background="{Binding Status, Converter={StaticResource OrderStatusColorConverter}}"
+                                    SelectionChanged="ComboBox_SelectionChanged"
+                                    Foreground="White"
+                                    FontWeight="Bold"
+                                    Padding="3"/>
                             </DataTemplate>
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>

@@ -15,7 +15,7 @@ namespace Ecommerce.DTOs
         public bool IsActive { get; set; } = true;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime? LastLoginDate { get; set; }
-        public ICollection<CartItemDto> CartItems { get; set; }
-        public ICollection<OrderDto> Orders { get; set; }
+        //public ICollection<CartItemDto> CartItems { get; set; }
+        //public ICollection<OrderDto> Orders { get; set; }
     }
 }

@@ -10,8 +10,7 @@ namespace Ecommerce.Context.Configration
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(c => c.CategoryId);
-            builder.HasIndex(c => c.Name)
-                .IsUnique();
+          
         }
 
     }

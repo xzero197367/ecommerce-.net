@@ -8,7 +8,7 @@ namespace Ecommerce.Application.Mapping
     {
         public static void Config()
         {
-         
+
             TypeAdapterConfig<User, UserDto>.NewConfig()
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.LastName, src => src.LastName)
@@ -16,9 +16,9 @@ namespace Ecommerce.Application.Mapping
                 .Map(dest => dest.UserName, src => src.UserName)
                 .Map(dest => dest.UserRole, src => src.UserRole)// Map the image path
                 .Map(dest => dest.UserPassword, src => src.UserPassword)
-                .Map(dest => dest.ImagePath, src => src.ImagePath)
-                .Map(dest=>dest.CartItems, 
-                    src => src.CartItems != null ? src.CartItems.ToList().Adapt<List<CartItemDto>>() : null); 
+                .Map(dest => dest.ImagePath, src => src.ImagePath);
+                //.Map(dest=>dest.CartItems, 
+                //    src => src.CartItems != null ? src.CartItems.ToList().Adapt<List<CartItemDto>>() : null); 
 
             TypeAdapterConfig<UserDto, User>.NewConfig().
               Map(dest => dest.UserID, src => src.UserID)

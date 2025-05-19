@@ -47,6 +47,7 @@ namespace Ecommerce.AdminFront.Pages.Categories.sections
             popupWindow = new PopupWindow();
             categoryFrom = new CategoryFromUC() { 
                 onSaveAction = async delegate (CategoryDto dto) {
+                    dto.CategoryId = category.CategoryId; 
                     var res =  await OnUpdateCategory(dto);
                     popupWindow.Close();
                     return res;

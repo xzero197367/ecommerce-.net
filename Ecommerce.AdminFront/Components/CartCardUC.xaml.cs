@@ -7,11 +7,19 @@ namespace Ecommerce.AdminFront.Components;
 
 public partial class CartCardUC : UserControl
 {
-    //private int _quantity = 1; // Default quantity
-    //private double _price = 99.99; // Product price
-    
-    public Action OnRefreshCatItems = () => { }; 
-    
+ 
+
+    public Action OnRefreshAction
+    {
+        get { return (Action)GetValue(OnRefreshActionProperty); }
+        set { SetValue(OnRefreshActionProperty, value); }
+    }
+
+    public static readonly DependencyProperty OnRefreshActionProperty =
+        DependencyProperty.Register("OnRefreshAction", typeof(Action), typeof(CartCardUC), new PropertyMetadata(null));
+
+
+
     private CartItemHandler cartItemHandler = CartItemHandler.GetInstance();
 
     public CartItemDto CartItem
@@ -76,7 +84,7 @@ public partial class CartCardUC : UserControl
     {
         await cartItemHandler.DeleteCartItem(CartItem.CartItemID);
         MainWindowEntry.cartItems = await cartItemHandler.GetCartItems();
-        OnRefreshCatItems?.Invoke();
+        OnRefreshAction?.Invoke();
     }
 
    

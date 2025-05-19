@@ -20,7 +20,7 @@ namespace Ecommerce.Application.Services.OrderServices
 
         public async override Task<List<OrderDto>> GetAllAsync()
         {
-            var items = await orderRepo.GetAllAsync().Include(x => x.Details).ThenInclude(x => x.Product).AsNoTracking().ToListAsync();
+            var items = await orderRepo.GetAllAsync().Include(x => x.Details).ThenInclude(x => x.Product).Include(x => x.User).AsNoTracking().ToListAsync();
 
             return items.Adapt<List<OrderDto>>();
         }
@@ -28,7 +28,7 @@ namespace Ecommerce.Application.Services.OrderServices
 
         public async override Task<List<OrderDto>> GetWithConditionAsync(Expression<Func<Order, bool>> predicate)
         {
-            var items = await orderRepo.GetWithConditionAsync(predicate).Include(x => x.Details).ThenInclude(x => x.Product).AsNoTracking().ToListAsync();
+            var items = await orderRepo.GetWithConditionAsync(predicate).Include(x => x.Details).ThenInclude(x => x.Product).Include(x => x.User).AsNoTracking().ToListAsync();
 
             return items.Adapt<List<OrderDto>>();
         }

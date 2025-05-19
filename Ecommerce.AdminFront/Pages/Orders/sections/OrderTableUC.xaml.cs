@@ -1,7 +1,10 @@
 ﻿
+using Ecommerce.AdminFront.ClientPages.Order;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,20 +15,68 @@ namespace Ecommerce.AdminFront.Pages.Orders.sections
     {
         public ObservableCollection<OrderDto> Orders { get; set; } = new ObservableCollection<OrderDto>();
 
+        private OrderHandler orderHandler = OrderHandler.Instance;
+
+        public Action OnRefreshAction
+        {
+            get { return (Action)GetValue(OnRefreshActionProperty); }
+            set { SetValue(OnRefreshActionProperty, value); }
+        }
+
+        public static readonly DependencyProperty OnRefreshActionProperty =
+            DependencyProperty.Register("OnRefreshAction", typeof(Action), typeof(OrderTableUC), new PropertyMetadata(null));
+
+        public List<OrderStatus> StatusOptions { get; set; }
+
+        public int counter = 0;
+
         public OrderTableUC()
         {
             InitializeComponent();
-            Orders.Add(new OrderDto
-            {
-                OrderID = 1,
-                UserID = 101,
-                OrderDate = DateTime.UtcNow,
-                TotalAmount = 250.75m,
-                Status = OrderStatus.Pending,
-                DateProcessed = null,
-                User = new UserDto { FirstName = "John Doe" }  
-            });
-            DataContext  = this;
+
+            DataContext = this;
+
+            StatusOptions = new List<OrderStatus> { OrderStatus.Pending, OrderStatus.Approved, OrderStatus.Shipped, OrderStatus.Denied };
         }
+
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            counter = 1;
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            counter = 0;
+        }
+
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(counter == 1 || counter == 0)
+            {
+                counter = 2;
+                return;
+            }
+            ComboBox comboBox = sender as ComboBox;
+            
+            if (comboBox != null && comboBox.SelectedIndex != -1)
+            {
+                OrderStatus status = Enum.Parse<OrderStatus>(comboBox.SelectedValue.ToString());
+                OrderDto order = comboBox.DataContext as OrderDto;
+
+                OrderDto olderOrder = Orders.Where(o => o.OrderID == order.OrderID).FirstOrDefault();
+                if(olderOrder != null)
+                {
+                    counter = 1;
+                    olderOrder.Status = order.Status;
+                    await orderHandler.UpdateOrder(olderOrder);
+                    OnRefreshAction?.Invoke();
+                    Orders = new ObservableCollection<OrderDto>(await orderHandler.GetAllOrders());
+                }
+                
+            }
+        }
+
+       
     }
 }

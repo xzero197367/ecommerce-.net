@@ -2,6 +2,7 @@
 using Ecommerce.AdminFront.ClientPages.Order;
 using Ecommerce.DTOs;
 using Ecommerce.Models;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 namespace WPFModernVerticalMenu.Pages.Orders
@@ -37,6 +38,7 @@ namespace WPFModernVerticalMenu.Pages.Orders
 
         private void OrderStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            orderTable.counter = 0;
             if(orderStatus.SelectedIndex == 0){
                 RefreshOrders();
                 return;
@@ -49,6 +51,7 @@ namespace WPFModernVerticalMenu.Pages.Orders
         {
             Orders = await orderHandler.GetAllOrders();
             orderTable.orderListView.ItemsSource = Orders;
+            orderTable.Orders = new ObservableCollection<OrderDto>(Orders);
         }
 
         private void SearchText_TextChanged(object sender, TextChangedEventArgs e)

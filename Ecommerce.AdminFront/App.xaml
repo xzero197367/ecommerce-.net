@@ -8,6 +8,9 @@
 
         <ResourceDictionary>
             <convertors:RelativePathToImageConverter x:Key="RelativePathToImageConverter" />
+            <convertors:OrderStatusColorConverter x:Key="OrderStatusColorConverter" />
+            <convertors:OrderStatusVisibleConverter x:Key="OrderStatusVisibleConverter" />
+            
             <ResourceDictionary.MergedDictionaries>
 
 

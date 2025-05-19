@@ -56,7 +56,7 @@ namespace Ecommerce.AdminFront.Pages.Products.sections
             popupWindow.containerGrid.Children.Add(productFrom);
             popupWindow.SizeToContent = SizeToContent.WidthAndHeight;
             popupWindow.ShowDialog();
-            //await RefreshProducts.Invoke();
+            await RefreshProducts.Invoke();
         }
     }
 }

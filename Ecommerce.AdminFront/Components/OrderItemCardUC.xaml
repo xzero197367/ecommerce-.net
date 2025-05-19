@@ -12,18 +12,36 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="5" Orientation="Horizontal">
-            
-            <ui:TextBox IsReadOnly="true" Text="{Binding OrderID}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" Margin="10,0" />
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="5" Orientation="Horizontal" >
 
-            <ui:TextBox IsReadOnly="true" Text="{Binding OrderDate}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
+                <ui:TextBox IsReadOnly="true" Text="{Binding OrderID}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left" Margin="10,0" />
 
-            <ui:TextBox IsReadOnly="true" Text="{Binding TotalAmount}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
+                <ui:TextBox IsReadOnly="true" Text="{Binding OrderDate}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
 
-            <ui:TextBox IsReadOnly="true" Text="{Binding Status}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
+                <ui:TextBox IsReadOnly="true" Text="{Binding TotalAmount}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
 
-        </StackPanel>
+                <ui:TextBox IsReadOnly="true" Text="{Binding Status}" FontWeight="Bold" 
+                Background="{Binding Status, Converter={StaticResource OrderStatusColorConverter}}" Foreground="White"
+                FontSize="16" HorizontalAlignment="Right" Margin="0,0,10,0" />
 
+                
+
+            </StackPanel>
+
+            <ui:Button Grid.Column="1" Appearance="Caution"
+                       FontSize="24" FontWeight="Bold" Cursor="Hand"
+                       Click="cancel_order_click"
+                       Visibility="{Binding Status, Converter={StaticResource OrderStatusVisibleConverter}}"
+                       Foreground="White" HorizontalAlignment="Right">Cancel Order</ui:Button>
+
+
+        </Grid>
+        
         <ui:ListView x:Name="categoryListView" ItemsSource="{Binding Details}"  
                   Grid.Row="1"
            Padding="10 5"  BorderBrush="Transparent" Margin="20 10"

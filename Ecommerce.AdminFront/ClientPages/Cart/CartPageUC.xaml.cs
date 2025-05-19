@@ -17,6 +17,7 @@ public partial class CartPageUC : UserControl
 
     private async void UserControl_Loaded(object sender, System.Windows.RoutedEventArgs e)
     {
+        
         RefreshCartItems();
     }
 

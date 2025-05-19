@@ -45,7 +45,7 @@
             </Grid>
 
             <Grid Margin="10" Grid.Row="2">
-                <sections:OrderTableUC x:Name="orderTable"/>
+                <sections:OrderTableUC x:Name="orderTable" OnRefreshAction="RefreshOrders"/>
             </Grid>
 
 

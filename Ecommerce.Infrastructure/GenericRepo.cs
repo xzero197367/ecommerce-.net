@@ -80,7 +80,7 @@ namespace Ecommerce.Infrastructure
             }
         }
 
-        public async Task<T> UpdateAsync(T entity)
+        public async virtual  Task<T> UpdateAsync(T entity)
         {
             try
             {
@@ -93,7 +93,8 @@ namespace Ecommerce.Infrastructure
             }
             catch (DbUpdateException ex)
             {
-                throw new Exception($"Error updating entity, {ex.Message}", ex);
+                MessageBox.Show($"Error updating entity, {ex.Message}");
+                return null;
             }
         }
 
