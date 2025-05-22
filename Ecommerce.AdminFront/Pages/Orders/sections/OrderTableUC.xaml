@@ -73,6 +73,17 @@
                         </ui:GridViewColumn.CellTemplate>
                     </ui:GridViewColumn>
 
+
+                    <ui:GridViewColumn Header="Show" Width="150">
+                        <ui:GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ui:Button Appearance="Primary"
+                                    Click="ShowOrderDetails"
+                                          Content="Show" />
+                            </DataTemplate>
+                        </ui:GridViewColumn.CellTemplate>
+                    </ui:GridViewColumn>
+
                 </ui:GridView>
             </ui:ListView.View>
         </ui:ListView>
